@@ -59,7 +59,6 @@ public class Island : MonoBehaviour
         Building building = Building.CreateComponent(island, name, x, y);   //instanciation
         buildings.Add(building);
         yield return building.build(building.constructionTime, x, y, island);  //addition of the building's image to the map (construction time)
-        Debug.Log("passed");
         while (building.state == 1)     //consumption/production during the building's life
         {
             building.consume_produce(this);
@@ -71,7 +70,7 @@ public class Island : MonoBehaviour
             yield return wait(10);
         }
         //if state is 2 --> building removed
-        //canvas.Children.RemoveAt(building.indexCanvas);
+        Destroy(building.buldingGameObject);
         Debug.Log("Le batiment " + building.buildingName + " a été supprimé !");
         building = null;
     }

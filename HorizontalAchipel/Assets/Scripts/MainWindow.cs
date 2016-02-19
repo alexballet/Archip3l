@@ -17,22 +17,16 @@ public class MainWindow : MonoBehaviour
                 MinorIsland.CreateComponent(GameObject.Find("sous_ile_3"), 3),
                 MinorIsland.CreateComponent(GameObject.Find("sous_ile_4"), 4)
             };
-
-        /*----------- Tests -------------*/
-
-
-
-        /*-------------------------------*/
+        
     }
 
     void OnMouseDown()
     {
         Vector2 mousePosition = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-
         RessourceManager rm = new RessourceManager();
         rm.giveRessource("or", islands[1], 50);
         StartCoroutine(islands[1].createBuilding("scierie", (int)mousePosition.x, (int)mousePosition.y, "sous_ile_1"));
-        toto();
+        StartCoroutine(wait(20));
     }
 
     // Update is called once per frame
