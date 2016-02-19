@@ -2,17 +2,21 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Island
+public class Island : MonoBehaviour
 {
     public int id;        //0 : ile pricipale ; 1 : haut gauche, 2 : haut droite, 3 : bas gauche, 4 : bas droite
     public List<Building> buildings;
     public List<Ressource> ressources;
 
-
-    public Island()
+    public Island CreateComponent(GameObject where)
     {
-        buildings = new List<Building>();
-        ressources = new List<Ressource>();
+        Island island = where.AddComponent<Island>();
+
+        island.buildings = new List<Building>();
+        island.ressources = new List<Ressource>();
+
+
+        return island;
     }
 
     public Building getBuilding(string name)
@@ -38,11 +42,10 @@ public class Island
         }
         return null;
     }
-
-
+    
     //creates a building, adds it to the list and starts the consumption/production of ressources (every 10 seconds)
     //the corresponding image is added in "canvas"
-    public void createBuilding(string name, int x, int y, GameObject island)
+    public IEnumerator createBuilding(string name, int x, int y, string island)
     {
         //TODO : appeler une fonction "défi" --> réussite = création du bâtiment ; échec = rien
 
@@ -50,12 +53,13 @@ public class Island
         if (getBuilding(name) != null)
         {
             Debug.Log("Le batiment " + name + " existe déjà !");
-            return;
+            yield break;
         }
-
-        Building building = new Building(name, x, y);                   //instanciation
+        
+        Building building = Building.CreateComponent(island, name, x, y);   //instanciation
         buildings.Add(building);
-        building.build(building.constructionTime, x, y, island);  //addition of the building's image to the map (construction time)
+        yield return building.build(building.constructionTime, x, y, island);  //addition of the building's image to the map (construction time)
+        Debug.Log("passed");
         while (building.state == 1)     //consumption/production during the building's life
         {
             building.consume_produce(this);
@@ -64,14 +68,12 @@ public class Island
                 Debug.Log(getRessource(building.ressourceNeeded).name + " : " + getRessource(building.ressourceNeeded).stock);
                 Debug.Log(getRessource(building.ressourceProduced).name + " : " + getRessource(building.ressourceProduced).stock);
             }
-            //await Task.Delay(TimeSpan.FromSeconds(10));
-            wait(10);
+            yield return wait(10);
         }
         //if state is 2 --> building removed
         //canvas.Children.RemoveAt(building.indexCanvas);
         Debug.Log("Le batiment " + building.buildingName + " a été supprimé !");
         building = null;
-        return;
     }
 
     IEnumerator wait(int sec)

@@ -1,10 +1,12 @@
 fileFormatVersion: 2
 guid: efead86d3b2b32c48aa8f5c46a2c3e55
-timeCreated: 1455874791
+timeCreated: 1455898818
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - toto: {instanceID: 0}
+  - SpriteToto: {fileID: 21300000, guid: f5bb0a62508d0474492f4700008870b2, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

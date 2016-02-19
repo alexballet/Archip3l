@@ -6,9 +6,15 @@ public class MinorIsland : Island
 {
     public string canvasName;
 
-    public MinorIsland(int argId) : base()  //initialize ressources & buildings from Island constructor
+    public static MinorIsland CreateComponent(GameObject where, int argId)
     {
-        id = argId;
-        canvasName = "sous_ile_" + argId.ToString();
+        MinorIsland minorIsland = where.AddComponent<MinorIsland>();
+
+        minorIsland.buildings = new List<Building>();
+        minorIsland.ressources = new List<Ressource>();
+
+        minorIsland.id = argId;
+        minorIsland.canvasName = "sous_ile_" + argId.ToString();
+        return minorIsland;
     }
-}
+}   

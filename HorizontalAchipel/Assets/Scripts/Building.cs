@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Building
+public class Building : MonoBehaviour
 {
     public string buildingName;
     public string ressourceNeeded;
@@ -16,87 +16,86 @@ public class Building
     public int coordX;
     public int coordY;
     public int constructionTime;    //time after which the building'state becomes 1
+    public GameObject buldingGameObject;
 
 
-    public Building(string argName, int x, int y)     //TODO : finir switch
+    public static Building CreateComponent(string island, string argName, int x, int y)     //TODO : finir switch
     {
-        buildingName = argName;
+        Building building = GameObject.Find(island).AddComponent<Building>();
+        building.buildingName = argName;
+
+
         switch (argName)
         {
             case "scierie":
-                ressourceNeeded = "or";
-                consumptionCost = 3;
-                ressourceProduced = "bois";
-                productionCost = 4;
-                constructionTime = 5;
+                building.ressourceNeeded = "or";
+                building.consumptionCost = 3;
+                building.ressourceProduced = "bois";
+                building.productionCost = 4;
+                building.constructionTime = 5;
                 break;
             case "mine":
-                ressourceNeeded = null;
-                consumptionCost = 0;
-                ressourceProduced = "or";
-                productionCost = 0;
-                constructionTime = 0;
+                building.ressourceNeeded = null;
+                building.consumptionCost = 0;
+                building.ressourceProduced = "or";
+                building.productionCost = 0;
+                building.constructionTime = 0;
                 break;
             case "usine":
-                ressourceNeeded = null;
-                consumptionCost = 0;
-                ressourceProduced = "metal";
-                productionCost = 0;
-                constructionTime = 0;
+                building.ressourceNeeded = null;
+                building.consumptionCost = 0;
+                building.ressourceProduced = "metal";
+                building.productionCost = 0;
+                building.constructionTime = 0;
                 break;
             case "ferme":
-                ressourceNeeded = null;
-                consumptionCost = 0;
-                ressourceProduced = "metal";
-                productionCost = 0;
-                constructionTime = 0;
+                building.ressourceNeeded = null;
+                building.consumptionCost = 0;
+                building.ressourceProduced = "metal";
+                building.productionCost = 0;
+                building.constructionTime = 0;
                 break;
         }
-        coordX = x;
-        coordY = y;
-        imageBeingBuilt = @"c:\tempConcours\building-beingbuilt-" + argName + ".png";
-        imageBuilt = @"c:\tempConcours\building-built-" + argName + ".png";
+        building.coordX = x;
+        building.coordY = y;
+        building.imageBeingBuilt = "building-beingbuilt-" + argName;
+        building.imageBuilt = "building-built-" + argName;
 
-
+        return building;
     }
+    
 
-    public bool build(int time, int x, int y, GameObject island)
+    public IEnumerator build(int time, int x, int y, string island)
     {
         state = 0;
         Debug.Log("La construction du batiment " + buildingName + " a commencé !");
 
         //creation of the image of the building in construction
-        //Image image = new Image
-        //{
-        //    Width = 50,
-        //    Height = 50,
-        //    buildingName = this.buildingName,
-        //    Source = new BitmapImage(new Uri(imageBeingBuilt, UriKind.Absolute)),
-        //};
-        //Canvas.SetTop(image, y);
-        //Canvas.SetLeft(image, x);
-        //indexCanvas = canvas.Children.Add(image);
-        Debug.Log("image créée");
 
-        StartCoroutine(wait(5));
+        buldingGameObject = new GameObject(island + "_" + buildingName);
+        buldingGameObject.AddComponent<SpriteRenderer>();
+        buldingGameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(imageBeingBuilt);
+        buldingGameObject.GetComponent<SpriteRenderer>().transform.position = new Vector2(-5, 3); //new Vector2(x, y);
+
+
+        //ATTENTE BLOQUANTE
+        //StartCoroutine(wait(time));
+        yield return new WaitForSeconds(time);
+        state = 1;
+        Debug.Log("Le batiment " + buildingName + " est construit !");
         //await Task.Delay(TimeSpan.FromSeconds(time));   //construction of the building
         //state = 1;
         //Debug.Log("Le batiment " + buildingName + " est construit !");
 
         ////modification of the image: the building is now built
-        //image.Source = new BitmapImage(new Uri(imageBuilt, UriKind.Absolute));
-        return true;
+        buldingGameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(imageBuilt);
+        yield break;
 
     }
 
     IEnumerator wait(int sec)
     {
         yield return new WaitForSeconds(sec);
-        state = 1;
-        Debug.Log("Le batiment " + buildingName + " est construit !");
-
-        //modification of the image: the building is now built
-        //image.Source = new BitmapImage(new Uri(imageBuilt, UriKind.Absolute));
     }
 
 
