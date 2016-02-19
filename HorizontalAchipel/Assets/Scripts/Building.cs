@@ -13,13 +13,13 @@ public class Building : MonoBehaviour
     public string imageBeingBuilt;
     public string imageBuilt;
     public int indexCanvas;
-    public int coordX;
-    public int coordY;
+    public float coordX;
+    public float coordY;
     public int constructionTime;    //time after which the building'state becomes 1
     public GameObject buldingGameObject;
 
 
-    public static Building CreateComponent(string island, string argName, int x, int y)     //TODO : finir switch
+    public static Building CreateComponent(string island, string argName, float x, float y)     //TODO : finir switch
     {
         Building building = GameObject.Find(island).AddComponent<Building>();
         building.buildingName = argName;
@@ -65,7 +65,7 @@ public class Building : MonoBehaviour
     }
     
 
-    public IEnumerator build(int time, int x, int y, string island)
+    public IEnumerator build(int time, float x, float y, string island)
     {
         state = 0;
         Debug.Log("La construction du batiment " + buildingName + " a commencé !");
@@ -75,7 +75,7 @@ public class Building : MonoBehaviour
         buldingGameObject = new GameObject(island + "_" + buildingName);
         buldingGameObject.AddComponent<SpriteRenderer>();
         buldingGameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(imageBeingBuilt);
-        buldingGameObject.GetComponent<SpriteRenderer>().transform.position = new Vector2(-5, 3); //new Vector2(x, y);
+        buldingGameObject.GetComponent<SpriteRenderer>().transform.position = new Vector2(x, y);
 
 
         //ATTENTE BLOQUANTE

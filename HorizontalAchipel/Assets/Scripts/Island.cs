@@ -45,7 +45,7 @@ public class Island : MonoBehaviour
     
     //creates a building, adds it to the list and starts the consumption/production of ressources (every 10 seconds)
     //the corresponding image is added in "canvas"
-    public IEnumerator createBuilding(string name, int x, int y, string island)
+    public IEnumerator createBuilding(string name, float x, float y, string island)
     {
         //TODO : appeler une fonction "défi" --> réussite = création du bâtiment ; échec = rien
 
@@ -71,6 +71,7 @@ public class Island : MonoBehaviour
         }
         //if state is 2 --> building removed
         Destroy(building.buldingGameObject);
+        buildings.Remove(getBuilding(building.buildingName));
         Debug.Log("Le batiment " + building.buildingName + " a été supprimé !");
         building = null;
     }

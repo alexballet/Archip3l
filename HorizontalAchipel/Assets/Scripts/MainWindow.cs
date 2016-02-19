@@ -23,9 +23,11 @@ public class MainWindow : MonoBehaviour
     void OnMouseDown()
     {
         Vector2 mousePosition = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        Vector2 mousePositionConverted = Camera.main.ScreenToWorldPoint(mousePosition);
+        Debug.Log("Position : x = " + mousePositionConverted.x.ToString() + " et y = " + mousePositionConverted.y.ToString());
         RessourceManager rm = new RessourceManager();
         rm.giveRessource("or", islands[1], 50);
-        StartCoroutine(islands[1].createBuilding("scierie", (int)mousePosition.x, (int)mousePosition.y, "sous_ile_1"));
+        StartCoroutine(islands[1].createBuilding("scierie", mousePositionConverted.x, mousePositionConverted.y, "sous_ile_1"));
         StartCoroutine(wait(20));
     }
 
