@@ -2,12 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class RessourceManager : MonoBehaviour {
+public class RessourceManager
+{
 
     public List<string> ressources; //list of existing ressources
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         ressources = new List<string>()
             {
                 "bois",
@@ -16,11 +18,12 @@ public class RessourceManager : MonoBehaviour {
                 "viande"
             };
     }
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
 
     //give a ressource named "name" to "island", with a stock of "quantity"
     //if the ressource didn't exist on "island", it is created

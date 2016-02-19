@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class Building
 {
-    public string name;
+    public string buildingName;
     public string ressourceNeeded;
     public int consumptionCost;     //quantity consumed every 10 seconds
     public string ressourceProduced;
@@ -20,7 +20,7 @@ public class Building
 
     public Building(string argName, int x, int y)     //TODO : finir switch
     {
-        name = argName;
+        buildingName = argName;
         switch (argName)
         {
             case "scierie":
@@ -60,31 +60,43 @@ public class Building
 
     }
 
-    public async Task<bool> build(int time, int x, int y, Canvas canvas)
+    public bool build(int time, int x, int y, GameObject island)
     {
         state = 0;
-        System.Diagnostics.Debug.WriteLine("La construction du batiment " + name + " a commencé !");
+        Debug.Log("La construction du batiment " + buildingName + " a commencé !");
 
         //creation of the image of the building in construction
-        Image image = new Image
-        {
-            Width = 50,
-            Height = 50,
-            Name = this.name,
-            Source = new BitmapImage(new Uri(imageBeingBuilt, UriKind.Absolute)),
-        };
-        Canvas.SetTop(image, y);
-        Canvas.SetLeft(image, x);
-        indexCanvas = canvas.Children.Add(image);
+        //Image image = new Image
+        //{
+        //    Width = 50,
+        //    Height = 50,
+        //    buildingName = this.buildingName,
+        //    Source = new BitmapImage(new Uri(imageBeingBuilt, UriKind.Absolute)),
+        //};
+        //Canvas.SetTop(image, y);
+        //Canvas.SetLeft(image, x);
+        //indexCanvas = canvas.Children.Add(image);
+        Debug.Log("image créée");
 
-        await Task.Delay(TimeSpan.FromSeconds(time));   //construction of the building
-        state = 1;
-        System.Diagnostics.Debug.WriteLine("Le batiment " + name + " est construit !");
+        StartCoroutine(wait(5));
+        //await Task.Delay(TimeSpan.FromSeconds(time));   //construction of the building
+        //state = 1;
+        //Debug.Log("Le batiment " + buildingName + " est construit !");
 
-        //modification of the image: the building is now built
-        image.Source = new BitmapImage(new Uri(imageBuilt, UriKind.Absolute));
+        ////modification of the image: the building is now built
+        //image.Source = new BitmapImage(new Uri(imageBuilt, UriKind.Absolute));
         return true;
 
+    }
+
+    IEnumerator wait(int sec)
+    {
+        yield return new WaitForSeconds(sec);
+        state = 1;
+        Debug.Log("Le batiment " + buildingName + " est construit !");
+
+        //modification of the image: the building is now built
+        //image.Source = new BitmapImage(new Uri(imageBuilt, UriKind.Absolute));
     }
 
 
@@ -98,25 +110,25 @@ public class Building
         {
             rm.withdrawRessource(ressourceNeeded, island, consumptionCost); //consumption
             rm.giveRessource(ressourceProduced, island, productionCost);    //production
-            System.Diagnostics.Debug.WriteLine("Le batiment " + this.name + " utilise " + this.consumptionCost.ToString() + " " + this.ressourceNeeded + " et produit " + this.productionCost.ToString() + " " + this.ressourceProduced + " sur l'ile " + island.id.ToString());
+            Debug.Log("Le batiment " + this.buildingName + " utilise " + this.consumptionCost.ToString() + " " + this.ressourceNeeded + " et produit " + this.productionCost.ToString() + " " + this.ressourceProduced + " sur l'ile " + island.id.ToString());
         }
         else
         {
-            System.Diagnostics.Debug.WriteLine("Le batiment " + this.name + " ne peut plus produire de " + this.ressourceProduced + " car il ne reste pas assez de " + ressourceNeeded + " sur l'ile " + island.id.ToString());
+            Debug.Log("Le batiment " + this.buildingName + " ne peut plus produire de " + this.ressourceProduced + " car il ne reste pas assez de " + ressourceNeeded + " sur l'ile " + island.id.ToString());
         }
     }
 
     public bool increaseProduction(int quantity)
     {
         productionCost += quantity;
-        System.Diagnostics.Debug.WriteLine("Le batiment " + this.name + " augmente sa production de " + quantity.ToString());
+        Debug.Log("Le batiment " + this.buildingName + " augmente sa production de " + quantity.ToString());
         return true;
     }
 
     public bool increaseConsumption(int quantity)
     {
         consumptionCost += quantity;
-        System.Diagnostics.Debug.WriteLine("Le batiment " + this.name + " augmente sa consommation de " + quantity.ToString());
+        Debug.Log("Le batiment " + this.buildingName + " augmente sa consommation de " + quantity.ToString());
         return true;
 
     }
@@ -125,7 +137,7 @@ public class Building
     {
         if (productionCost == 0)
         {
-            System.Diagnostics.Debug.WriteLine("Le batiment " + this.name + " a deja un taux de production nul");
+            Debug.Log("Le batiment " + this.buildingName + " a deja un taux de production nul");
             return false;
         }
         else
@@ -133,7 +145,7 @@ public class Building
             productionCost -= quantity;
             if (productionCost < 0)
                 productionCost = 0;
-            System.Diagnostics.Debug.WriteLine("Le batiment " + this.name + " a maintenant un taux de production de " + productionCost.ToString());
+            Debug.Log("Le batiment " + this.buildingName + " a maintenant un taux de production de " + productionCost.ToString());
             return true;
         }
     }
@@ -142,7 +154,7 @@ public class Building
     {
         if (consumptionCost == 0)
         {
-            System.Diagnostics.Debug.WriteLine("Le batiment " + this.name + " a deja un taux de production nul");
+            Debug.Log("Le batiment " + this.buildingName + " a deja un taux de production nul");
             return false;
         }
         else
@@ -150,7 +162,7 @@ public class Building
             consumptionCost -= quantity;
             if (consumptionCost < 0)
                 consumptionCost = 0;
-            System.Diagnostics.Debug.WriteLine("Le batiment " + this.name + " a maintenant un taux de consommation de " + productionCost.ToString());
+            Debug.Log("Le batiment " + this.buildingName + " a maintenant un taux de consommation de " + productionCost.ToString());
             return true;
         }
     }
@@ -162,4 +174,4 @@ public class Building
     }
 
 }
-}
+
