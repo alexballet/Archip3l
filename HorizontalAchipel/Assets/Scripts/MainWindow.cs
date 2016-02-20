@@ -17,6 +17,8 @@ public class MainWindow : MonoBehaviour
                 MinorIsland.CreateComponent(GameObject.Find("sous_ile_3"), 3),
                 MinorIsland.CreateComponent(GameObject.Find("sous_ile_4"), 4)
             };
+
+        initializeRessources();
         
     }
 
@@ -25,10 +27,21 @@ public class MainWindow : MonoBehaviour
         Vector2 mousePosition = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
         Vector2 mousePositionConverted = Camera.main.ScreenToWorldPoint(mousePosition);
         Debug.Log("Position : x = " + mousePositionConverted.x.ToString() + " et y = " + mousePositionConverted.y.ToString());
-        RessourceManager rm = new RessourceManager();
-        rm.giveRessource("or", islands[1], 50);
-        StartCoroutine(islands[1].createBuilding("scierie", mousePositionConverted.x, mousePositionConverted.y, "sous_ile_1"));
+        int islandTouched = getIslandTouched(mousePositionConverted.x, mousePositionConverted.y);
+        Debug.Log("islandTouched : " + islandTouched.ToString());
+        StartCoroutine(getIsland(islandTouched).createBuilding("scierie", mousePositionConverted.x, mousePositionConverted.y, "sous_ile_" + islandTouched.ToString()));
         StartCoroutine(wait(20));
+    }
+
+    private int getIslandTouched(float x, float y)
+    {
+        if (x < 0 && y > 0)
+            return 1;
+        if (x < 0 && y < 0)
+            return 2;
+        if (x > 0 && y > 0)
+            return 3;
+        return 4;
     }
 
     // Update is called once per frame
@@ -39,7 +52,18 @@ public class MainWindow : MonoBehaviour
 
     private Island getIsland(int id)
     {
-        return islands[id];
+        return islands[id - 1];
+    }
+
+    private void initializeRessources()     //to be completed
+    {
+        RessourceManager rm = new RessourceManager();
+        Island island;
+        for (int i = 1; i <= 4; i++)
+        {
+            island = getIsland(i);
+            rm.giveRessource("or", island, 50);
+        }
     }
     
 
