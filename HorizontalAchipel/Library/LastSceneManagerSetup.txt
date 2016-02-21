@@ -1,4 +1,0 @@
-sceneSetups:
-- path: Assets/Scene/HorizontalArchipel.unity
-  isLoaded: 1
-  isActive: 1
