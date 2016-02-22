@@ -57,12 +57,6 @@
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Networking">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
@@ -70,6 +64,7 @@
   <ItemGroup>
     <Compile Include="Assets\Script\Building.cs" />
     <Compile Include="Assets\Script\BuildingManager.cs" />
+    <Compile Include="Assets\Script\CSV_reader.cs" />
     <Compile Include="Assets\Script\Challenge.cs" />
     <Compile Include="Assets\Script\MinorIsland.cs" />
     <Compile Include="Assets\Script\Resource.cs" />
@@ -79,6 +74,10 @@
     <Compile Include="Assets\Script\TypeChallenge.cs" />
     <Compile Include="Assets\Script\TypeResource.cs" />
     <Compile Include="Assets\Script\main.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Resources\Challenges\QCM.txt" />
+    <None Include="Assets\Resources\Challenges\VraiFaux.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

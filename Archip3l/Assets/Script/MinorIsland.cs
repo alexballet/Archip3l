@@ -11,10 +11,17 @@ public class MinorIsland : MonoBehaviour {
     {
         buildingManager = ScriptableObject.CreateInstance<BuildingManager>();
         buildingManager.init(this);
-        Debug.Log(buildingManager.minorIsland.nameMinorIsland);
 
-        Challenge challenge = ScriptableObject.CreateInstance<Challenge>();
-        challenge.init(TypeChallenge.VraiFaux, this);
+        /*----------TEST--------*/
+
+        if (nameMinorIsland == "sous_ile_1")
+        {
+            Challenge challenge = ScriptableObject.CreateInstance<Challenge>();
+            challenge.init(TypeChallenge.VraiFaux, this);
+        }
+        
+
+        /*------------------*/
     }
 
     // Use this for initialization
