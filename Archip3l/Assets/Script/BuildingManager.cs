@@ -5,15 +5,13 @@ using System.Collections.Generic;
 public class BuildingManager : MonoBehaviour {
 
     public MinorIsland minorIsland { get; private set; }
+    public Transform buildingPrefab;
     public List<Building> buildingList { get; private set; }
 
     public void init(MinorIsland island)
     {
         this.minorIsland = island;
         buildingList = new List<Building>();
-
-        //test
-        createBuilding(TypeBuilding.Ferme);
     }
 
     public Building getBuilding(TypeBuilding buildingType)
@@ -32,11 +30,16 @@ public class BuildingManager : MonoBehaviour {
     {
         if (this.getBuilding(buildingType) == null)
         {
-            Building newBuildingPrefab = Resources.Load<Building>("Prefab/Building");      //new Building(buildingType, this.minorIsland);
-            Building newBuilding = Instantiate(newBuildingPrefab);
-            newBuilding.transform.SetParent(GameObject.Find(minorIsland.nameMinorIsland).transform);
-            this.buildingList.Add(newBuilding);
-            return true;
+            var buildingTransform = Instantiate(buildingPrefab) as Transform;
+            Building building = buildingTransform.GetComponent<Building>();
+            if (building != null)
+            {
+                building.init(buildingType, this.minorIsland);
+                building.transform.SetParent(this.transform);
+
+                return true;
+            }
+            return false;
         }
         else
         {
@@ -46,19 +49,7 @@ public class BuildingManager : MonoBehaviour {
 
     public bool destroyBuilding(TypeBuilding buildingType)
     {
+        //delete the gameobject child (to do)
         return (this.buildingList.Remove(this.getBuilding(buildingType)));
     }
-
-    // Use this for initialization
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
 }

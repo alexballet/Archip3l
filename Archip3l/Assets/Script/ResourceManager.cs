@@ -12,7 +12,7 @@ public class ResourceManager : MonoBehaviour {
     {
         this.minorIsland = island;
 
-        this.Resources = new List<Resource>();
+        //this.Resources = new List<Resource>();
 
         /*this.Resources.Add(ScriptableObject.CreateInstance<Resource>());
         this.Resources[-1].init(TypeResource.Bois, "Bois");
@@ -21,7 +21,7 @@ public class ResourceManager : MonoBehaviour {
         this.Resources.Add(ScriptableObject.CreateInstance<Resource>());
         this.Resources[-1].init(TypeResource.Bois, "Métal");
         this.Resources.Add(ScriptableObject.CreateInstance<Resource>());*/
-        this.Resources[-1].init(TypeResource.Bois, "Nourriture");
+        //this.Resources[-1].init(TypeResource.Bois, "Nourriture");
         
     }
     public bool addResource(TypeResource resourceType, string name, int quantity, int production)
