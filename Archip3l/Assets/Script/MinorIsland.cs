@@ -5,12 +5,31 @@ public class MinorIsland : MonoBehaviour {
 
     public BuildingManager buildingManager { get; private set; }
     public ResourceManager resourceManager { get; private set; }
+
+    public Transform buildingManagerPrefab;
+    public Transform resourceManagerPrefab;
+
     public string nameMinorIsland;
 
     void Awake()
     {
-        buildingManager = GameObject.Find(nameMinorIsland).GetComponent<BuildingManager>();
-        buildingManager.init(this);
+        var buildingManagerTransform = Instantiate(buildingManagerPrefab) as Transform;
+        BuildingManager buildingManager = buildingManagerTransform.GetComponent<BuildingManager>();
+        if (buildingManager != null)
+        {
+            buildingManager.init(this);
+            buildingManager.transform.SetParent(this.transform);
+            this.buildingManager = buildingManager;
+        }
+
+        var resourceManagerTransform = Instantiate(resourceManagerPrefab) as Transform;
+        ResourceManager resourceManager = resourceManagerTransform.GetComponent<ResourceManager>();
+        if (resourceManager != null)
+        {
+            resourceManager.init(this);
+            resourceManager.transform.SetParent(this.transform);
+            this.resourceManager = resourceManager;
+        }
 
         /*resourceManager = GameObject.Find(nameMinorIsland).AddComponent<ResourceManager>();
         resourceManager.init(this);*/
@@ -18,11 +37,11 @@ public class MinorIsland : MonoBehaviour {
         /*----------TEST--------*/
 
         //if (nameMinorIsland == "sous_ile_1")
-        {
-            Challenge challenge = GameObject.Find("Virtual_" + nameMinorIsland).AddComponent<Challenge>();
-            challenge.init(TypeChallenge.VraiFaux, this);
-        }
-        
+        //{
+        //    Challenge challenge = GameObject.Find("Virtual_" + nameMinorIsland).AddComponent<Challenge>();
+        //    challenge.init(TypeChallenge.VraiFaux, this);
+        //}
+
 
         /*------------------*/
     }
@@ -45,4 +64,8 @@ public class MinorIsland : MonoBehaviour {
             }
         }
 	}
+    void OnMouseDown()
+    {
+        this.buildingManager.createBuilding(TypeBuilding.Mine);
+    }
 }

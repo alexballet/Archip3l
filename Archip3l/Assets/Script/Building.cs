@@ -12,27 +12,35 @@ public class Building : MonoBehaviour {
     public MinorIsland minorIsland { get; private set; }
     private List<Tuple<TypeResource, int>> constructionResourceNeeded;
 
+    public Transform resourceManagerPrefab;
+
     public void init(TypeBuilding TypeBuilding, MinorIsland island)
     {
         this.TypeBuilding = TypeBuilding;
-        this.resourceManager = new ResourceManager();
         this.buildState = 0;
         this.minorIsland = island;
         this.constructionResourceNeeded = new List<Tuple<TypeResource, int>>();
+
+        var resourceManagerTransform = Instantiate(resourceManagerPrefab) as Transform;
+        ResourceManager resourceManager = resourceManagerTransform.GetComponent<ResourceManager>();
+        if (resourceManager != null)
+        {
+            //pb du manager d'ile et de batiment^^
+            resourceManager.init(null);
+            resourceManager.transform.SetParent(this.transform);
+            this.resourceManager = resourceManager;
+        }
 
         switch (TypeBuilding)
         {
             case TypeBuilding.Scierie:
                 this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Or, 3));
-                this.resourceManager.addResource(TypeResource.Bois, "bois", 0, 4);
-                //ressourceNeeded = "or";
-                //consumptionCost = 3;
-                //ressourceProduced = "bois";
-                //productionCost = 4;
+                //this.resourceManager.addResource(TypeResource.Bois, "bois", 0, 4);
+                //null instance from now
                 this.constructionTime = 5;
                 break;
             case TypeBuilding.Mine:
-                this.resourceManager.addResource(TypeResource.Or, "Or", 0, 1);
+                //this.resourceManager.addResource(TypeResource.Or, "Or", 0, 1);
                 this.constructionTime = 0;
                 break;
             case TypeBuilding.Usine:
@@ -43,9 +51,30 @@ public class Building : MonoBehaviour {
                 break;
         }
         //this.build();
+
+        Debug.Log("Construction " + this.TypeBuilding);
     }
+    //IEnumerator build()
+    //{
+    //    //check needed resources
+    //    foreach (Tuple<TypeResource, int> item in this.ConstructionResourceNeeded)
+    //    {
+    //        //avoid null references
+    //        Resource resource = this.Island.ResourceManager.getResource(item.Item1);
+    //        if ((resource == null) || (item.Item2 < resource.Stock))
+    //        {
+    //            return false;
+    //        }
+    //    }
 
-
+    //    //start construction
+    //    this.BuildState = 0;
+    //    foreach (Tuple<TypeResource, int> item in this.ConstructionResourceNeeded)
+    //    {
+    //        this.minorIsland.resourceManager.changeResourceStock(item.Item1, -item.Item2);
+    //    }
+    //    yield return new WaitForSeconds(this.constructionTime);
+    //}
     /*public async Task<bool> build()
     {
         //check needed resources
@@ -84,20 +113,4 @@ public class Building : MonoBehaviour {
     {
         return this.resourceManager.changeResourceProduction(resourceType, value);
     }
-
-
-
-
-
-
-
-    // Use this for initialization
-    void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 }
