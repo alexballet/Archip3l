@@ -36,28 +36,25 @@ public class MinorIsland : MonoBehaviour {
 
         /*----------TEST--------*/
 
-<<<<<<< HEAD
         createChallenge();
-        
-=======
-        //if (nameMinorIsland == "sous_ile_1")
-        //{
-        //    Challenge challenge = GameObject.Find("Virtual_" + nameMinorIsland).AddComponent<Challenge>();
-        //    challenge.init(TypeChallenge.VraiFaux, this);
-        //}
-
->>>>>>> origin/master
 
         /*------------------*/
     }
 
     public void createChallenge()
     {
-        if (nameMinorIsland == "sous_ile_1" || nameMinorIsland == "sous_ile_4")
+        /*----------TEST--------*/
+        if (nameMinorIsland == "sous_ile_1")
         {
             Challenge challenge = GameObject.Find("Virtual_" + nameMinorIsland).AddComponent<Challenge>();
             challenge.init(TypeChallenge.QCM, this);
         }
+        if (nameMinorIsland == "sous_ile_4")
+        {
+            Challenge challenge = GameObject.Find("Virtual_" + nameMinorIsland).AddComponent<Challenge>();
+            challenge.init(TypeChallenge.VraiFaux, this);
+        }
+        /*------------------*/
     }
 
 
