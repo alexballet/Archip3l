@@ -17,15 +17,21 @@ public class MinorIsland : MonoBehaviour {
 
         /*----------TEST--------*/
 
-        //if (nameMinorIsland == "sous_ile_1")
-        {
-            Challenge challenge = GameObject.Find("Virtual_" + nameMinorIsland).AddComponent<Challenge>();
-            challenge.init(TypeChallenge.VraiFaux, this);
-        }
+        createChallenge();
         
 
         /*------------------*/
     }
+
+    public void createChallenge()
+    {
+        if (nameMinorIsland == "sous_ile_1" || nameMinorIsland == "sous_ile_4")
+        {
+            Challenge challenge = GameObject.Find("Virtual_" + nameMinorIsland).AddComponent<Challenge>();
+            challenge.init(TypeChallenge.QCM, this);
+        }
+    }
+
 
     // Use this for initialization
     void Start () {

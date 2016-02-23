@@ -77,8 +77,8 @@
     <Compile Include="Assets\Script\main.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Resources\Challenges\QCM.txt" />
-    <None Include="Assets\Resources\Challenges\VraiFaux.txt" />
+    <None Include="Assets\Resources\Challenges\QCM\QCM.txt" />
+    <None Include="Assets\Resources\Challenges\VraiFaux\VraiFaux.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>
