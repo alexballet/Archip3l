@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class Challenge : MonoBehaviour {
 
     public string question;
+    public string buildingConcerned;
     public string answer;
     public string[] propositions;
     public int nbPropositions;
@@ -24,64 +25,51 @@ public class Challenge : MonoBehaviour {
         else
             this.nbPropositions = 2;
 
+
+        //CSV part
+        //row[0] : building ; row[1] : question ; row[2] : answer ; after: propositions
+
         csv = Resources.Load<TextAsset>("Challenges/" + typeChallenge.ToString());
 
         //CSV_reader.DebugOutputGrid(CSV_reader.SplitCsvGrid(csv.text));
         string[] row = CSV_reader.GetRandomLine(csv.text);
 
-        this.question = row[0];
-        this.answer = row[1];
-        this.propositions = new string[this.nbPropositions];
-        this.propositions[0] = row[2];
-        this.propositions[1] = row[3];
+        this.buildingConcerned = row[0];
+        this.question = row[1];
+        this.answer = row[2];
+        this.propositions = new string[nbPropositions];
+        this.propositions[0] = row[3];
+        this.propositions[1] = row[4];
         if (this.nbPropositions == 3)
-            this.propositions[2] = row[4];
-       
-        
-        
+            this.propositions[2] = row[5];
+
+
+        //graphic part
+
         Canvas challengePrefab = Resources.Load<Canvas>("Prefab/Challenge_" + this.typeChallenge);
         canvasChallenge = Instantiate(challengePrefab);
         canvasChallenge.transform.SetParent(GameObject.Find("Virtual_" + minorIsland.nameMinorIsland).transform);
         Text questionText = canvasChallenge.GetComponentInChildren<Text>();
-        questionText.text = question;
         Button[] propositionsButtons = canvasChallenge.GetComponentsInChildren<Button>();
         SpriteRenderer background = canvasChallenge.GetComponentInChildren<SpriteRenderer>();
-
+        
+        questionText.text = question.Replace('*', '\n');        //in CSV: '*' replace a line break ('\n')
         for (int i = 0; i < this.nbPropositions; i++)
         {
             propositionsButtons[i].GetComponent<Text>().text = this.propositions[i];
         }
 
-
-        //gérer position background + question/réponses
         
-        float screenWidth = Screen.width;
-        float screenHeight = Screen.height;
-        float backgroundWidth = background.sprite.rect.width;
-        float backgroundHeight = background.sprite.rect.height;        
+        canvasChallenge.transform.position = GameObject.Find("Virtual_" + minorIsland.nameMinorIsland).transform.position;
 
-        Vector2 vector2;
+        //rotation if other side of the table
+        char id = minorIsland.nameMinorIsland[minorIsland.nameMinorIsland.Length - 1];
+        if (id == '1' || id == '2')
+            canvasChallenge.transform.Rotate(Vector3.forward * 180);
 
-        switch (this.minorIsland.nameMinorIsland)
-        {
-            case "sous_ile_1":
-                vector2 = new Vector2(-3.86f, 2.6f);
-                break;
-            case "sous_ile_2":
-                vector2 = new Vector2(screenWidth / 2 + backgroundWidth, screenHeight / 2 + backgroundHeight);
-                break;
-            case "sous_ile_3":
-                vector2 = new Vector2(-screenWidth / 2 - backgroundWidth, -screenHeight / 2 - backgroundHeight);
-                break;
-            default:
-                vector2 = new Vector2(-screenWidth / 2 - backgroundWidth, screenHeight / 2 + backgroundHeight);
-                break;
-        }
+        background.transform.localPosition = new Vector3(0, 0, -1);
 
-
-        background.transform.position = vector2; // Camera.main.ScreenToWorldPoint(vector2);
-
-
+        
     }
 
     // Use this for initialization

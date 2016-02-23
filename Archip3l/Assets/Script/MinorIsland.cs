@@ -17,7 +17,7 @@ public class MinorIsland : MonoBehaviour {
 
         /*----------TEST--------*/
 
-        if (nameMinorIsland == "sous_ile_1")
+        //if (nameMinorIsland == "sous_ile_1")
         {
             Challenge challenge = GameObject.Find("Virtual_" + nameMinorIsland).AddComponent<Challenge>();
             challenge.init(TypeChallenge.VraiFaux, this);

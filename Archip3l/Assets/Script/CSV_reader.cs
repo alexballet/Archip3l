@@ -88,7 +88,7 @@ public class CSV_reader : MonoBehaviour
         // creates new 2D string grid to output to
         string[,] outputGrid = new string[width + 1, lines.Length + 1];
         System.Random ran = new System.Random();
-        int numberLine = ran.Next(0, lines.Length);
+        int numberLine = ran.Next(1, lines.Length); //not the first line (titles avec columns)
         return SplitCsvLine(lines[numberLine]);
     }
 
