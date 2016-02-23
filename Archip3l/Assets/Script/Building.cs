@@ -12,7 +12,7 @@ public class Building : MonoBehaviour {
     public MinorIsland minorIsland { get; private set; }
     private List<Tuple<TypeResource, int>> constructionResourceNeeded;
 
-    public Building(TypeBuilding TypeBuilding, MinorIsland island)
+    public void init(TypeBuilding TypeBuilding, MinorIsland island)
     {
         this.TypeBuilding = TypeBuilding;
         this.resourceManager = new ResourceManager();

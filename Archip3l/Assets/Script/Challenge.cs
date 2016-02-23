@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class Challenge : ScriptableObject {
+public class Challenge : MonoBehaviour {
 
     public string question;
     public string answer;
@@ -41,7 +41,7 @@ public class Challenge : ScriptableObject {
         
         Canvas challengePrefab = Resources.Load<Canvas>("Prefab/Challenge_" + this.typeChallenge);
         canvasChallenge = Instantiate(challengePrefab);
-        canvasChallenge.transform.SetParent(GameObject.Find("Virtual_sous_ile_1").transform);
+        canvasChallenge.transform.SetParent(GameObject.Find("Virtual_" + minorIsland.nameMinorIsland).transform);
         Text questionText = canvasChallenge.GetComponentInChildren<Text>();
         questionText.text = question;
         Button[] propositionsButtons = canvasChallenge.GetComponentsInChildren<Button>();
@@ -83,5 +83,17 @@ public class Challenge : ScriptableObject {
 
 
     }
-    
+
+    // Use this for initialization
+    void Start()
+    {
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+
 }

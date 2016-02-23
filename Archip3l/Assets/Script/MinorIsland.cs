@@ -9,14 +9,17 @@ public class MinorIsland : MonoBehaviour {
 
     void Awake()
     {
-        buildingManager = ScriptableObject.CreateInstance<BuildingManager>();
+        buildingManager = GameObject.Find(nameMinorIsland).GetComponent<BuildingManager>();
         buildingManager.init(this);
+
+        /*resourceManager = GameObject.Find(nameMinorIsland).AddComponent<ResourceManager>();
+        resourceManager.init(this);*/
 
         /*----------TEST--------*/
 
         if (nameMinorIsland == "sous_ile_1")
         {
-            Challenge challenge = ScriptableObject.CreateInstance<Challenge>();
+            Challenge challenge = GameObject.Find("Virtual_" + nameMinorIsland).AddComponent<Challenge>();
             challenge.init(TypeChallenge.VraiFaux, this);
         }
         

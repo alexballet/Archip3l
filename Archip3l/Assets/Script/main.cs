@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class main : ScriptableObject{
+public class main : MonoBehaviour{
 
 	// Use this for initialization
 	void Start () {

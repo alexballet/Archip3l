@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Resource : ScriptableObject{
+public class Resource : MonoBehaviour{
 
     public TypeResource TypeResource { get; private set; }
     public string Name { get; private set; }
@@ -62,5 +62,17 @@ public class Resource : ScriptableObject{
     {
         return this.Stock + value >= 0;
     }
-    
+
+    // Use this for initialization
+    void Start()
+    {
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+
 }

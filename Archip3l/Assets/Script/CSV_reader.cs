@@ -104,4 +104,5 @@ public class CSV_reader : MonoBehaviour
         System.Text.RegularExpressions.RegexOptions.ExplicitCapture)
             select m.Groups[1].Value).ToArray();
     }
+    
 }

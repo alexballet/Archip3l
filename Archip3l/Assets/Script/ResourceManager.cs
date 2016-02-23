@@ -3,21 +3,24 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
-public class ResourceManager : ScriptableObject {
+public class ResourceManager : MonoBehaviour {
 
+    public MinorIsland minorIsland { get; private set; }
     public List<Resource> Resources;
 
-    public ResourceManager()
+    public void init(MinorIsland island)
     {
+        this.minorIsland = island;
+
         this.Resources = new List<Resource>();
 
-        this.Resources.Add(ScriptableObject.CreateInstance<Resource>());
+        /*this.Resources.Add(ScriptableObject.CreateInstance<Resource>());
         this.Resources[-1].init(TypeResource.Bois, "Bois");
         this.Resources.Add(ScriptableObject.CreateInstance<Resource>());
         this.Resources[-1].init(TypeResource.Bois, "Or");
         this.Resources.Add(ScriptableObject.CreateInstance<Resource>());
         this.Resources[-1].init(TypeResource.Bois, "Métal");
-        this.Resources.Add(ScriptableObject.CreateInstance<Resource>());
+        this.Resources.Add(ScriptableObject.CreateInstance<Resource>());*/
         this.Resources[-1].init(TypeResource.Bois, "Nourriture");
         
     }
@@ -38,7 +41,11 @@ public class ResourceManager : ScriptableObject {
         else
         {
 
-            this.Resources.Add(ScriptableObject.CreateInstance<Resource>());
+            GameObject myGameObject = new GameObject();
+            myGameObject.transform.SetParent(GameObject.Find("Virtual_" + minorIsland.nameMinorIsland).transform);
+            Resource res = myGameObject.AddComponent<Resource>();
+            this.Resources.Add(res);
+
             this.Resources[-1].init(resourceType, name, quantity, production);
             return true;
         }
@@ -69,6 +76,18 @@ public class ResourceManager : ScriptableObject {
             }
         }
         return null;
+    }
+
+    // Use this for initialization
+    void Start()
+    {
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
     }
 }
 
