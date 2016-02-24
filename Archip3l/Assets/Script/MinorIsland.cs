@@ -37,25 +37,34 @@ public class MinorIsland : MonoBehaviour {
 
         /*----------TEST--------*/
 
-        createChallenge();
+
+        if (nameMinorIsland == "sous_ile_4")
+            createChallenge();
 
         /*------------------*/
     }
 
     public void createChallenge()
     {
-        /*----------TEST--------*/
-        if (nameMinorIsland == "sous_ile_1")
-        {
-            Challenge challenge = GameObject.Find("Virtual_" + nameMinorIsland).AddComponent<Challenge>();
-            challenge.init(TypeChallenge.QCM, this);
-        }
-        if (nameMinorIsland == "sous_ile_4")
-        {
-            Challenge challenge = GameObject.Find("Virtual_" + nameMinorIsland).AddComponent<Challenge>();
-            challenge.init(TypeChallenge.VraiFaux, this);
-        }
-        /*------------------*/
+        //avoid creation on wheel by clicking on Island
+
+        GameObject.Find(nameMinorIsland).GetComponent<PolygonCollider2D>().enabled = false;
+
+        Challenge challenge = GameObject.Find("Virtual_" + nameMinorIsland).AddComponent<Challenge>();
+
+        //random type of Challenge
+        TypeChallenge type;
+        System.Random ran = new System.Random();
+        int aleat = ran.Next(0, 2);
+        if (aleat == 0)
+            type = TypeChallenge.VraiFaux;
+        else
+            type = TypeChallenge.QCM;
+
+        challenge.init(type, this);
+
+        GameObject.Find(nameMinorIsland).GetComponent<PolygonCollider2D>().enabled = false;
+
     }
 
 
@@ -77,9 +86,13 @@ public class MinorIsland : MonoBehaviour {
             }
         }
 	}
+
+
     void OnMouseDown()
     {
         Debug.Log(Input.mousePosition.ToString());
+
+        //Wheel appearance
 
         if (GameObject.Find("WheelCanvas_" + nameMinorIsland) != null)
         {
