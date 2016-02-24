@@ -24,6 +24,11 @@ public class ResourceManager : MonoBehaviour {
         //this.Resources[-1].init(TypeResource.Bois, "Nourriture");
         
     }
+    void Start()
+    {
+        StartCoroutine("updateStocks");
+    }
+
     public bool addResource(TypeResource resourceType, string name, int quantity, int production)
     {
         bool flag = false;
@@ -40,13 +45,9 @@ public class ResourceManager : MonoBehaviour {
         }
         else
         {
-
             GameObject myGameObject = new GameObject();
             myGameObject.transform.SetParent(GameObject.Find("Virtual_" + minorIsland.nameMinorIsland).transform);
-            Resource res = myGameObject.AddComponent<Resource>();
-            this.Resources.Add(res);
-
-            this.Resources[-1].init(resourceType, name, quantity, production);
+            this.Resources.Add(new Resource(resourceType, name, quantity, production));
             return true;
         }
     }
@@ -78,16 +79,17 @@ public class ResourceManager : MonoBehaviour {
         return null;
     }
 
-    // Use this for initialization
-    void Start()
+    IEnumerator updateStocks()
     {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        for(;;)
+        {
+            foreach(Resource res in this.Resources)
+            {
+                res.changeStock(res.Production);
+                Debug.Log("Island : " + this.minorIsland + "\tStock  : " + res.Name + " : " + res.Stock);
+            }
+            yield return new WaitForSeconds(1f);
+        }
     }
 }
 

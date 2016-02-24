@@ -32,24 +32,24 @@ public class MinorIsland : MonoBehaviour {
             this.resourceManager = resourceManager;
         }
 
-        /*resourceManager = GameObject.Find(nameMinorIsland).AddComponent<ResourceManager>();
-        resourceManager.init(this);*/
-
         /*----------TEST--------*/
 
 
         if (nameMinorIsland == "sous_ile_4")
             createChallenge();
 
+        if(nameMinorIsland == "sous_ile_3")
+        {
+            this.resourceManager.addResource(TypeResource.Gold, "Or", 10, 5);
+        }
+
         /*------------------*/
     }
-
     public void createChallenge()
     {
         //avoid creation on wheel by clicking on Island
 
         GameObject.Find(nameMinorIsland).GetComponent<PolygonCollider2D>().enabled = false;
-
         Challenge challenge = GameObject.Find("Virtual_" + nameMinorIsland).AddComponent<Challenge>();
 
         //random type of Challenge
@@ -64,7 +64,6 @@ public class MinorIsland : MonoBehaviour {
         challenge.init(type, this, TypeBuilding.GoldMine);      //pb with TypeStat
 
         GameObject.Find(nameMinorIsland).GetComponent<PolygonCollider2D>().enabled = false;
-
     }
 
 
@@ -86,8 +85,6 @@ public class MinorIsland : MonoBehaviour {
             }
         }
 	}
-
-
     void OnMouseDown()
     {
         Debug.Log(Input.mousePosition.ToString());
