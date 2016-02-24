@@ -16,5 +16,9 @@ public class OnClickWheelIcon : MonoBehaviour {
     void OnMouseDown()
     {
         Debug.Log(this.name);
+
+        //create window with information
     }
+
+    
 }
