@@ -1,3 +1,0 @@
-Building;Question;Answer;Proposition0;Proposition1;Proposition2
-scierie;question_A;proposition0_A;proposition0_A;proposition1_A;proposition2_A
-mineOr;question_B;proposition0_A;proposition0_B;proposition1_B;proposition2_B
