@@ -85,7 +85,7 @@ public class MinorIsland : MonoBehaviour {
 	}
     void OnMouseDown()
     {
-        Debug.Log(Input.mousePosition.ToString());
+        //Debug.Log(Input.mousePosition.ToString());
 
         if (!challengePresent)  //if any challenge is open on the island
         {
@@ -122,8 +122,21 @@ public class MinorIsland : MonoBehaviour {
             }
         }
 
+        //pas ici ! le transfert se fait suite à un appui long sur l'ile ^^
         
+        //Transfert test
+        /*MinorIsland remote = GameObject.Find("sous_ile_3").GetComponent<MinorIsland>();
+        if (this.resourceManager.donateResource(remote, TypeResource.Gold, 10))
+        {
+            Debug.Log("Transfer Resource " + TypeResource.Gold.ToString() + " from " + this.nameMinorIsland + " to " + remote.nameMinorIsland);
+        }
+        else
+        {
+            Debug.Log("Impossible to tranfert " + TypeResource.Gold.ToString() + " from " + this.nameMinorIsland + " to " + remote.nameMinorIsland);
+        }
 
+        */
+        //Bulding creation test
         //this.buildingManager.createBuilding(TypeBuilding.GoldMine, Input.mousePosition);
     }
 }

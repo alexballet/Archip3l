@@ -82,8 +82,7 @@ public class ResourceManagerBuilding : MonoBehaviour {
             {
                 //this.building.resourceManager.changeResourceStock(res.TypeResource, res.Production);
                 res.changeStock(res.Production);
-
-                Debug.Log("Building : " + this.building.name + "\tProduction : " + res.Production + "\tStock  : " + res.Name + " : " + res.Stock);
+                //Debug.Log("Building : " + this.building.name + "\tProduction : " + res.Production + "\tStock  : " + res.Name + " : " + res.Stock);
             }
             yield return new WaitForSeconds(1f);
         }
