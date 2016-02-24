@@ -22,6 +22,7 @@ public class Building : MonoBehaviour {
         this.buildState = 0;
         this.minorIsland = island;
         this.constructionResourceNeeded = new List<Tuple<TypeResource, int>>();
+        this.name = this.minorIsland.nameMinorIsland + "_" + this.TypeBuilding.ToString();
 
         var resourceManagerTransform = Instantiate(resourceManagerPrefab) as Transform;
         ResourceManagerBuilding resourceManager = resourceManagerTransform.GetComponent<ResourceManagerBuilding>();
@@ -91,19 +92,22 @@ public class Building : MonoBehaviour {
             {
                 this.minorIsland.resourceManager.changeResourceStock(item.First, -item.Second);
             }
-        }
+            //Animation
+            var buildingConstructionTransform = Instantiate(buildingConstructionPrefab) as Transform;
+            Anim_BuildingConstruction anim_BuildingConstruction = buildingConstructionTransform.GetComponent<Anim_BuildingConstruction>();
+            if (anim_BuildingConstruction != null)
+            {
+                anim_BuildingConstruction.transform.SetParent(this.transform);
+            }
 
-        //Animation
-        var buildingConstructionTransform = Instantiate(buildingConstructionPrefab) as Transform;
-        Anim_BuildingConstruction anim_BuildingConstruction = buildingConstructionTransform.GetComponent<Anim_BuildingConstruction>();
-        if (anim_BuildingConstruction != null)
+            yield return new WaitForSeconds(this.constructionTime);
+            this.buildState = 1;
+            Destroy(buildingConstructionTransform.gameObject);
+        }
+        else
         {
-            anim_BuildingConstruction.transform.SetParent(this.transform);
+            //Not enough resources
         }
-
-        yield return new WaitForSeconds(this.constructionTime);
-        this.buildState = 1;
-        Destroy(buildingConstructionTransform.gameObject);
     }
     public bool changeProduction(TypeResource resourceType, int value)
     {

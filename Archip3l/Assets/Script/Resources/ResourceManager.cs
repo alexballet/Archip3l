@@ -14,15 +14,16 @@ public class ResourceManager : MonoBehaviour {
 
         this.Resources = new List<Resource>();
 
-        /*this.Resources.Add(ScriptableObject.CreateInstance<Resource>());
-        this.Resources[-1].init(TypeResource.Bois, "Bois");
-        this.Resources.Add(ScriptableObject.CreateInstance<Resource>());
-        this.Resources[-1].init(TypeResource.Bois, "Or");
-        this.Resources.Add(ScriptableObject.CreateInstance<Resource>());
-        this.Resources[-1].init(TypeResource.Bois, "Métal");
-        this.Resources.Add(ScriptableObject.CreateInstance<Resource>());*/
+        //add all resources
+        foreach(TypeResource resourceType in Enum.GetValues(typeof(TypeResource)))
+        {
+            this.addResource(resourceType, resourceType.ToString(), 0, 0);
+        }
+        //this.addResource(TypeResource.Gold, "Or", 0, 0);
+
+        //this.Resources.Add(ScriptableObject.CreateInstance<Resource>());*/
         //this.Resources[-1].init(TypeResource.Bois, "Nourriture");
-        
+
     }
     void Start()
     {
@@ -49,7 +50,7 @@ public class ResourceManager : MonoBehaviour {
             myGameObject.transform.SetParent(GameObject.Find("Virtual_" + minorIsland.nameMinorIsland).transform);
             Resource res = ScriptableObject.CreateInstance<Resource>();
             res.init(resourceType, name, quantity, production);
-            this.Resources.Add(res); // new Resource(resourceType, name, quantity, production));
+            this.Resources.Add(res);
             return true;
         }
     }
@@ -88,7 +89,10 @@ public class ResourceManager : MonoBehaviour {
             foreach(Resource res in this.Resources)
             {
                 res.changeStock(res.Production);
-                Debug.Log("Island : " + this.minorIsland + "\tProduction : " + res.Production + "\tStock  : " + res.Name + " : " + res.Stock);
+                if (res.Production != 0)
+                {
+                    Debug.Log("Island : " + this.minorIsland + "\tProduction : " + res.Production + "\tStock  : " + res.Name + " : " + res.Stock);
+                }
             }
             yield return new WaitForSeconds(1f);
         }
