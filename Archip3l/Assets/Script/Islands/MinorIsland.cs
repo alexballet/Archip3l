@@ -38,10 +38,10 @@ public class MinorIsland : MonoBehaviour {
         if (nameMinorIsland == "sous_ile_4")
             createChallenge();
 
-        if(nameMinorIsland == "sous_ile_3")
-        {
-            this.resourceManager.addResource(TypeResource.Gold, "Or", 10, 5);
-        }
+        //if(nameMinorIsland == "sous_ile_3")
+        //{
+        //    this.resourceManager.addResource(TypeResource.Gold, "Or", 10, 5);
+        //}
 
         /*------------------*/
     }
@@ -66,12 +66,6 @@ public class MinorIsland : MonoBehaviour {
         GameObject.Find(nameMinorIsland).GetComponent<PolygonCollider2D>().enabled = false;
     }
 
-
-    // Use this for initialization
-    void Start () {
-	    
-	}
-	
 	// Update is called once per frame
 	void Update () {
 
@@ -90,23 +84,22 @@ public class MinorIsland : MonoBehaviour {
         Debug.Log(Input.mousePosition.ToString());
 
         //Wheel appearance
-
-        if (GameObject.Find("WheelCanvas_" + nameMinorIsland) != null)
-        {
-            Debug.Log("already a wheelCanvas");
-        }
-        else
-        {
-            Canvas prefabWheelCanvas = Resources.Load<Canvas>("Prefab/WheelCanvas");
-            Canvas wheelCanvas = Instantiate(prefabWheelCanvas);
-            wheelCanvas.name = "WheelCanvas_" + nameMinorIsland;
-            wheelCanvas.transform.SetParent(GameObject.Find(nameMinorIsland).transform);
-            SpriteRenderer wheelImage = wheelCanvas.GetComponentInChildren<SpriteRenderer>();
-            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            mousePosition.z = 0;
-            wheelImage.transform.position = mousePosition;
-        }
+        //if (GameObject.Find("WheelCanvas_" + nameMinorIsland) != null)
+        //{
+        //    Debug.Log("already a wheelCanvas");
+        //}
+        //else
+        //{
+        //    Canvas prefabWheelCanvas = Resources.Load<Canvas>("Prefab/WheelCanvas");
+        //    Canvas wheelCanvas = Instantiate(prefabWheelCanvas);
+        //    wheelCanvas.name = "WheelCanvas_" + nameMinorIsland;
+        //    wheelCanvas.transform.SetParent(GameObject.Find(nameMinorIsland).transform);
+        //    SpriteRenderer wheelImage = wheelCanvas.GetComponentInChildren<SpriteRenderer>();
+        //    Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //    mousePosition.z = 0;
+        //    wheelImage.transform.position = mousePosition;
+        //}
         
-        //this.buildingManager.createBuilding(TypeBuilding.GoldMine, Input.mousePosition);
+        this.buildingManager.createBuilding(TypeBuilding.GoldMine, Input.mousePosition);
     }
 }

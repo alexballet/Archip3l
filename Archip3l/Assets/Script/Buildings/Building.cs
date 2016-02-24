@@ -7,7 +7,7 @@ using UnityEditor;
 public class Building : MonoBehaviour {
 
     public TypeBuilding TypeBuilding { get; private set; }
-    public ResourceManager resourceManager { get; private set; }
+    public ResourceManagerBuilding resourceManager { get; private set; }
     public int buildState { get; private set; }
     public int constructionTime { get; private set; }
     public MinorIsland minorIsland { get; private set; }
@@ -24,30 +24,23 @@ public class Building : MonoBehaviour {
         this.constructionResourceNeeded = new List<Tuple<TypeResource, int>>();
 
         var resourceManagerTransform = Instantiate(resourceManagerPrefab) as Transform;
-        ResourceManager resourceManager = resourceManagerTransform.GetComponent<ResourceManager>();
+        ResourceManagerBuilding resourceManager = resourceManagerTransform.GetComponent<ResourceManagerBuilding>();
         if (resourceManager != null)
         {
-            //pb du manager d'ile et de batiment^^
-            resourceManager.init(null);
+            resourceManager.init(this);
             resourceManager.transform.SetParent(this.transform);
             this.resourceManager = resourceManager;
         }
-
+        
         //must be set in the switch
-        string texturePath = "Assets/Resources/Building/mapIconMine.png";
-
-        Texture2D texture = (Texture2D) AssetDatabase.LoadAssetAtPath(texturePath, typeof(Texture2D));
-        //SpriteRenderer spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
-        GetComponent<SpriteRenderer>().sprite =  Sprite.Create(texture, new Rect(0f, 0f, texture.width, texture.height), new Vector2(0.5f, 0.5f));
-
-        GetComponent<Transform>().localScale = new Vector3(100f, 100f, 1f);
+        string texturePath = "Assets/Resources/Building/Icons/mapIconFactory.png";
 
         switch (TypeBuilding)
         {
             case TypeBuilding.GoldMine:
                 this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 3));
-                //this.resourceManager.addResource(TypeResource.Bois, "bois", 0, 4);
-                //null instance from now
+                this.resourceManager.addResource(TypeResource.Gold, "Gold", 0, 4);
+                texturePath = "Assets/Resources/Building/Icons/mapIconMine.png";
                 this.constructionTime = 5;
                 break;
             case TypeBuilding.StoneMine:
@@ -70,6 +63,11 @@ public class Building : MonoBehaviour {
                 this.constructionTime = 5;
                 break;
         }
+
+        Texture2D texture = (Texture2D)AssetDatabase.LoadAssetAtPath(texturePath, typeof(Texture2D));
+        GetComponent<SpriteRenderer>().sprite = Sprite.Create(texture, new Rect(0f, 0f, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+        GetComponent<Transform>().localScale = new Vector3(100f, 100f, 1f);
+
         StartCoroutine("build");
         Debug.Log("Construction " + this.TypeBuilding);
     }
@@ -89,7 +87,6 @@ public class Building : MonoBehaviour {
 
         if(flag)
         {
-            this.buildState = 0;
             foreach (Tuple<TypeResource, int> item in this.constructionResourceNeeded)
             {
                 this.minorIsland.resourceManager.changeResourceStock(item.First, -item.Second);
@@ -105,6 +102,7 @@ public class Building : MonoBehaviour {
         }
 
         yield return new WaitForSeconds(this.constructionTime);
+        this.buildState = 1;
         Destroy(buildingConstructionTransform.gameObject);
     }
     public bool changeProduction(TypeResource resourceType, int value)

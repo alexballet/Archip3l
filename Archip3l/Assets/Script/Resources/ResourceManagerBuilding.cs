@@ -1,28 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using System;
 
-public class ResourceManager : MonoBehaviour {
+public class ResourceManagerBuilding : MonoBehaviour {
 
-    public MinorIsland minorIsland { get; private set; }
-    public List<Resource> Resources;
+    public Building building { get; private set; }
+    public List<Resource> Resources { get; private set;}
 
-    public void init(MinorIsland island)
+    public void init(Building building)
     {
-        this.minorIsland = island;
-
+        this.building = building;
         this.Resources = new List<Resource>();
-
-        /*this.Resources.Add(ScriptableObject.CreateInstance<Resource>());
-        this.Resources[-1].init(TypeResource.Bois, "Bois");
-        this.Resources.Add(ScriptableObject.CreateInstance<Resource>());
-        this.Resources[-1].init(TypeResource.Bois, "Or");
-        this.Resources.Add(ScriptableObject.CreateInstance<Resource>());
-        this.Resources[-1].init(TypeResource.Bois, "Métal");
-        this.Resources.Add(ScriptableObject.CreateInstance<Resource>());*/
-        //this.Resources[-1].init(TypeResource.Bois, "Nourriture");
-        
     }
     void Start()
     {
@@ -45,11 +33,11 @@ public class ResourceManager : MonoBehaviour {
         }
         else
         {
-            GameObject myGameObject = new GameObject();
-            myGameObject.transform.SetParent(GameObject.Find("Virtual_" + minorIsland.nameMinorIsland).transform);
+            //GameObject myGameObject = new GameObject();
+            //myGameObject.transform.SetParent(GameObject.Find("Virtual_" + minorIsland.nameMinorIsland).transform);
             Resource res = ScriptableObject.CreateInstance<Resource>();
             res.init(resourceType, name, quantity, production);
-            this.Resources.Add(res); // new Resource(resourceType, name, quantity, production));
+            this.Resources.Add(res);
             return true;
         }
     }
@@ -83,12 +71,13 @@ public class ResourceManager : MonoBehaviour {
 
     IEnumerator updateStocks()
     {
-        for(;;)
+        for (;;)
         {
-            foreach(Resource res in this.Resources)
+            foreach (Resource res in this.Resources)
             {
+                //this.building.resourceManager.changeResourceStock(res.TypeResource, res.Production);
                 res.changeStock(res.Production);
-                Debug.Log("Island : " + this.minorIsland + "\tProduction : " + res.Production + "\tStock  : " + res.Name + " : " + res.Stock);
+                Debug.Log("Building : " + this.building + "\tProduction : " + res.Production + "\tStock  : " + res.Name + " : " + res.Stock);
             }
             yield return new WaitForSeconds(1f);
         }

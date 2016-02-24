@@ -36,6 +36,7 @@ public class BuildingManager : MonoBehaviour {
             {
                 building.init(buildingType, this.minorIsland);
                 building.transform.SetParent(this.transform);
+                this.buildingList.Add(building);
 
                 Vector3 newPosition = Camera.main.ScreenToWorldPoint(position);
                 newPosition.z = 0;

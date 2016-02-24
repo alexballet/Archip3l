@@ -8,24 +8,24 @@ public class Resource : ScriptableObject{
     public int Stock { get; private set; }
     public int Production { get; private set; }
 
-    public Resource(TypeResource TypeResource, string argName)
+    public void init(TypeResource TypeResource, string argName)
     {
         this.TypeResource = TypeResource;
         this.Name = argName;
         this.Stock = 0;
         this.Production = 0;
     }
-    public Resource(TypeResource TypeResource, string argName, int quantity) : this(TypeResource, argName)
+    public void init(TypeResource TypeResource, string argName, int quantity)
     {
-        //init(TypeResource, argName);
+        init(TypeResource, argName);
         if (quantity > 0)
         {
             this.Stock = quantity;
         }
     }
-    public Resource(TypeResource TypeResource, string argName, int quantity, int production) : this(TypeResource, argName, quantity)
+    public void init(TypeResource TypeResource, string argName, int quantity, int production)
     {
-        //init(TypeResource, argName, quantity);
+        init(TypeResource, argName, quantity);
         this.Production = production;
     }
 
