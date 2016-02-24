@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 
 public class Building : MonoBehaviour {
 
@@ -13,6 +14,7 @@ public class Building : MonoBehaviour {
     private List<Tuple<TypeResource, int>> constructionResourceNeeded;
 
     public Transform resourceManagerPrefab;
+    public Transform buildingConstructionPrefab;
 
     public void init(TypeBuilding TypeBuilding, MinorIsland island)
     {
@@ -31,6 +33,15 @@ public class Building : MonoBehaviour {
             this.resourceManager = resourceManager;
         }
 
+        //must be set in the switch
+        string texturePath = "Assets/Resources/Building/mapIconMine.png";
+
+        Texture2D texture = (Texture2D) AssetDatabase.LoadAssetAtPath(texturePath, typeof(Texture2D));
+        //SpriteRenderer spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
+        GetComponent<SpriteRenderer>().sprite =  Sprite.Create(texture, new Rect(0f, 0f, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+
+        GetComponent<Transform>().localScale = new Vector3(100f, 100f, 1f);
+
         switch (TypeBuilding)
         {
             case TypeBuilding.Scierie:
@@ -41,74 +52,52 @@ public class Building : MonoBehaviour {
                 break;
             case TypeBuilding.Mine:
                 //this.resourceManager.addResource(TypeResource.Or, "Or", 0, 1);
-                this.constructionTime = 0;
+                this.constructionTime = 5;
                 break;
             case TypeBuilding.Usine:
-                this.constructionTime = 0;
+                this.constructionTime = 5;
                 break;
             case TypeBuilding.Ferme:
-                this.constructionTime = 0;
+                this.constructionTime = 5;
                 break;
         }
-        //this.build();
-
+        StartCoroutine("build");
         Debug.Log("Construction " + this.TypeBuilding);
     }
-    //IEnumerator build()
-    //{
-    //    //check needed resources
-    //    foreach (Tuple<TypeResource, int> item in this.ConstructionResourceNeeded)
-    //    {
-    //        //avoid null references
-    //        Resource resource = this.Island.ResourceManager.getResource(item.Item1);
-    //        if ((resource == null) || (item.Item2 < resource.Stock))
-    //        {
-    //            return false;
-    //        }
-    //    }
-
-    //    //start construction
-    //    this.BuildState = 0;
-    //    foreach (Tuple<TypeResource, int> item in this.ConstructionResourceNeeded)
-    //    {
-    //        this.minorIsland.resourceManager.changeResourceStock(item.Item1, -item.Item2);
-    //    }
-    //    yield return new WaitForSeconds(this.constructionTime);
-    //}
-    /*public async Task<bool> build()
+    IEnumerator build()
     {
+        bool flag = true;
         //check needed resources
-        foreach (Tuple<ResourceType, int> item in this.ConstructionResourceNeeded)
+        foreach (Tuple<TypeResource, int> item in this.constructionResourceNeeded)
         {
             //avoid null references
-            Resource resource = this.Island.ResourceManager.getResource(item.Item1);
-            if ((resource == null) || (item.Item2 < resource.Stock))
+            Resource resource = this.minorIsland.resourceManager.getResource(item.First);
+            if ((resource == null) || (item.Second < resource.Stock))
             {
-                return false;
+                flag = false;
             }
         }
 
-        //start construction
-        this.BuildState = 0;
-        foreach (Tuple<ResourceType, int> item in this.ConstructionResourceNeeded)
+        if(flag)
         {
-            this.Island.ResourceManager.changeResourceStock(item.Item1, -item.Item2);
+            this.buildState = 0;
+            foreach (Tuple<TypeResource, int> item in this.constructionResourceNeeded)
+            {
+                this.minorIsland.resourceManager.changeResourceStock(item.First, -item.Second);
+            }
         }
-        if (this.BuildingConstructionStart != null)
-        {
-            this.BuildingConstructionStart(this, new BuildingConstructionStartEventArgs { TypeBuilding = this.TypeBuilding, Island = this.Island });
-        }
-        await Task.Delay(TimeSpan.FromSeconds(this.ConstructionTime));
 
-        //end construction
-        this.BuildState = 1;
-        if (this.BuildingConstructionEnd != null)
+        //Animation
+        var buildingConstructionTransform = Instantiate(buildingConstructionPrefab) as Transform;
+        Anim_BuildingConstruction anim_BuildingConstruction = buildingConstructionTransform.GetComponent<Anim_BuildingConstruction>();
+        if (anim_BuildingConstruction != null)
         {
-            this.BuildingConstructionEnd(this, new BuildingConstructionEndEventArgs { TypeBuilding = this.TypeBuilding, Island = this.Island });
+            anim_BuildingConstruction.transform.SetParent(this.transform);
         }
-        return true;
-    }*/
 
+        yield return new WaitForSeconds(this.constructionTime);
+        Destroy(buildingConstructionTransform.gameObject);
+    }
     public bool changeProduction(TypeResource resourceType, int value)
     {
         return this.resourceManager.changeResourceProduction(resourceType, value);
