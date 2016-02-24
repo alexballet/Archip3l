@@ -26,7 +26,7 @@ public class BuildingManager : MonoBehaviour {
         return null;
     }
 
-    public bool createBuilding(TypeBuilding buildingType)
+    public bool createBuilding(TypeBuilding buildingType, Vector3 position)
     {
         if (this.getBuilding(buildingType) == null)
         {
@@ -37,6 +37,9 @@ public class BuildingManager : MonoBehaviour {
                 building.init(buildingType, this.minorIsland);
                 building.transform.SetParent(this.transform);
 
+                Vector3 newPosition = Camera.main.ScreenToWorldPoint(position);
+                newPosition.z = 0;
+                building.transform.position = newPosition;
                 return true;
             }
             return false;

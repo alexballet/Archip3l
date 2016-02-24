@@ -78,6 +78,7 @@ public class MinorIsland : MonoBehaviour {
 	}
     void OnMouseDown()
     {
-        this.buildingManager.createBuilding(TypeBuilding.Mine);
+        Debug.Log(Input.mousePosition.ToString());
+        this.buildingManager.createBuilding(TypeBuilding.Mine, Input.mousePosition);
     }
 }

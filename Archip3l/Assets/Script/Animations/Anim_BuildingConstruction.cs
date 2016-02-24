@@ -3,28 +3,33 @@ using System.Collections;
 
 public class Anim_BuildingConstruction : MonoBehaviour
 {
+    public Transform hammerPrefab;
+
     private Quaternion startQuaternion;
     private float interval;
 
     void Start()
     {
-        this.startQuaternion = transform.rotation;
-        this.interval = 0.5f;
+        this.startQuaternion = transform.GetChild(0).rotation;
+        this.interval = 0.02f;
+
+        Instantiate(hammerPrefab).SetParent(this.transform);
+        StartCoroutine("Rotate");
     }
 
     void Update()
     {
-        if (Input.GetKeyDown("left"))
-        {
-            StartCoroutine("Rotate");
-        }
+        //if (Input.GetKeyDown("left"))
+        //{
+        //    StartCoroutine("Rotate");
+        //}
     }
 
     IEnumerator Rotate()
     {
         for (;;)
         {
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 23; i++)
             {
                 RotateLeft();
                 yield return new WaitForSeconds(this.interval);
@@ -36,10 +41,10 @@ public class Anim_BuildingConstruction : MonoBehaviour
     }
     void RotateLeft()
     {
-        transform.Rotate(Vector3.forward * 20);
+        transform.GetChild(0).transform.Rotate(Vector3.forward * 2);
     }
     void RotateInit()
     {
-        transform.rotation = this.startQuaternion;
+        transform.GetChild(0).transform.rotation = this.startQuaternion;
     }
 }
