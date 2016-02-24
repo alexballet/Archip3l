@@ -14,10 +14,10 @@ public class ResourceManager : MonoBehaviour {
 
         this.Resources = new List<Resource>();
 
-        //add all resources
+        //Add all resources
         foreach(TypeResource resourceType in Enum.GetValues(typeof(TypeResource)))
         {
-            this.addResource(resourceType, resourceType.ToString(), 0, 0);
+            this.addResource(resourceType, resourceType.ToString(), 0, 10);
         }
         //this.addResource(TypeResource.Gold, "Or", 0, 0);
 
@@ -63,13 +63,44 @@ public class ResourceManager : MonoBehaviour {
     public bool changeResourceStock(TypeResource resourceType, int value)
     {
         Resource resource = this.getResource(resourceType);
-        bool result = resource.changeStock(value);
+        bool result = false;
+        if(resource != null)
+        {
+            result = resource.changeStock(value);
+        }
+        else
+        {
+            if(value >= 0)
+            {
+                this.addResource(resourceType, resourceType.ToString(), value, 0);
+                result = true;
+            }
+            else
+            {
+                return false;
+            }
+            
+        }
         return result;
     }
     public bool checkWithdrawPossibility(TypeResource resourceType, int value)
     {
         return this.getResource(resourceType).checkChangeStockPossibility(value);
     }
+    public bool donateResource(MinorIsland remoteIsland, TypeResource typeResource, int quantity)
+    {
+        if(checkWithdrawPossibility(typeResource, -quantity))
+        {
+            changeResourceStock(typeResource, -quantity);
+            remoteIsland.resourceManager.changeResourceStock(typeResource, quantity);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
+    } 
     public Resource getResource(TypeResource resourceType)
     {
         foreach (Resource item in this.Resources)

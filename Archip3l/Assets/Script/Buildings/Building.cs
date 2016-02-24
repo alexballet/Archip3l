@@ -70,7 +70,7 @@ public class Building : MonoBehaviour {
         GetComponent<Transform>().localScale = new Vector3(100f, 100f, 1f);
 
         StartCoroutine("build");
-        Debug.Log("Construction " + this.TypeBuilding);
+        //Debug.Log("Construction " + this.TypeBuilding);
     }
     IEnumerator build()
     {

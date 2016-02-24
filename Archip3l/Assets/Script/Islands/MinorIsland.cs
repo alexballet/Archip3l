@@ -81,7 +81,7 @@ public class MinorIsland : MonoBehaviour {
 	}
     void OnMouseDown()
     {
-        Debug.Log(Input.mousePosition.ToString());
+        //Debug.Log(Input.mousePosition.ToString());
 
         //Wheel appearance
         //if (GameObject.Find("WheelCanvas_" + nameMinorIsland) != null)
@@ -100,6 +100,18 @@ public class MinorIsland : MonoBehaviour {
         //    wheelImage.transform.position = mousePosition;
         //}
 
-        this.buildingManager.createBuilding(TypeBuilding.GoldMine, Input.mousePosition);
+        //Transfert test
+        MinorIsland remote = GameObject.Find("sous_ile_3").GetComponent<MinorIsland>();
+        if (this.resourceManager.donateResource(remote, TypeResource.Gold, 10))
+        {
+            Debug.Log("Transfer Resource " + TypeResource.Gold.ToString() + " from " + this.nameMinorIsland + " to " + remote.nameMinorIsland);
+        }
+        else
+        {
+            Debug.Log("Impossible to tranfert " + TypeResource.Gold.ToString() + " from " + this.nameMinorIsland + " to " + remote.nameMinorIsland);
+        }
+
+        //Bulding creation test
+        //this.buildingManager.createBuilding(TypeBuilding.GoldMine, Input.mousePosition);
     }
 }
