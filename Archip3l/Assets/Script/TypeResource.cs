@@ -3,9 +3,11 @@ using System.Collections;
 
 public enum TypeResource
     {
-        Or,
-        Nourriture,
-        Bois,
-        Metal,
-        Pierre
+        Gold,
+        Stone,
+        Oil,
+        Wood,
+        Energy,     //to be modified
+        Electricity,
+        Food
     }

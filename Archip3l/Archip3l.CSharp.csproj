@@ -75,6 +75,7 @@
     <Compile Include="Assets\Script\TypeBuilding.cs" />
     <Compile Include="Assets\Script\TypeChallenge.cs" />
     <Compile Include="Assets\Script\TypeResource.cs" />
+    <Compile Include="Assets\Script\TypeStat.cs" />
     <Compile Include="Assets\Script\main.cs" />
   </ItemGroup>
   <ItemGroup>

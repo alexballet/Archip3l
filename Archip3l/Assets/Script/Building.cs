@@ -44,20 +44,29 @@ public class Building : MonoBehaviour {
 
         switch (TypeBuilding)
         {
-            case TypeBuilding.Scierie:
-                this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Or, 3));
+            case TypeBuilding.GoldMine:
+                this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 3));
                 //this.resourceManager.addResource(TypeResource.Bois, "bois", 0, 4);
                 //null instance from now
                 this.constructionTime = 5;
                 break;
-            case TypeBuilding.Mine:
+            case TypeBuilding.StoneMine:
                 //this.resourceManager.addResource(TypeResource.Or, "Or", 0, 1);
                 this.constructionTime = 5;
                 break;
-            case TypeBuilding.Usine:
+            case TypeBuilding.OilPlant:
                 this.constructionTime = 5;
                 break;
-            case TypeBuilding.Ferme:
+            case TypeBuilding.Sawmill:
+                this.constructionTime = 5;
+                break;
+            case TypeBuilding.Factory:
+                this.constructionTime = 5;
+                break;
+            case TypeBuilding.WindTurbine:
+                this.constructionTime = 5;
+                break;
+            case TypeBuilding.Farm:
                 this.constructionTime = 5;
                 break;
         }

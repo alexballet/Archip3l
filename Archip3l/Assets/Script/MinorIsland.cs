@@ -61,7 +61,7 @@ public class MinorIsland : MonoBehaviour {
         else
             type = TypeChallenge.QCM;
 
-        challenge.init(type, this);
+        challenge.init(type, this, TypeBuilding.GoldMine);      //pb with TypeStat
 
         GameObject.Find(nameMinorIsland).GetComponent<PolygonCollider2D>().enabled = false;
 
@@ -110,8 +110,6 @@ public class MinorIsland : MonoBehaviour {
             wheelImage.transform.position = mousePosition;
         }
         
-
-
-        //this.buildingManager.createBuilding(TypeBuilding.Mine, Input.mousePosition);
+        //this.buildingManager.createBuilding(TypeBuilding.GoldMine, Input.mousePosition);
     }
 }

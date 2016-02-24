@@ -18,7 +18,7 @@ public class Challenge : MonoBehaviour {
 
     public TextAsset csv;
 
-    public void init(TypeChallenge tc, MinorIsland island)
+    public void init(TypeChallenge tc, MinorIsland island, TypeBuilding typeBuilding)         //pb with TypeStat
     {
 
         this.minorIsland = island;
@@ -39,6 +39,7 @@ public class Challenge : MonoBehaviour {
         //CSV_reader.DebugOutputGrid(CSV_reader.SplitCsvGrid(csv.text));
         string[] row = CSV_reader.GetRandomLine(csv.text);
 
+        //theme of question is linked to building to construct  --> order ??
         this.buildingConcerned = row[0];
         this.question = row[1];
         this.answer = row[2];
