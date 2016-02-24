@@ -56,7 +56,7 @@ public class Challenge : MonoBehaviour {
         Canvas challengePrefab = Resources.Load<Canvas>("Prefab/Challenge_" + this.typeChallenge);
         canvasChallenge = Instantiate(challengePrefab);
         canvasChallenge.name = "Challenge_" + this.typeChallenge + "_" + minorIsland.name;
-        canvasChallenge.transform.SetParent(GameObject.Find("Virtual_" + minorIsland.nameMinorIsland).transform);
+        canvasChallenge.transform.SetParent(GameObject.Find(minorIsland.nameMinorIsland).transform);
         Text questionText = null;
         foreach (Text text in canvasChallenge.GetComponentsInChildren<Text>())
         {
@@ -141,14 +141,15 @@ public class Challenge : MonoBehaviour {
             background.material.color = color;
         }
 
-
-        /*Destroy(canvasChallenge.GetComponent("CanvasScaler"));
+        Destroy(canvasChallenge.GetComponent("CanvasScaler"));
         Destroy(canvasChallenge.GetComponent("GraphicRaycaster"));
-        Destroy(canvasChallenge);*/
+        Destroy(canvasChallenge);
 
-        Destroy(GameObject.Find(canvasChallenge.name));
+        //TODO : gérer destruction proprement !!!
 
+        minorIsland.challengePresent = false;
 
+        minorIsland.buildingManager.createBuilding(TypeBuilding.GoldMine, minorIsland.placeToConstruct);
     }
 
     // Use this for initialization

@@ -12,6 +12,11 @@ public class MinorIsland : MonoBehaviour {
 
     public string nameMinorIsland;
 
+    public Vector2 placeToConstruct;
+    public bool wheelPresent = false;           //wheel present on the island
+    public bool buildingInfoPresent = false;    //buildingInfo present on the island
+    public bool challengePresent = false;       //challenge present on the island
+
     void Awake()
     {
         var buildingManagerTransform = Instantiate(buildingManagerPrefab) as Transform;
@@ -47,7 +52,6 @@ public class MinorIsland : MonoBehaviour {
     }
     public void createChallenge()
     {
-        //avoid creation on wheel by clicking on Island
 
         GameObject.Find(nameMinorIsland).GetComponent<PolygonCollider2D>().enabled = false;
         Challenge challenge = GameObject.Find("Virtual_" + nameMinorIsland).AddComponent<Challenge>();
@@ -63,7 +67,7 @@ public class MinorIsland : MonoBehaviour {
 
         challenge.init(type, this, TypeBuilding.GoldMine);      //pb with TypeStat
 
-        GameObject.Find(nameMinorIsland).GetComponent<PolygonCollider2D>().enabled = false;
+        GameObject.Find(nameMinorIsland).GetComponent<PolygonCollider2D>().enabled = true;
     }
 
 	// Update is called once per frame
@@ -83,23 +87,43 @@ public class MinorIsland : MonoBehaviour {
     {
         Debug.Log(Input.mousePosition.ToString());
 
-        //Wheel appearance
-        //if (GameObject.Find("WheelCanvas_" + nameMinorIsland) != null)
-        //{
-        //    Debug.Log("already a wheelCanvas");
-        //}
-        //else
-        //{
-        //    Canvas prefabWheelCanvas = Resources.Load<Canvas>("Prefab/WheelCanvas");
-        //    Canvas wheelCanvas = Instantiate(prefabWheelCanvas);
-        //    wheelCanvas.name = "WheelCanvas_" + nameMinorIsland;
-        //    wheelCanvas.transform.SetParent(GameObject.Find(nameMinorIsland).transform);
-        //    SpriteRenderer wheelImage = wheelCanvas.GetComponentInChildren<SpriteRenderer>();
-        //    Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        //    mousePosition.z = 0;
-        //    wheelImage.transform.position = mousePosition;
-        //}
+        if (!challengePresent)  //if any challenge is open on the island
+        {
+            if (!wheelPresent)  //if the wheel is not on the island
+            {
+                this.placeToConstruct = Input.mousePosition;
 
-        this.buildingManager.createBuilding(TypeBuilding.GoldMine, Input.mousePosition);
+                //Wheel appearance
+                Canvas prefabWheelCanvas = Resources.Load<Canvas>("Prefab/WheelCanvas");
+                Canvas wheelCanvas = Instantiate(prefabWheelCanvas);
+                wheelCanvas.name = "WheelCanvas_" + nameMinorIsland;
+                //parent : island
+                wheelCanvas.transform.SetParent(GameObject.Find(nameMinorIsland).transform);
+                SpriteRenderer wheelImage = wheelCanvas.GetComponentInChildren<SpriteRenderer>();
+                Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                mousePosition.z = 0;
+                //position of wheel where it was clicked on
+                wheelImage.transform.position = mousePosition;
+                //rotation of image according to the place of the island
+                char id = this.nameMinorIsland[this.nameMinorIsland.Length - 1];
+                if (id == '1' || id == '2')
+                    wheelImage.transform.Rotate(Vector3.forward * 180);
+
+                wheelPresent = true;
+            }
+            else
+            {
+                if (!buildingInfoPresent)       //if the wheel is on the island, but not he buildingInfo
+                {
+                    //destruction of the wheel if clic somewhere else in the island
+                    Destroy(GameObject.Find("WheelCanvas_" + nameMinorIsland));
+                    this.wheelPresent = false;
+                }
+            }
+        }
+
+        
+
+        //this.buildingManager.createBuilding(TypeBuilding.GoldMine, Input.mousePosition);
     }
 }
