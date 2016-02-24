@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class OnClickWheelIcon : MonoBehaviour {
+public class WheelIcon : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {

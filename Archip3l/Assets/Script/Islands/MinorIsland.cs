@@ -99,7 +99,7 @@ public class MinorIsland : MonoBehaviour {
         //    mousePosition.z = 0;
         //    wheelImage.transform.position = mousePosition;
         //}
-        
+
         this.buildingManager.createBuilding(TypeBuilding.GoldMine, Input.mousePosition);
     }
 }
