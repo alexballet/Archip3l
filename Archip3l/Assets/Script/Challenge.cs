@@ -12,8 +12,9 @@ public class Challenge : MonoBehaviour {
     public int nbPropositions;
     public TypeChallenge typeChallenge;
     public Canvas canvasChallenge;
-    Button[] propositionsButtons;
-    Text resultText;
+    public SpriteRenderer background;
+    public Button[] propositionsButtons;
+    public Text resultText;
     public MinorIsland minorIsland;
 
     public TextAsset csv;
@@ -65,7 +66,7 @@ public class Challenge : MonoBehaviour {
                 resultText = text;
         }
         propositionsButtons = canvasChallenge.GetComponentsInChildren<Button>();
-        SpriteRenderer background = canvasChallenge.GetComponentInChildren<SpriteRenderer>();
+        background = canvasChallenge.GetComponentInChildren<SpriteRenderer>();
         
         questionText.text = question.Replace('*', '\n');        //in CSV: '*' replace a line break ('\n')
         for (int i = 0; i < this.nbPropositions; i++)
@@ -86,6 +87,7 @@ public class Challenge : MonoBehaviour {
 
         
     }
+
 
     public void propositionClick()
     {
@@ -122,14 +124,31 @@ public class Challenge : MonoBehaviour {
             }
         }
 
-        StartCoroutine(wait(3));
+        StartCoroutine(wait());
 
     }
 
-    IEnumerator wait(int nbSeconds)
+    IEnumerator wait()
     {
-        yield return new WaitForSeconds(nbSeconds);
-        Debug.Log("destroy");
+        yield return new WaitForSeconds(0.5f);
+        Color color;
+        for (int i = 0; i < 100; i++)
+        {
+            yield return new WaitForSeconds(0.001f);
+
+            color = background.material.color;
+            color.a -= 0.01f;
+            background.material.color = color;
+        }
+
+
+        /*Destroy(canvasChallenge.GetComponent("CanvasScaler"));
+        Destroy(canvasChallenge.GetComponent("GraphicRaycaster"));
+        Destroy(canvasChallenge);*/
+
+        Destroy(GameObject.Find(canvasChallenge.name));
+
+
     }
 
     // Use this for initialization
