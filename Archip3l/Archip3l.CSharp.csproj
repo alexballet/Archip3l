@@ -68,6 +68,7 @@
     <Compile Include="Assets\Script\CSV_reader.cs" />
     <Compile Include="Assets\Script\Challenge.cs" />
     <Compile Include="Assets\Script\MinorIsland.cs" />
+    <Compile Include="Assets\Script\OnClickWheelIcon.cs" />
     <Compile Include="Assets\Script\Resource.cs" />
     <Compile Include="Assets\Script\ResourceManager.cs" />
     <Compile Include="Assets\Script\Tuple.cs" />

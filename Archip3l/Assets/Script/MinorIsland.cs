@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class MinorIsland : MonoBehaviour {
 
@@ -79,6 +80,25 @@ public class MinorIsland : MonoBehaviour {
     void OnMouseDown()
     {
         Debug.Log(Input.mousePosition.ToString());
-        this.buildingManager.createBuilding(TypeBuilding.Mine, Input.mousePosition);
+
+        if (GameObject.Find("WheelCanvas_" + nameMinorIsland) != null)
+        {
+            Debug.Log("already a wheelCanvas");
+        }
+        else
+        {
+            Canvas prefabWheelCanvas = Resources.Load<Canvas>("Prefab/WheelCanvas");
+            Canvas wheelCanvas = Instantiate(prefabWheelCanvas);
+            wheelCanvas.name = "WheelCanvas_" + nameMinorIsland;
+            wheelCanvas.transform.SetParent(GameObject.Find(nameMinorIsland).transform);
+            SpriteRenderer wheelImage = wheelCanvas.GetComponentInChildren<SpriteRenderer>();
+            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            mousePosition.z = 0;
+            wheelImage.transform.position = mousePosition;
+        }
+        
+
+
+        //this.buildingManager.createBuilding(TypeBuilding.Mine, Input.mousePosition);
     }
 }
