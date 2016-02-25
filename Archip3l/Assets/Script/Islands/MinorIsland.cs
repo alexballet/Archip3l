@@ -12,10 +12,12 @@ public class MinorIsland : MonoBehaviour {
 
     public string nameMinorIsland;
 
+    //communication with WheelIcon, BuildingInfo & Challenge scripts
     public Vector2 placeToConstruct;
     public bool wheelPresent = false;           //wheel present on the island
     public bool buildingInfoPresent = false;    //buildingInfo present on the island
     public bool challengePresent = false;       //challenge present on the island
+    public string buildingClicked;
 
     void Awake()
     {
@@ -85,6 +87,7 @@ public class MinorIsland : MonoBehaviour {
 	}
     void OnMouseDown()
     {
+
         //Debug.Log(Input.mousePosition.ToString());
 
         if (!challengePresent)  //if any challenge is open on the island

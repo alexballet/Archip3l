@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System;
 
 public class Challenge : MonoBehaviour {
 
@@ -149,7 +150,10 @@ public class Challenge : MonoBehaviour {
 
         minorIsland.challengePresent = false;
 
-        minorIsland.buildingManager.createBuilding(TypeBuilding.GoldMine, minorIsland.placeToConstruct);
+        //convert string to enum
+        TypeBuilding typeBuilding = (TypeBuilding)Enum.Parse(typeof(TypeBuilding), minorIsland.buildingClicked, true);
+        //construction of building
+        minorIsland.buildingManager.createBuilding(typeBuilding, minorIsland.placeToConstruct);
     }
 
     // Use this for initialization
