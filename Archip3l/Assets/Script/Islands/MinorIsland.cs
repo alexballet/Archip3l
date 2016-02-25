@@ -42,8 +42,8 @@ public class MinorIsland : MonoBehaviour {
         /*----------TEST--------*/
 
 
-        if (nameMinorIsland == "sous_ile_4")
-            createChallenge();
+        //if (nameMinorIsland == "sous_ile_4")
+        //    createChallenge();
 
         //if(nameMinorIsland == "sous_ile_3")
         //{
@@ -141,5 +141,29 @@ public class MinorIsland : MonoBehaviour {
         */
         //Bulding creation test
         //this.buildingManager.createBuilding(TypeBuilding.GoldMine, Input.mousePosition);
+    }
+
+    //translation of the building's name to french
+    public string translateBuildingName(string buildingName)
+    {
+        switch (buildingName)
+        {
+            case "GoldMine":
+                return "Mine d'or";
+            case "StoneMine":
+                return "Mine de pierre";
+            case "OilPlant":
+                return "Puit de pétrole";
+            case "Sawmill":
+                return "Scierie";
+            case "Factory":
+                return "Usine";
+            case "WindTurbine":
+                return "Eolienne";
+            case "Farm":
+                return "Ferme";
+            default:
+                return string.Empty;
+        }
     }
 }

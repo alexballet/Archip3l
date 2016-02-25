@@ -47,6 +47,7 @@ public class ResourceManager : MonoBehaviour {
         else
         {
             GameObject myGameObject = new GameObject();
+            myGameObject.name = name + "_" + minorIsland.nameMinorIsland;
             myGameObject.transform.SetParent(GameObject.Find("Virtual_" + minorIsland.nameMinorIsland).transform);
             Resource res = ScriptableObject.CreateInstance<Resource>();
             res.init(resourceType, name, quantity, production);

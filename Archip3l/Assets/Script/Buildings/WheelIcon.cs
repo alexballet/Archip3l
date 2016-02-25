@@ -14,6 +14,7 @@ public class WheelIcon : MonoBehaviour {
 	
 	}
 
+
     void OnMouseDown()
     {
         MinorIsland island = GameObject.Find(this.transform.parent.parent.parent.name).GetComponent<MinorIsland>();
@@ -33,11 +34,37 @@ public class WheelIcon : MonoBehaviour {
                 switch (textInCanvas.name)
                 {
                     case "Name":
-                        textInCanvas.text = island.buildingClicked;
+                        textInCanvas.text = island.translateBuildingName(island.buildingClicked);
+                        break;
+                    //on garde toujours les mêmes valeurs ??
+                    case "CostValue":
+                        textInCanvas.text = "5";
+                        break;
+                    case "ProductionValueGoodAnswer":
+                        textInCanvas.text = "20";
+                        break;
+                    case "ProductionValueBadAnswer":
+                        textInCanvas.text = "10";
                         break;
                 }
             }
-
+            //modification of the background of the different Image Children of the Canvas
+            foreach (Image imageInCanvas in buildingInfo.GetComponent<Canvas>().GetComponentsInChildren<Image>())
+            {
+                switch (imageInCanvas.name)
+                {
+                    case "CostImage":
+                        //imageInCanvas.sprite = Resources.Load<Sprite>("Resource/" + getResourceConsumedFromBuilding);
+                        break;
+                    //mêmes images
+                    case "ProductionImage":
+                        //imageInCanvas.sprite = Resources.Load<Sprite>("Resource/" + getResourceProductedFromBuilding);
+                        break;
+                    case "ProductionImage2":
+                        //imageInCanvas.sprite = Resources.Load<Sprite>("Resource/" + getResourceProductedFromBuilding);
+                        break;
+                }
+            }
             //rotation of image according to the place of the island
             char id = island.nameMinorIsland[island.nameMinorIsland.Length - 1];
             if (id == '1' || id == '2')

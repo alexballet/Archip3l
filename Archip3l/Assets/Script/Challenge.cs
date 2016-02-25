@@ -141,12 +141,8 @@ public class Challenge : MonoBehaviour {
             color.a -= 0.01f;
             background.material.color = color;
         }
-
-        Destroy(canvasChallenge.GetComponent("CanvasScaler"));
-        Destroy(canvasChallenge.GetComponent("GraphicRaycaster"));
-        Destroy(canvasChallenge);
-
-        //TODO : gérer destruction proprement !!!
+        
+        Destroy(GameObject.Find("Challenge_" + typeChallenge + "_" + minorIsland.nameMinorIsland));
 
         minorIsland.challengePresent = false;
 

@@ -33,15 +33,13 @@ public class Building : MonoBehaviour {
             this.resourceManager = resourceManager;
         }
         
-        //must be set in the switch
-        string texturePath = "Assets/Resources/Building/Icons/mapIconFactory.png";
+        string texturePath = "Assets/Resources/Building/Icons/mapIcon" + TypeBuilding.ToString() + ".png";
 
         switch (TypeBuilding)
         {
             case TypeBuilding.GoldMine:
                 this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 3));
                 this.resourceManager.addResource(TypeResource.Gold, "Gold", 0, 4);
-                texturePath = "Assets/Resources/Building/Icons/mapIconMine.png";
                 this.constructionTime = 5;
                 break;
             case TypeBuilding.StoneMine:
