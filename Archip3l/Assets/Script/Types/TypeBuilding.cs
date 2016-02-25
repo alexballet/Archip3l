@@ -9,5 +9,7 @@ public enum TypeBuilding
         Sawmill,
         Factory,
         WindTurbine,
-        Farm
-    }
+        Farm,
+        Harbor,
+        PowerPlant
+}

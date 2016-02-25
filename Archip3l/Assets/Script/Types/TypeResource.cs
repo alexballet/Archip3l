@@ -7,7 +7,7 @@ public enum TypeResource
         Stone,
         Oil,
         Wood,
-        Energy,     //to be modified
+        Manufacture,
         Electricity,
         Food
     }

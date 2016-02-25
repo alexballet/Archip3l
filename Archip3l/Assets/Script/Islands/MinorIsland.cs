@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System;
 
 public class MinorIsland : MonoBehaviour {
 
@@ -12,15 +13,18 @@ public class MinorIsland : MonoBehaviour {
 
     public string nameMinorIsland;
 
-    //communication with WheelIcon, BuildingInfo & Challenge scripts
+    //communication with WheelIcon, BuildingInfo & Challenge scripts + Popups
     public Vector2 placeToConstruct;
     public bool wheelPresent = false;           //wheel present on the island
     public bool buildingInfoPresent = false;    //buildingInfo present on the island
     public bool challengePresent = false;       //challenge present on the island
     public string buildingClicked;
+    public int nbPopupPresent;
 
     void Awake()
     {
+        nbPopupPresent = 0;
+        /*
         var buildingManagerTransform = Instantiate(buildingManagerPrefab) as Transform;
         BuildingManager buildingManager = buildingManagerTransform.GetComponent<BuildingManager>();
         if (buildingManager != null)
@@ -29,7 +33,7 @@ public class MinorIsland : MonoBehaviour {
             buildingManager.transform.SetParent(this.transform);
             this.buildingManager = buildingManager;
         }
-
+        
         var resourceManagerTransform = Instantiate(resourceManagerPrefab) as Transform;
         ResourceManager resourceManager = resourceManagerTransform.GetComponent<ResourceManager>();
         if (resourceManager != null)
@@ -38,12 +42,9 @@ public class MinorIsland : MonoBehaviour {
             resourceManager.transform.SetParent(this.transform);
             this.resourceManager = resourceManager;
         }
-
+        */
         /*----------TEST--------*/
-
-
-        //if (nameMinorIsland == "sous_ile_4")
-        //    createChallenge();
+        
 
         //if(nameMinorIsland == "sous_ile_3")
         //{
@@ -71,9 +72,54 @@ public class MinorIsland : MonoBehaviour {
 
         GameObject.Find(nameMinorIsland).GetComponent<PolygonCollider2D>().enabled = true;
     }
+    
 
-	// Update is called once per frame
-	void Update () {
+    //returns the name of the Popup (GameObject) created
+    public string createPopup(string popupText)
+    {
+
+        Canvas popupCanvasPrefab = Resources.Load<Canvas>("Prefab/PopupCanvas");
+        Canvas popupCanvas = Instantiate(popupCanvasPrefab);
+        this.nbPopupPresent++;
+        popupCanvas.name = "PopupCanvas" + nbPopupPresent.ToString() + "_" + this.nameMinorIsland;
+        popupCanvas.transform.SetParent(GameObject.Find(this.nameMinorIsland).transform);
+        popupCanvas.transform.position = GameObject.Find(this.nameMinorIsland).transform.position;
+        //rotation of image according to the place of the island
+        char id = this.nameMinorIsland[this.nameMinorIsland.Length - 1];
+        if (id == '1' || id == '2')
+            popupCanvas.transform.Rotate(Vector3.forward * 180);
+
+        popupCanvas.GetComponentInChildren<Text>().text = popupText;
+
+        //name + island passed to get the Canvas to destroy
+        popupCanvas.GetComponentInChildren<Popup>().namePopupCanvas = popupCanvas.name;
+        popupCanvas.GetComponentInChildren<Popup>().island = this;
+
+        return popupCanvas.name;
+    }
+
+    public IEnumerator destroyPopup(string namePopup, int timer)
+    {
+        SpriteRenderer popupImage = GameObject.Find(namePopup).GetComponentInChildren<SpriteRenderer>();
+        
+        yield return new WaitForSeconds(timer);
+        Color color;
+        for (int i = 0; i < 100; i++)
+        {
+            yield return new WaitForSeconds(0.001f);
+
+            color = popupImage.color;
+            color.a -= 0.01f;
+            popupImage.color = color;
+
+        }
+
+        Destroy(GameObject.Find(namePopup));
+        this.nbPopupPresent--;
+    }
+
+        // Update is called once per frame
+        void Update () {
 
         for (int i = 0; i < Input.touchCount; i++)
         {
@@ -162,6 +208,66 @@ public class MinorIsland : MonoBehaviour {
                 return "Eolienne";
             case "Farm":
                 return "Ferme";
+            case "Lab":
+                return "Laboratoire";
+            case "Airport":
+                return "Aéroport";
+            case "Hotel":
+                return "Hôtel";
+            case "Harbor":
+                return "Port";
+            case "School":
+                return "Ecole";
+            case "Church":
+                return "Eglise";
+            case "Cinema":
+                return "Cinéma";
+            case "AmusementPark":
+                return "Parc d'attraction";
+            case "PowerPlant":
+                return "Centrale électrique"; 
+            default:
+                return string.Empty;
+        }
+    }
+
+    //returns the name of the resource (or stat) produced
+    public string getNameResourceOrStatProduced(string buildingName)
+    {
+        switch (buildingName)
+        {
+            case "GoldMine":
+                return "gold";
+            case "StoneMine":
+                return "stone";
+            case "OilPlant":
+                return "oil";
+            case "Sawmill":
+                return "wood";
+            case "Factory":
+                return "manufacture";
+            case "WindTurbine":
+                return "electricity";
+            case "Farm":
+                return "food";
+            case "Lab":
+                return "meds";
+            case "Airport":
+                return "tourism";
+            case "Hotel":
+                return "tourism";
+            case "Harbor":
+                return "food";
+            case "School":
+                return "education";
+            case "Church":
+                return "religion";
+            case "Cinema":
+                return "happiness";
+            case "AmusementPark":
+                return "happiness";
+            case "PowerPlant":
+                return "electricity";
             default:
                 return string.Empty;
         }

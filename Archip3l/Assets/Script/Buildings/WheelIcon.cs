@@ -36,11 +36,11 @@ public class WheelIcon : MonoBehaviour {
                     case "Name":
                         textInCanvas.text = island.translateBuildingName(island.buildingClicked);
                         break;
-                    //on garde toujours les mêmes valeurs ??
+                    //write in a script functions which return these values (long switch)
                     case "CostValue":
                         textInCanvas.text = "5";
                         break;
-                    case "ProductionValueGoodAnswer":
+                    case "ProductionValueGoodAnswer":       // 2 * productionValueBadAnswer
                         textInCanvas.text = "20";
                         break;
                     case "ProductionValueBadAnswer":
@@ -54,14 +54,14 @@ public class WheelIcon : MonoBehaviour {
                 switch (imageInCanvas.name)
                 {
                     case "CostImage":
-                        //imageInCanvas.sprite = Resources.Load<Sprite>("Resource/" + getResourceConsumedFromBuilding);
+                        //imageInCanvas.sprite = Resources.Load<Sprite>("infoBatiments/ResourcesIcons/" + getResourceConsumedFromBuilding(island.buildingClicked) + "Icon");
                         break;
-                    //mêmes images
+                        //mêmes images
                     case "ProductionImage":
-                        //imageInCanvas.sprite = Resources.Load<Sprite>("Resource/" + getResourceProductedFromBuilding);
+                        imageInCanvas.sprite = Resources.Load<Sprite>("infoBatiments/ResourcesIcons/" + island.getNameResourceOrStatProduced(island.buildingClicked) + "Icon");
                         break;
                     case "ProductionImage2":
-                        //imageInCanvas.sprite = Resources.Load<Sprite>("Resource/" + getResourceProductedFromBuilding);
+                        imageInCanvas.sprite = Resources.Load<Sprite>("infoBatiments/ResourcesIcons/" + island.getNameResourceOrStatProduced(island.buildingClicked) + "Icon");
                         break;
                 }
             }

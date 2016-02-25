@@ -5,7 +5,6 @@ public class BuildingInfo : MonoBehaviour {
     
     void OnMouseDown()
     {
-        Debug.Log(this.name);
         MinorIsland island = GameObject.Find(this.transform.parent.parent.parent.name).GetComponent<MinorIsland>();
         if (this.name == "Build")
         {

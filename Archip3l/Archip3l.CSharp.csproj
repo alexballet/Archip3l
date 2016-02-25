@@ -71,10 +71,12 @@
     <Compile Include="Assets\Script\Islands\MinorIsland.cs" />
     <Compile Include="Assets\Script\Miscellaneous\CSV_reader.cs" />
     <Compile Include="Assets\Script\Miscellaneous\Tuple.cs" />
+    <Compile Include="Assets\Script\Popup.cs" />
     <Compile Include="Assets\Script\Resources\Resource.cs" />
     <Compile Include="Assets\Script\Resources\ResourceManager.cs" />
     <Compile Include="Assets\Script\Resources\ResourceManagerBuilding.cs" />
     <Compile Include="Assets\Script\Types\TypeBuilding.cs" />
+    <Compile Include="Assets\Script\Types\TypeBuildingStat.cs" />
     <Compile Include="Assets\Script\Types\TypeChallenge.cs" />
     <Compile Include="Assets\Script\Types\TypeResource.cs" />
     <Compile Include="Assets\Script\Types\TypeStat.cs" />

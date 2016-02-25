@@ -1,4 +1,4 @@
-Building;Question;Answer;Proposition0;Proposition1
-scierie;question_A;VRAI;VRAI;FAUX
-mineOr;question_B;FAUX;VRAI;FAUX
-scierie;Les premières scies mécaniques * possédaient des moteurs hydrauliques;VRAI;VRAI;FAUX
+Building;Question;Answer;Explanations;Proposition0;Proposition1
+scierie;question_A;VRAI;blablabla_A;VRAI;FAUX
+mineOr;question_B;FAUX;blablabla_B;VRAI;FAUX
+scierie;Les premières scies mécaniques * possédaient des moteurs hydrauliques;VRAI;blablablablablablablablabla;VRAI;FAUX

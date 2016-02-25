@@ -6,9 +6,10 @@ using System;
 
 public class Challenge : MonoBehaviour {
 
-    public string question;
     public string buildingConcerned;
+    public string question;
     public string answer;
+    public string explainations;
     public string[] propositions;
     public int nbPropositions;
     public TypeChallenge typeChallenge;
@@ -17,10 +18,11 @@ public class Challenge : MonoBehaviour {
     public Button[] propositionsButtons;
     public Text resultText;
     public MinorIsland minorIsland;
+    public bool goodAnswer;
 
     public TextAsset csv;
 
-    public void init(TypeChallenge tc, MinorIsland island, TypeBuilding typeBuilding)         //pb with TypeStat
+    public void init(TypeChallenge tc, MinorIsland island, TypeBuilding typeBuilding)         //pb with TypeBuildingStat
     {
 
         this.minorIsland = island;
@@ -32,7 +34,7 @@ public class Challenge : MonoBehaviour {
 
 
         //CSV part
-        //row[0] : building ; row[1] : question ; row[2] : answer ; after: propositions
+        //row[0] : building ; row[1] : question ; row[2] : answer ; row[3] : explainations ; after : propositions
         //VraiFaux : answer = VRAI ou answer = FAUX
         //QCM : answer = Proposition0 ou answer = Proposition1 ou answer = Proposition2
 
@@ -45,11 +47,12 @@ public class Challenge : MonoBehaviour {
         this.buildingConcerned = row[0];
         this.question = row[1];
         this.answer = row[2];
+        this.explainations = row[3];
         this.propositions = new string[nbPropositions];
-        this.propositions[0] = row[3];
-        this.propositions[1] = row[4];
+        this.propositions[0] = row[4];
+        this.propositions[1] = row[5];
         if (this.nbPropositions == 3)
-            this.propositions[2] = row[5];
+            this.propositions[2] = row[6];
 
 
         //graphic part
@@ -66,6 +69,7 @@ public class Challenge : MonoBehaviour {
             else if (text.name == "Result")
                 resultText = text;
         }
+
         propositionsButtons = canvasChallenge.GetComponentsInChildren<Button>();
         background = canvasChallenge.GetComponentInChildren<SpriteRenderer>();
         
@@ -98,9 +102,11 @@ public class Challenge : MonoBehaviour {
         if (clickedText == answer)
         {
             resultText.text = "Réponse correcte !";
+            goodAnswer = true;
         }           
         else{
             resultText.text = "Réponse incorrecte !";
+            goodAnswer = false;
         }
 
         //modify Propositions background
@@ -144,12 +150,43 @@ public class Challenge : MonoBehaviour {
         
         Destroy(GameObject.Find("Challenge_" + typeChallenge + "_" + minorIsland.nameMinorIsland));
 
-        minorIsland.challengePresent = false;
+        StartCoroutine(minorIsland.destroyPopup(minorIsland.createPopup(explainations), 8));
 
-        //convert string to enum
-        TypeBuilding typeBuilding = (TypeBuilding)Enum.Parse(typeof(TypeBuilding), minorIsland.buildingClicked, true);
-        //construction of building
-        minorIsland.buildingManager.createBuilding(typeBuilding, minorIsland.placeToConstruct);
+        minorIsland.challengePresent = false;
+        
+        //minorIsland.buildingClicked is a string --> conversion necessary
+        if(Enum.IsDefined(typeof(TypeBuilding), minorIsland.buildingClicked))
+        {
+            TypeBuilding typeBuilding = (TypeBuilding)Enum.Parse(typeof(TypeBuilding), minorIsland.buildingClicked, true);
+
+            //construction of building
+            if(minorIsland.buildingManager.createBuilding(typeBuilding, minorIsland.placeToConstruct) == false)
+            {
+                StartCoroutine(minorIsland.destroyPopup(minorIsland.createPopup("Le bâtiment " + typeBuilding.ToString() + " a déjà été créé !"), 3));
+            }
+            else if (goodAnswer)
+            {
+                StartCoroutine(minorIsland.destroyPopup(minorIsland.createPopup("Grâce à votre bonne réponse, la production du bâtiment " + typeBuilding.ToString() + " double !"), 3));
+            }
+        }
+        else if(Enum.IsDefined(typeof(TypeBuildingStat), minorIsland.buildingClicked))
+        {
+            TypeBuildingStat typeBuildingStat = (TypeBuildingStat)Enum.Parse(typeof(TypeBuildingStat), minorIsland.buildingClicked, true);
+
+            //TODO : gérer le cas de la construction d'un batiment qui ne produit pas de ressources, mais des stats (ex : Hotel, Airport...)
+
+            //construction of building
+            /*if (minorIsland.buildingManager.createBuilding(typeBuildingStat, minorIsland.placeToConstruct) == false)
+            {
+                minorIsland.createPopup("Le bâtiment " + typeBuildingStat.ToString() + " a déjà été créé !");
+            }
+            else if (goodAnswer)
+            {
+                minorIsland.createPopup("Grâce à votre bonne réponse, la production du bâtiment " + typeBuildingStat.ToString() + " double !");
+            }*/
+        }
+
+
     }
 
     // Use this for initialization
