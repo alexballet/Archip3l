@@ -1,4 +1,27 @@
-Building;Question;Answer;Explanations;Proposition0;Proposition1
-scierie;question_A;VRAI;blablabla_A;VRAI;FAUX
-mineOr;question_B;FAUX;blablabla_B;VRAI;FAUX
-scierie;Les premières scies mécaniques * possédaient des moteurs hydrauliques;VRAI;blablablablablablablablabla;VRAI;FAUX
+Building;Question;Answer;Explaination;Proposition0;Proposition1
+Tourisme;Au XVIIIème siècle, le terme “tourisme” désigne le voyage que font les jeunes de l'aristocratie britannique sur le continent européen pour rejoindre la ville de Rome;VRAI;_;VRAI;FAUX
+Tourisme;En 2014, la France est le pays au monde qui attire le plus de touristes (en nombre d’arrivées);VRAI;Avec 83,8 millions d’arrivées cette année-là;VRAI;FAUX
+Ecole;En 2013, la Norvège a un taux d’alphabétisation inférieur à celui du Liechtenstein;VRAI;95% en Norvège contre 100% au Liechtenstein;VRAI;FAUX
+Ecole;Durant l’Antiquité, le collège désignait une assemblée composée de plusieurs magistrats ou notables;VRAI;L’assemblée prenait d’ailleurs un nom différent en fonction du nombre de participants;VRAI;FAUX
+Ecole;Au XIIème siècle, on appellait les étudiants de faculté d’art les artois;FAUX;On les appelait les artiens;VRAI;FAUX
+Labos;Dans tous les pays développés, la vente de médicaments progresse structurellement plus vite que le PIB;VRAI;En France par exemple, elle a progressé de 2,7% entre 2010 et 2011, par rapport à 2,1% pour le PIB à la même date;VRAI;FAUX
+Labos;En moyenne, un ménage français dépense plus d’argent pour les médicaments que pour les vêtements;FAUX;C’est toujours l’inverse avec par exemple, 47700 millions d’euros contre 34341 millions d’euros par an en 2012;VRAI;FAUX
+Labos;En 2000, la France est le plus grand consommateur européen de médicaments, parmi les 8 classes thérapeutiques principales;VRAI;_;VRAI;FAUX
+Scierie;Les premières scies mécaniques possédaient des moteurs hydrauliques;VRAI;C’est pourquoi les scieries étaient traditionnellement situées à côté des cours d’eau;VRAI;FAUX
+MineOr;L’or est le plus malléable et ductile des métaux connus;VRAI;Il est à la fois dense et tendre;VRAI;FAUX
+MineOr;L’or, comme l’argent, est soluble dans l’acide nitrique;FAUX;Seuls l’argent et les métaux communs le sont;VRAI;FAUX
+MineOr;Une orfèvrerie est une bijouterie vendant de l’or;FAUX;L’orfèvrerie correspond à l’art du travail de l’or;VRAI;FAUX
+MinePierre;Un caillou est aussi le surnom donné à un objectif photographique;VRAI;De même qu’à la Nouvelle-Calédonie;VRAI;FAUX
+MinePierre;L’argile est une roche perméable;FAUX;_;VRAI;FAUX
+MinePierre;La pétrographie correspond à la science d’analyse du pétrole;FAUX;Cela correspond à la science de la description et de l’analyse des roches;VRAI;FAUX
+MinePierre;Roche et rocher sont des mots synonymes;FAUX;Un rocher est un bloc de roches;VRAI;FAUX
+PuitsPétrole;Les mots fioul et pétrole sont des synonymes;FAUX;Le fioul est un combustible dérivé du pétrole;VRAI;FAUX
+PuitsPétrole;Les mots fioul et mazout sont des synonymes;VRAI;"Tous deux correspondent au carburant notamment utilisé dans les chaudières
+
+";VRAI;FAUX
+PuitsPétrole;En 2012, le charbon est une source d’énergie plus utilisée que le pétrole dans le monde;FAUX;Ils représentent respectivement 29% et 31,4% de l’énergie primaire consommée;VRAI;FAUX
+Eolienne;Un aérogénérateur est un avion qui produit de l’électricité;FAUX;Il s’agit d’une éolienne produisant de l’électricité tandis que celle qui pompent directement de l’eau sont appelées “éoliennes de pompage”;VRAI;FAUX
+Ferme;L’horticulture est l’art de cultiver les jardins, de pratiquer la culture de légumes, de fruits et de fleurs;VRAI;Il vient du latin hortus “jardin” et du mot “culture”;VRAI;FAUX
+Ferme;Le maraîchage correspond à la culture de fruits et fleurs;FAUX;Cela correspond à la culture de légumes;VRAI;FAUX
+Ferme;L’architecture vernaculaire est un type de construction d’habitations propre à la ville de Vernacles;FAUX;il s’agit d’un type d’architecture “propre à un pays” et c’est dans ce cadre que certaines fermes sont classés pour raisons patrimoniales et paysagères;VRAI;FAUX
+Ferme;L’aquaponie est une activité consistant à faire se baigner des poneys;FAUX;C’est une forme d’agriculture associant culture de végétaux en symbiose avec l’élevage de poissons;VRAI;FAUX

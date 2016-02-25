@@ -24,7 +24,7 @@ public class MinorIsland : MonoBehaviour {
     void Awake()
     {
         nbPopupPresent = 0;
-        /*
+        
         var buildingManagerTransform = Instantiate(buildingManagerPrefab) as Transform;
         BuildingManager buildingManager = buildingManagerTransform.GetComponent<BuildingManager>();
         if (buildingManager != null)
@@ -42,7 +42,7 @@ public class MinorIsland : MonoBehaviour {
             resourceManager.transform.SetParent(this.transform);
             this.resourceManager = resourceManager;
         }
-        */
+        
         /*----------TEST--------*/
         
 
@@ -77,6 +77,7 @@ public class MinorIsland : MonoBehaviour {
     //returns the name of the Popup (GameObject) created
     public string createPopup(string popupText)
     {
+        //TODO : gérer superposition des textes des Popup
 
         Canvas popupCanvasPrefab = Resources.Load<Canvas>("Prefab/PopupCanvas");
         Canvas popupCanvas = Instantiate(popupCanvasPrefab);

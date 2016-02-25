@@ -8,8 +8,6 @@ public class Popup : MonoBehaviour {
 
     void OnMouseDown()
     {
-        Debug.Log(namePopupCanvas + " +++ " + island.nameMinorIsland);
         StartCoroutine(island.destroyPopup(namePopupCanvas, 1));
-        //Destroy(GameObject.Find(namePopupCanvas));
     }
 }
