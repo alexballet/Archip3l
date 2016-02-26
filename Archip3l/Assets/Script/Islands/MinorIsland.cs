@@ -23,6 +23,8 @@ public class MinorIsland : MonoBehaviour {
     public string buildingClicked;
     public int nbPopupPresent;
 
+
+
     void Awake()
     {
         nbPopupPresent = 0;
@@ -107,9 +109,9 @@ public class MinorIsland : MonoBehaviour {
         
         yield return new WaitForSeconds(timer);
         Color color;
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 100; i++)
         {
-            yield return new WaitForSeconds(0.001f);
+            yield return new WaitForSeconds(0.01f);
 
             color = popupImage.color;
             color.a -= 0.01f;
@@ -123,12 +125,12 @@ public class MinorIsland : MonoBehaviour {
 
     public void createBuildingTouch(string nameBuilding)
     {
-        this.nameBuildingTouchCanvas = "touchBuilding_" + nameBuilding;
+        this.nameBuildingTouchCanvas =nameBuilding;
 
         Canvas touchBuildingCanvasPrefab = Resources.Load<Canvas>("Prefab/touchBuildingCanvas");
         Canvas touchBuildingCanvas = Instantiate(touchBuildingCanvasPrefab);
         touchBuildingCanvas.transform.SetParent(this.transform);
-        touchBuildingCanvas.name = this.nameBuildingTouchCanvas;
+        touchBuildingCanvas.name = "touchBuilding_" + this.nameBuildingTouchCanvas;
         touchBuildingCanvas.transform.position = GameObject.Find(nameBuilding).transform.position;
 
         foreach(TouchBuilding touchBuilding in touchBuildingCanvas.GetComponentsInChildren<TouchBuilding>())
@@ -165,44 +167,56 @@ public class MinorIsland : MonoBehaviour {
     {
         //Debug.Log(Input.mousePosition.ToString());
 
-        if (this.nameBuildingTouchCanvas != String.Empty)
+        //moving a building
+        if (moveBuilding)
         {
-            Destroy(GameObject.Find(this.nameBuildingTouchCanvas));
-            this.nameBuildingTouchCanvas = String.Empty;
+            Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            pos.z = -1;
+            GameObject.Find(this.nameBuildingTouchCanvas).transform.position = pos;
+            this.moveBuilding = false;
+            this.nameBuildingTouchCanvas = string.Empty;
         }
         else
         {
-            if (!challengeBuildPresent)  //if any challengeBuild is open on the island
+            if (this.nameBuildingTouchCanvas != String.Empty)
             {
-                if (!wheelPresent)  //if the wheel is not on the island
+                Destroy(GameObject.Find("touchBuilding_" + this.nameBuildingTouchCanvas));
+                this.nameBuildingTouchCanvas = String.Empty;
+            }
+            else
+            {
+                if (!challengeBuildPresent)  //if any challengeBuild is open on the island
                 {
-                    this.placeToConstruct = Input.mousePosition;
-
-                    //Wheel appearance
-                    Canvas prefabWheelCanvas = Resources.Load<Canvas>("Prefab/WheelCanvas");
-                    Canvas wheelCanvas = Instantiate(prefabWheelCanvas);
-                    wheelCanvas.name = "WheelCanvas_" + nameMinorIsland;
-                    //parent : island
-                    wheelCanvas.transform.SetParent(GameObject.Find(nameMinorIsland).transform);
-                    SpriteRenderer wheelImage = wheelCanvas.GetComponentInChildren<SpriteRenderer>();
-                    Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                    mousePosition.z = 0;
-                    //position of wheel where it was clicked on
-                    wheelImage.transform.position = mousePosition;
-                    //rotation of image according to the place of the island
-                    char id = this.nameMinorIsland[this.nameMinorIsland.Length - 1];
-                    if (id == '1' || id == '2')
-                        wheelImage.transform.Rotate(Vector3.forward * 180);
-
-                    this.wheelPresent = true;
-                }
-                else
-                {
-                    if (!buildingInfoPresent)       //if the wheel is on the island, but not he buildingInfo
+                    if (!wheelPresent)  //if the wheel is not on the island
                     {
-                        //destruction of the wheel if clic somewhere else in the island
-                        Destroy(GameObject.Find("WheelCanvas_" + nameMinorIsland));
-                        this.wheelPresent = false;
+                        this.placeToConstruct = Input.mousePosition;
+
+                        //Wheel appearance
+                        Canvas prefabWheelCanvas = Resources.Load<Canvas>("Prefab/WheelCanvas");
+                        Canvas wheelCanvas = Instantiate(prefabWheelCanvas);
+                        wheelCanvas.name = "WheelCanvas_" + nameMinorIsland;
+                        //parent : island
+                        wheelCanvas.transform.SetParent(GameObject.Find(nameMinorIsland).transform);
+                        SpriteRenderer wheelImage = wheelCanvas.GetComponentInChildren<SpriteRenderer>();
+                        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                        mousePosition.z = 0;
+                        //position of wheel where it was clicked on
+                        wheelImage.transform.position = mousePosition;
+                        //rotation of image according to the place of the island
+                        char id = this.nameMinorIsland[this.nameMinorIsland.Length - 1];
+                        if (id == '1' || id == '2')
+                            wheelImage.transform.Rotate(Vector3.forward * 180);
+
+                        this.wheelPresent = true;
+                    }
+                    else
+                    {
+                        if (!buildingInfoPresent)       //if the wheel is on the island, but not the buildingInfo
+                        {
+                            //destruction of the wheel if clic somewhere else in the island
+                            Destroy(GameObject.Find("WheelCanvas_" + nameMinorIsland));
+                            this.wheelPresent = false;
+                        }
                     }
                 }
             }

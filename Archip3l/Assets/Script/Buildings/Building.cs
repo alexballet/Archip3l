@@ -95,7 +95,6 @@ public class Building : MonoBehaviour {
 
             
             var buildingConstructionTransform = Instantiate(buildingConstructionPrefab) as Transform;
-            Destroy(GameObject.Find("Hammer(Clone)"));
             buildingConstructionTransform.name = "BuildingAnnimation_" + minorIsland.nameMinorIsland;
             Anim_BuildingConstruction anim_BuildingConstruction = buildingConstructionTransform.GetComponent<Anim_BuildingConstruction>();
             if (anim_BuildingConstruction != null)
