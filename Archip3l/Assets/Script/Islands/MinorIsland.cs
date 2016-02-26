@@ -17,7 +17,7 @@ public class MinorIsland : MonoBehaviour {
     public Vector2 placeToConstruct;
     public bool wheelPresent = false;                   //wheel present on the island
     public bool buildingInfoPresent = false;            //buildingInfo present on the island
-    public bool challengeBuildPresent = false;               //challengeBuild present on the island
+    public bool challengePresent = false;               //challenge present on the island
     public bool moveBuilding = false;                   //moving a building
     public string nameBuildingTouchCanvas;
     public string buildingClicked;
@@ -57,7 +57,8 @@ public class MinorIsland : MonoBehaviour {
 
         /*------------------*/
     }
-    public void createChallengeBuild()
+
+    public void createChallengeBuild(string buildingClicked)
     {
 
         GameObject.Find(nameMinorIsland).GetComponent<PolygonCollider2D>().enabled = false;
@@ -72,11 +73,31 @@ public class MinorIsland : MonoBehaviour {
         else
             type = TypeChallenge.QCM;
 
-        challengeBuild.init(type, this, TypeBuilding.GoldMine);      //pb with TypeStat
+        challengeBuild.init(type, this, (TypeBuilding)System.Enum.Parse(typeof(TypeBuilding), buildingClicked));      //pb with TypeStat +++ adapt TypeBuilding
 
         GameObject.Find(nameMinorIsland).GetComponent<PolygonCollider2D>().enabled = true;
     }
-    
+
+    public void createChallengeUpgrade(Building building)
+    {
+
+        GameObject.Find(nameMinorIsland).GetComponent<PolygonCollider2D>().enabled = false;
+        ChallengeUpgrade challengeUpgrade = GameObject.Find("Virtual_" + nameMinorIsland).AddComponent<ChallengeUpgrade>();
+
+        //random type of ChallengeUpgrade
+        TypeChallenge type;
+        System.Random ran = new System.Random();
+        int aleat = ran.Next(0, 2);
+        if (aleat == 0)
+            type = TypeChallenge.VraiFaux;
+        else
+            type = TypeChallenge.QCM;
+
+        challengeUpgrade.init(type, this, building);      //pb with TypeStat
+
+        GameObject.Find(nameMinorIsland).GetComponent<PolygonCollider2D>().enabled = true;
+    }
+
 
     //returns the name of the Popup (GameObject) created
     public string createPopup(string popupText)
@@ -123,19 +144,20 @@ public class MinorIsland : MonoBehaviour {
         this.nbPopupPresent--;
     }
 
-    public void createBuildingTouch(string nameBuilding)
+    public void createBuildingTouch(Building building)
     {
-        this.nameBuildingTouchCanvas =nameBuilding;
+        this.nameBuildingTouchCanvas = building.name;
 
         Canvas touchBuildingCanvasPrefab = Resources.Load<Canvas>("Prefab/touchBuildingCanvas");
         Canvas touchBuildingCanvas = Instantiate(touchBuildingCanvasPrefab);
         touchBuildingCanvas.transform.SetParent(this.transform);
         touchBuildingCanvas.name = "touchBuilding_" + this.nameBuildingTouchCanvas;
-        touchBuildingCanvas.transform.position = GameObject.Find(nameBuilding).transform.position;
+        touchBuildingCanvas.transform.position = GameObject.Find(this.nameBuildingTouchCanvas).transform.position;
 
         foreach(TouchBuilding touchBuilding in touchBuildingCanvas.GetComponentsInChildren<TouchBuilding>())
         {
             touchBuilding.island = this;
+            touchBuilding.building = building;
         }
         //touchBuildingCanvas.GetComponent<TouchBuilding>().island = this;
 
@@ -185,7 +207,7 @@ public class MinorIsland : MonoBehaviour {
             }
             else
             {
-                if (!challengeBuildPresent)  //if any challengeBuild is open on the island
+                if (!challengePresent)      //if any challenge is open on the island
                 {
                     if (!wheelPresent)  //if the wheel is not on the island
                     {
@@ -288,37 +310,37 @@ public class MinorIsland : MonoBehaviour {
         switch (buildingName)
         {
             case "GoldMine":
-                return "gold";
+                return "Gold";
             case "StoneMine":
-                return "stone";
+                return "Stone";
             case "OilPlant":
-                return "oil";
+                return "Oil";
             case "Sawmill":
-                return "wood";
+                return "Wood";
             case "Factory":
-                return "manufacture";
+                return "Manufacture";
             case "WindTurbine":
-                return "electricity";
+                return "Electricity";
             case "Farm":
-                return "food";
+                return "Food";
             case "Lab":
-                return "meds";
+                return "Meds";
             case "Airport":
-                return "tourism";
+                return "Tourism";
             case "Hotel":
-                return "tourism";
+                return "Tourism";
             case "Harbor":
-                return "food";
+                return "Food";
             case "School":
-                return "education";
+                return "Education";
             case "Church":
-                return "religion";
+                return "Religion";
             case "Cinema":
-                return "happiness";
+                return "Happiness";
             case "AmusementPark":
-                return "happiness";
+                return "Happiness";
             case "PowerPlant":
-                return "electricity";
+                return "Electricity";
             default:
                 return string.Empty;
         }

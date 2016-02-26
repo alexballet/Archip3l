@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class WheelIcon : MonoBehaviour {    
+public class WheelIcon : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
@@ -25,6 +25,7 @@ public class WheelIcon : MonoBehaviour {
         {
             Canvas buildingInfoPrefab = Resources.Load<Canvas>("Prefab/BuildingInfoWindowCanvas");
             Canvas buildingInfo = Instantiate(buildingInfoPrefab);
+
             buildingInfo.name = "BuildingInfo_" + this.name;
             buildingInfo.transform.SetParent(this.transform.parent.parent.parent);  //parent : minorIsland
             buildingInfo.transform.position = island.transform.position;

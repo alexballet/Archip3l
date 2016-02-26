@@ -2,16 +2,20 @@
 using System.Collections;
 
 public class BuildingInfo : MonoBehaviour {
+
+    public string buildingClicked;
+    public MinorIsland island;
     
     void OnMouseDown()
     {
-        MinorIsland island = GameObject.Find(this.transform.parent.parent.parent.name).GetComponent<MinorIsland>();
+        island = this.transform.parent.parent.parent.GetComponent<MinorIsland>();
+        buildingClicked = island.buildingClicked;
         if (this.name == "Build")
         {
             Destroy(GameObject.Find("WheelCanvas_" + this.transform.parent.parent.parent.name));
             island.wheelPresent = false;
-            island.createChallengeBuild();
-            island.challengeBuildPresent = true;
+            island.createChallengeBuild(buildingClicked);
+            island.challengePresent = true;
         }
 
         Destroy(GameObject.Find(this.transform.parent.parent.name));

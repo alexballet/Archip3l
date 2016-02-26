@@ -66,6 +66,7 @@ public class ResourceManagerBuilding : MonoBehaviour {
     {
         foreach (Resource item in this.Resources)
         {
+            Debug.Log("+++ " + item.Name);
             if (item.TypeResource == resourceType)
             {
                 return item;

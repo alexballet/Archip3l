@@ -119,9 +119,9 @@ public class Building : MonoBehaviour {
     void OnMouseDown()
     {
 
-        if (!minorIsland.wheelPresent && !minorIsland.buildingInfoPresent && !minorIsland.challengeBuildPresent && !minorIsland.moveBuilding && minorIsland.nameBuildingTouchCanvas == String.Empty)
+        if (!minorIsland.wheelPresent && !minorIsland.buildingInfoPresent && !minorIsland.challengePresent && !minorIsland.moveBuilding && minorIsland.nameBuildingTouchCanvas == String.Empty)
         {
-            minorIsland.createBuildingTouch(this.name);
+            minorIsland.createBuildingTouch(this);
         }
 
     }

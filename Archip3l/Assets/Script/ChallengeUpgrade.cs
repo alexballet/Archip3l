@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
 
-public class ChallengeBuild : MonoBehaviour {
+public class ChallengeUpgrade : MonoBehaviour {
 
     public string buildingConcerned;
     public string question;
@@ -18,13 +18,15 @@ public class ChallengeBuild : MonoBehaviour {
     public Button[] propositionsButtons;
     public Text resultText;
     public MinorIsland minorIsland;
+    public Building buidling;
     public bool goodAnswer;
+
 
     public TextAsset csv;
 
-    public void init(TypeChallenge tc, MinorIsland island, TypeBuilding typeBuilding)         //pb with TypeBuildingStat
+    public void init(TypeChallenge tc, MinorIsland island, Building myBuilding)         //pb with TypeBuildingStat
     {
-
+        this.buidling = myBuilding;
         this.minorIsland = island;
         this.typeChallenge = tc;
         if (typeChallenge == TypeChallenge.QCM)
@@ -159,31 +161,23 @@ public class ChallengeBuild : MonoBehaviour {
         {
             TypeBuilding typeBuilding = (TypeBuilding)Enum.Parse(typeof(TypeBuilding), minorIsland.buildingClicked, true);
 
-            //construction of building
-            if(minorIsland.buildingManager.createBuilding(typeBuilding, minorIsland.placeToConstruct) == false)
-            {
-                StartCoroutine(minorIsland.destroyPopup(minorIsland.createPopup("Le bâtiment " + typeBuilding.ToString() + " a déjà été créé !"), 3));
-            }
-            else if (goodAnswer)
-            {
-                StartCoroutine(minorIsland.destroyPopup(minorIsland.createPopup("Grâce à votre bonne réponse, la production du bâtiment " + typeBuilding.ToString() + " double !"), 3));
-            }
+            //TODO : upgrade of the building
+            TypeResource typeResourceProduced = (TypeResource)Enum.Parse(typeof(TypeResource), minorIsland.getNameResourceOrStatProduced(buidling.TypeBuilding.ToString()), true);
+            Debug.Log(typeResourceProduced);
+            if (buidling.resourceManager.getResource(typeResourceProduced) == null)
+                Debug.Log("resource not found");
+            Debug.Log(buidling.resourceManager.getResource(typeResourceProduced).Production.ToString());
+            buidling.resourceManager.changeResourceProduction(typeResourceProduced, buidling.resourceManager.getResource(typeResourceProduced).Production * 2);
+            Debug.Log(buidling.resourceManager.getResource(typeResourceProduced).Production.ToString());
+
+
         }
         else if(Enum.IsDefined(typeof(TypeBuildingStat), minorIsland.buildingClicked))
         {
             TypeBuildingStat typeBuildingStat = (TypeBuildingStat)Enum.Parse(typeof(TypeBuildingStat), minorIsland.buildingClicked, true);
 
             //TODO : gérer le cas de la construction d'un batiment qui ne produit pas de ressources, mais des stats (ex : Hotel, Airport...)
-
-            //construction of building
-            /*if (minorIsland.buildingManager.createBuilding(typeBuildingStat, minorIsland.placeToConstruct) == false)
-            {
-                minorIsland.createPopup("Le bâtiment " + typeBuildingStat.ToString() + " a déjà été créé !");
-            }
-            else if (goodAnswer)
-            {
-                minorIsland.createPopup("Grâce à votre bonne réponse, la production du bâtiment " + typeBuildingStat.ToString() + " double !");
-            }*/
+            
         }
 
 
