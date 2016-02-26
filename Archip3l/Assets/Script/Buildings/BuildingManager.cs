@@ -39,7 +39,7 @@ public class BuildingManager : MonoBehaviour {
                 this.buildingList.Add(building);
 
                 Vector3 newPosition = Camera.main.ScreenToWorldPoint(position);
-                newPosition.z = 0;
+                newPosition.z = -1;
                 building.transform.position = newPosition;
                 return true;
             }

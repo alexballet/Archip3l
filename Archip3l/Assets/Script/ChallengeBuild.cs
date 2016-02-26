@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
 
-public class Challenge : MonoBehaviour {
+public class ChallengeBuild : MonoBehaviour {
 
     public string buildingConcerned;
     public string question;
@@ -152,7 +152,7 @@ public class Challenge : MonoBehaviour {
 
         StartCoroutine(minorIsland.destroyPopup(minorIsland.createPopup(explainations), 8));
 
-        minorIsland.challengePresent = false;
+        minorIsland.challengeBuildPresent = false;
         
         //minorIsland.buildingClicked is a string --> conversion necessary
         if(Enum.IsDefined(typeof(TypeBuilding), minorIsland.buildingClicked))

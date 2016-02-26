@@ -123,7 +123,7 @@ public class ResourceManager : MonoBehaviour {
                 res.changeStock(res.Production);
                 if (res.Production != 0)
                 {
-                    Debug.Log("Island : " + this.minorIsland + "\tProduction : " + res.Production + "\tStock  : " + res.Name + " : " + res.Stock);
+                    //Debug.Log("Island : " + this.minorIsland + "\tProduction : " + res.Production + "\tStock  : " + res.Name + " : " + res.Stock);
                 }
             }
             yield return new WaitForSeconds(1f);

@@ -64,6 +64,7 @@ public class Building : MonoBehaviour {
         }
 
         Texture2D texture = (Texture2D)AssetDatabase.LoadAssetAtPath(texturePath, typeof(Texture2D));
+        //GetComponent<SpriteRenderer>().sprite = Sprite.Create(texture, new Rect(0f, 0f, texture.width, texture.height), new Vector2(0.5f, 0.5f));
         GetComponent<SpriteRenderer>().sprite = Sprite.Create(texture, new Rect(0f, 0f, texture.width, texture.height), new Vector2(0.5f, 0.5f));
         GetComponent<Transform>().localScale = new Vector3(100f, 100f, 1f);
 
@@ -91,7 +92,11 @@ public class Building : MonoBehaviour {
                 this.minorIsland.resourceManager.changeResourceStock(item.First, -item.Second);
             }
             //Animation
+
+            
             var buildingConstructionTransform = Instantiate(buildingConstructionPrefab) as Transform;
+            Destroy(GameObject.Find("Hammer(Clone)"));
+            buildingConstructionTransform.name = "BuildingAnnimation_" + minorIsland.nameMinorIsland;
             Anim_BuildingConstruction anim_BuildingConstruction = buildingConstructionTransform.GetComponent<Anim_BuildingConstruction>();
             if (anim_BuildingConstruction != null)
             {
@@ -110,5 +115,15 @@ public class Building : MonoBehaviour {
     public bool changeProduction(TypeResource resourceType, int value)
     {
         return this.resourceManager.changeResourceProduction(resourceType, value);
+    }
+
+    void OnMouseDown()
+    {
+
+        if (!minorIsland.wheelPresent && !minorIsland.buildingInfoPresent && !minorIsland.challengeBuildPresent && !minorIsland.moveBuilding && minorIsland.nameBuildingTouchCanvas == String.Empty)
+        {
+            minorIsland.createBuildingTouch(this.name);
+        }
+
     }
 }

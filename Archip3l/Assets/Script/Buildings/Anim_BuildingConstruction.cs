@@ -13,7 +13,7 @@ public class Anim_BuildingConstruction : MonoBehaviour
         this.startQuaternion = transform.GetChild(0).rotation;
         this.interval = 0.02f;
 
-        Instantiate(hammerPrefab).SetParent(this.transform);
+        //Instantiate(hammerPrefab).SetParent(this.transform);
         StartCoroutine("Rotate");
     }
 

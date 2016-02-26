@@ -10,8 +10,8 @@ public class BuildingInfo : MonoBehaviour {
         {
             Destroy(GameObject.Find("WheelCanvas_" + this.transform.parent.parent.parent.name));
             island.wheelPresent = false;
-            island.createChallenge();
-            island.challengePresent = true;
+            island.createChallengeBuild();
+            island.challengeBuildPresent = true;
         }
 
         Destroy(GameObject.Find(this.transform.parent.parent.name));
