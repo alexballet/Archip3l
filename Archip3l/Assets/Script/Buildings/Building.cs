@@ -8,7 +8,7 @@ public class Building : MonoBehaviour {
 
     public TypeBuilding TypeBuilding { get; private set; }
     public Resource resourceProduced { get; private set; }
-    public int buildState { get; private set; }
+    public int buildState { get; set; }
     public int constructionTime { get; private set; }
     public MinorIsland minorIsland { get; private set; }
     public List<Tuple<TypeResource, int>> constructionResourceNeeded { get; private set; }
@@ -19,6 +19,7 @@ public class Building : MonoBehaviour {
     public int level;       //possible levels : 0-1-2-3
 
     public Transform buildingConstructionPrefab;
+    public Transform buildingUpgradePrefab;
 
     public void init(TypeBuilding TypeBuilding, MinorIsland island)
     {
@@ -202,6 +203,25 @@ public class Building : MonoBehaviour {
 
         StartCoroutine("build");
     }
+
+    public IEnumerator launchUpgradeAnimation()
+    {
+        //Animation
+        var buildingUpgradeTransform = Instantiate(buildingUpgradePrefab) as Transform;
+        buildingUpgradeTransform.name = "BuildingUpgradeAnimation_" + minorIsland.nameMinorIsland;
+        Anim_BuildingConstruction anim_BuildingConstruction = buildingUpgradeTransform.GetComponent<Anim_BuildingConstruction>();
+        if (anim_BuildingConstruction != null)
+        {
+            anim_BuildingConstruction.transform.SetParent(this.transform);
+            Vector3 vector3 = anim_BuildingConstruction.transform.parent.position;
+            vector3.z = -2;
+            anim_BuildingConstruction.transform.position = vector3;
+        }
+        yield return new WaitForSeconds(this.constructionTime);
+        this.buildState = 1;
+        Destroy(buildingUpgradeTransform.gameObject);
+    }
+
     IEnumerator build()
     {
         bool flag = true;

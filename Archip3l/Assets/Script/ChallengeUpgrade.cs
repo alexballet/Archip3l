@@ -2,27 +2,26 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEditor;
 using System;
 
 public class ChallengeUpgrade : MonoBehaviour {
 
-    public string buildingConcerned;
     public string question;
     public string answer;
     public string explainations;
     public string[] propositions;
     public int nbPropositions;
-    public TypeChallenge typeChallenge;
-    public Canvas canvasChallenge;
-    public SpriteRenderer background;
-    public Button[] propositionsButtons;
-    public Text resultText;
-    public MinorIsland minorIsland;
-    public Building building;
+    public TypeChallenge typeChallenge { get; private set; }
+    public Canvas canvasChallenge { get; private set; }
+    public SpriteRenderer background { get; private set; }
+    public Button[] propositionsButtons { get; private set; }
+    public Text resultText { get; private set; }
+    public MinorIsland minorIsland { get; private set; }
+    public Building building { get; private set; }
     public bool goodAnswer;
 
-
-    public TextAsset csv;
+    public TextAsset csv { get; private set; }
 
     public void init(TypeChallenge tc, MinorIsland island, Building myBuilding)
     {
@@ -36,25 +35,22 @@ public class ChallengeUpgrade : MonoBehaviour {
 
 
         //CSV part
-        //row[0] : building ; row[1] : question ; row[2] : answer ; row[3] : explainations ; after : propositions
+        //row[0] : question ; row[1] : answer ; row[2] : explainations ; after : propositions
         //VraiFaux : answer = VRAI ou answer = FAUX
         //QCM : answer = Proposition0 ou answer = Proposition1 ou answer = Proposition2
 
-        csv = Resources.Load<TextAsset>("Challenges/" + typeChallenge.ToString() + "/" + typeChallenge.ToString());
+        csv = Resources.Load<TextAsset>("Challenges/" + typeChallenge.ToString() + "/" + typeChallenge.ToString() + "_" + this.building.TypeBuilding.ToString());
 
-        //CSV_reader.DebugOutputGrid(CSV_reader.SplitCsvGrid(csv.text));
         string[] row = CSV_reader.GetRandomLine(csv.text);
 
-        //theme of question is linked to building to construct  --> order ??
-        this.buildingConcerned = row[0];
-        this.question = row[1];
-        this.answer = row[2];
-        this.explainations = row[3];
+        this.question = row[0];
+        this.answer = row[1];
+        this.explainations = row[2];
         this.propositions = new string[nbPropositions];
-        this.propositions[0] = row[4];
-        this.propositions[1] = row[5];
+        this.propositions[0] = row[3];
+        this.propositions[1] = row[4];
         if (this.nbPropositions == 3)
-            this.propositions[2] = row[6];
+            this.propositions[2] = row[5];
 
 
         //graphic part
@@ -167,8 +163,8 @@ public class ChallengeUpgrade : MonoBehaviour {
             {
                 building.level += 1;
                 Debug.Log(typeResourceProduced);
-                //Debug.Log(building.resourceManager.getResource(typeResourceProduced).Production.ToString());
                 building.changeProduction(building.resourceProduced.Production);
+                StartCoroutine(minorIsland.destroyPopup(minorIsland.createPopup("Bonne réponse ! Votre bâtiment passe au niveau " + building.level.ToString()), 3));
             }
             else
             {
@@ -176,10 +172,14 @@ public class ChallengeUpgrade : MonoBehaviour {
                 {
                     building.level -= 1;
                     building.changeProduction(-(building.resourceProduced.Production / 2));
+                    StartCoroutine(minorIsland.destroyPopup(minorIsland.createPopup("Mauvaise réponse ! Votre bâtiment passe au niveau " + building.level.ToString()), 3));
                 }
+                StartCoroutine(minorIsland.destroyPopup(minorIsland.createPopup("Mauvaise réponse ! Votre bâtiment est déjà au nivau le plus bas ..."), 3));
             }
 
-
+            //upgrading animation
+            building.buildState = 0;
+            StartCoroutine(building.launchUpgradeAnimation());
         }
 
 
