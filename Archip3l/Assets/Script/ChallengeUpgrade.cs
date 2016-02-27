@@ -39,7 +39,9 @@ public class ChallengeUpgrade : MonoBehaviour {
         //VraiFaux : answer = VRAI ou answer = FAUX
         //QCM : answer = Proposition0 ou answer = Proposition1 ou answer = Proposition2
 
-        csv = Resources.Load<TextAsset>("Challenges/" + typeChallenge.ToString() + "/" + typeChallenge.ToString() + "_" + this.building.TypeBuilding.ToString());
+        //csv = Resources.Load<TextAsset>("Challenges/" + typeChallenge.ToString() + "/" + typeChallenge.ToString() + "_" + this.building.TypeBuilding.ToString());
+        csv = Resources.Load<TextAsset>("Challenges/" + typeChallenge.ToString() + "/" + typeChallenge.ToString());
+
 
         string[] row = CSV_reader.GetRandomLine(csv.text);
 

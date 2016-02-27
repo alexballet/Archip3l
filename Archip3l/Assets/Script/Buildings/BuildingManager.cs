@@ -41,6 +41,10 @@ public class BuildingManager : MonoBehaviour {
                 Vector3 newPosition = Camera.main.ScreenToWorldPoint(position);
                 newPosition.z = -1;
                 building.transform.position = newPosition;
+                //rotation of image according to the place of the island
+                char id = minorIsland.nameMinorIsland[minorIsland.nameMinorIsland.Length - 1];
+                if (id == '1' || id == '2')
+                    building.transform.Rotate(Vector3.forward * 180);
                 return true;
             }
             return false;
