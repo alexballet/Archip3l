@@ -38,7 +38,8 @@ public class ChallengeBuild : MonoBehaviour {
         //QCM : answer = Proposition0 ou answer = Proposition1 ou answer = Proposition2
 
         //ENCODAGE : UTF8-16-LE
-        csv = Resources.Load<TextAsset>("Challenges/" + typeChallenge.ToString() + "/" + typeChallenge.ToString() + "_" + typeBuilding.ToString());
+        //csv = Resources.Load<TextAsset>("Challenges/" + typeChallenge.ToString() + "/" + typeChallenge.ToString() + "_" + typeBuilding.ToString());
+        csv = Resources.Load<TextAsset>("Challenges/" + typeChallenge.ToString() + "/" + typeChallenge.ToString());
 
         string[] row = CSV_reader.GetRandomLine(csv.text);
 

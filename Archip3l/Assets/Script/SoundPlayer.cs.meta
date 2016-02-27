@@ -1,0 +1,30 @@
+fileFormatVersion: 2
+guid: 8e01a522ab0402149bf6d24a1d8432f8
+timeCreated: 1456609468
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - airportSound: {fileID: 8300000, guid: 46ef3ee474998b0429562365ec977b3b, type: 3}
+  - amusementParkSound: {fileID: 8300000, guid: d624b41fd9ede2543b31cb92c304b9a0,
+      type: 3}
+  - churchSound: {fileID: 8300000, guid: 0b510e40e487d154585300f31b5407d9, type: 3}
+  - cinemaSound: {fileID: 8300000, guid: 6c2e0766b0cd3aa48845ef6172608aa7, type: 3}
+  - constructionSound: {fileID: 8300000, guid: 569b38c08fade644fa69b36fac034647, type: 3}
+  - factorySound: {fileID: 8300000, guid: b995d18a5a1302e4aa141924f180ce47, type: 3}
+  - farmSound: {fileID: 8300000, guid: 7bca791653196f149ae335e66f0c6b84, type: 3}
+  - harborSound: {fileID: 8300000, guid: 9d14a08ab1f341c48b1840a315b9a545, type: 3}
+  - hotelsound: {fileID: 8300000, guid: 6fecbd8826e9bc749b10cc77795f9964, type: 3}
+  - labSound: {fileID: 8300000, guid: 989911475d9d0b94d825d1ab0ecb80e4, type: 3}
+  - mineSound: {fileID: 8300000, guid: 224114a0d2e6d834f844155ca4a120c0, type: 3}
+  - oilPlantSound: {fileID: 8300000, guid: cdd62d25c88466a4aaa76537402de741, type: 3}
+  - powerPlantSound: {fileID: 8300000, guid: 57e34828ba0acae4fa80f116b37e707a, type: 3}
+  - sawMillSound: {fileID: 8300000, guid: 4f6acd8166acf9c4f978f4f31a14f110, type: 3}
+  - schoolSound: {fileID: 8300000, guid: 69af1845136309d45ad67f57697fa09b, type: 3}
+  - upgradeSound: {fileID: 8300000, guid: c54d512fe5542fa4eba548ba00d43088, type: 3}
+  - windTurbineSound: {fileID: 8300000, guid: 49d4bbb42e03549469e56256107f7d95, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
