@@ -46,6 +46,8 @@ public class Tuto_Building : MonoBehaviour {
         }
         yield return new WaitForSeconds(this.constructionTime);
         this.buildState = 1;
+        tuto_minorIsland.harborUpgraded = true;
+        StartCoroutine(tuto_minorIsland.destroyPopup(tuto_minorIsland.createPopup("Pour finir le tutoriel, supprimez le port."), 5));
         Destroy(buildingUpgradeTransform.gameObject);
     }
 

@@ -13,8 +13,9 @@ public class Tuto_BuildingInfo : MonoBehaviour {
         if (this.name == "Build")
         {
             Destroy(GameObject.Find("WheelCanvas_" + this.transform.parent.parent.parent.name));
-            island.wheelPresent = false;
+            //island.wheelPresent = false;
             island.createTuto_ChallengeBuild(buildingClicked);
+            island.harborBuilt = true;
         }
 
         Destroy(GameObject.Find(this.transform.parent.parent.name));

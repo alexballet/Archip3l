@@ -27,6 +27,11 @@ public class Tuto_BuildingManager : MonoBehaviour {
             Vector3 newPosition = Camera.main.ScreenToWorldPoint(position);
             newPosition.z = -1;
             building.transform.position = newPosition;
+            //rotation of image according to the place of the island
+            char id = tuto_minorIsland.nameTuto_MinorIsland[tuto_minorIsland.nameTuto_MinorIsland.Length - 1];
+            if (id == '1' || id == '2')
+                building.transform.Rotate(Vector3.forward * 180);
+            tuto_minorIsland.harborBuilt = true;
             return true;
         }
         else
@@ -36,9 +41,23 @@ public class Tuto_BuildingManager : MonoBehaviour {
         return false;
     }
 
-    public bool destroyBuilding(TypeBuilding buildingType)
+    public IEnumerator destroyBuilding()
     {
-        GameObject.Find(this.tuto_minorIsland.nameTuto_MinorIsland + "_" + buildingType.ToString());
-        return tuto_building;
+        GameObject objectToDestroy = GameObject.Find(this.tuto_minorIsland.nameTuto_MinorIsland + "_Harbor");
+        yield return StartCoroutine(fadeAndDestroy(objectToDestroy));
+    }
+    IEnumerator fadeAndDestroy(GameObject obj)
+    {
+        Color color;
+        for (int i = 0; i < 100; i++)
+        {
+            yield return new WaitForSeconds(0.001f);
+
+            color = obj.GetComponent<SpriteRenderer>().material.color;
+            color.a -= 0.01f;
+            obj.GetComponent<SpriteRenderer>().material.color = color;
+        }
+        Destroy(obj);
+        tuto_minorIsland.harborRemoved = true;
     }
 }

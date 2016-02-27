@@ -21,6 +21,11 @@ public class Tuto_MinorIsland : MonoBehaviour {
     public string buildingClicked;
     public int nbPopupPresent;
 
+    //steps of tuto
+    public bool harborBuilt = false;
+    public bool harborMoved = false;
+    public bool harborUpgraded = false;
+    public bool harborRemoved = false;
 
 
     void Awake()
@@ -33,9 +38,12 @@ public class Tuto_MinorIsland : MonoBehaviour {
         {
             mytuto_buildingManager.init(this);
             mytuto_buildingManager.transform.SetParent(this.transform);
+            mytuto_buildingManager.name = "BuildingManager_" + this.nameTuto_MinorIsland;
             this.tuto_buildingManager = mytuto_buildingManager;
         }
-        
+
+        StartCoroutine(this.destroyPopup(this.createPopup("Appuyez n'importe où puis créez le port."), 5));
+
     }
 
     public void createTuto_ChallengeBuild(string buildingClicked)
@@ -43,14 +51,11 @@ public class Tuto_MinorIsland : MonoBehaviour {
         this.tuto_buildingManager.createBuilding(this.placeToConstruct);
     }
 
-    public void createChallengeUpgrade(Building tuto_building)
+    public void createTuto_ChallengeUpgrade(Tuto_Building tuto_building)
     {
-
         tuto_building.level += 1;
         tuto_building.buildState = 0;
         StartCoroutine(tuto_building.launchUpgradeAnimation());
-
-        
     }
 
 
@@ -130,8 +135,15 @@ public class Tuto_MinorIsland : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        
-	}
+
+        //when all islands have finished the tuto, change scene
+
+        if (GameObject.Find("sous_ile_1").GetComponent<Tuto_MinorIsland>().harborRemoved &&
+            GameObject.Find("sous_ile_2").GetComponent<Tuto_MinorIsland>().harborRemoved &&
+            GameObject.Find("sous_ile_3").GetComponent<Tuto_MinorIsland>().harborRemoved &&
+            GameObject.Find("sous_ile_4").GetComponent<Tuto_MinorIsland>().harborRemoved)
+                Application.LoadLevel("playingScene");
+    }
 
 
     void OnMouseDown()
@@ -145,6 +157,8 @@ public class Tuto_MinorIsland : MonoBehaviour {
             GameObject.Find(this.nameBuildingTouchCanvas).transform.position = pos;
             this.moveBuilding = false;
             this.nameBuildingTouchCanvas = string.Empty;
+            this.harborMoved = true;
+            StartCoroutine(this.destroyPopup(this.createPopup("Maintenant, améliorez le port."), 5));
         }
         else
         {
@@ -155,7 +169,7 @@ public class Tuto_MinorIsland : MonoBehaviour {
             }
             else
             {
-                if (!wheelPresent)  //if the wheel is not on the island
+                if (!wheelPresent && !harborBuilt)  //if the wheel is not on the island
                 {
                     this.placeToConstruct = Input.mousePosition;
 
