@@ -51,9 +51,28 @@ public class BuildingManager : MonoBehaviour {
         }
     }
 
-    public bool destroyBuilding(TypeBuilding buildingType)
+    public IEnumerator destroyBuilding(TypeBuilding buildingType)
     {
-        GameObject.Find(this.minorIsland.nameMinorIsland + "_" + buildingType.ToString());
-        return (this.buildingList.Remove(this.getBuilding(buildingType)));
+        Building buildingToDestroy = this.getBuilding(buildingType);
+        GameObject objectToDestroy = GameObject.Find(this.minorIsland.nameMinorIsland + "_" + buildingType.ToString());
+        //Delete game object
+        yield return StartCoroutine(fadeAndDestroy(objectToDestroy));
+        //update resource production in island resource manager
+        this.minorIsland.resourceManager.changeResourceProduction(buildingToDestroy.resourceProduced.TypeResource, buildingToDestroy.resourceProduced.Production);
+        //remove the building in the list of this manager
+        this.buildingList.Remove(this.getBuilding(buildingType));
+    }
+    IEnumerator fadeAndDestroy(GameObject obj)
+    {
+        Color color;
+        for (int i = 0; i < 100; i++)
+        {
+            yield return new WaitForSeconds(0.001f);
+
+            color = obj.GetComponent<SpriteRenderer>().material.color;
+            color.a -= 0.01f;
+            obj.GetComponent<SpriteRenderer>().material.color = color;
+        }
+        Destroy(obj);
     }
 }
