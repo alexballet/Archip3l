@@ -12,6 +12,7 @@ public class Building : MonoBehaviour {
     public int constructionTime { get; private set; }
     public MinorIsland minorIsland { get; private set; }
     private List<Tuple<TypeResource, int>> constructionResourceNeeded;
+    private string texturePath;
     public int level;       //possible levels : 0-1-2-3
 
     public Transform resourceManagerPrefab;
@@ -35,8 +36,7 @@ public class Building : MonoBehaviour {
             this.resourceManager = resourceManager;
         }
 
-        //string texturePath = "Assets/Resources/Building/Icons/mapIcon" + TypeBuilding.ToString() + ".png";
-        string texturePath = "Assets/Resources/Building/Icons/wheelIcon" + TypeBuilding.ToString() + ".png";
+        this.texturePath = "Assets/Resources/Building/Icons/wheelIcon" + TypeBuilding.ToString() + ".png";
 
         switch (TypeBuilding)
         {
@@ -124,13 +124,9 @@ public class Building : MonoBehaviour {
                 break;
         }
 
-        Texture2D texture = (Texture2D)AssetDatabase.LoadAssetAtPath(texturePath, typeof(Texture2D));
-        GetComponent<SpriteRenderer>().sprite = Sprite.Create(texture, new Rect(0f, 0f, texture.width, texture.height), new Vector2(0.5f, 0.5f));
-        //GetComponent<Transform>().localScale = new Vector3(100f, 100f, 1f);
         GetComponent<Transform>().localScale = new Vector3(9f, 9f, 1f);
 
         StartCoroutine("build");
-        //Debug.Log("Construction " + this.TypeBuilding);
     }
     IEnumerator build()
     {
@@ -146,14 +142,18 @@ public class Building : MonoBehaviour {
             }
         }
 
-        if(flag)
+        if (flag == true)
         {
             foreach (Tuple<TypeResource, int> item in this.constructionResourceNeeded)
             {
                 this.minorIsland.resourceManager.changeResourceStock(item.First, -item.Second);
             }
+
+            //texture
+            Texture2D texture = (Texture2D)AssetDatabase.LoadAssetAtPath(this.texturePath, typeof(Texture2D));
+            GetComponent<SpriteRenderer>().sprite = Sprite.Create(texture, new Rect(0f, 0f, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+
             //Animation
-            
             var buildingConstructionTransform = Instantiate(buildingConstructionPrefab) as Transform;
             buildingConstructionTransform.name = "BuildingAnnimation_" + minorIsland.nameMinorIsland;
             Anim_BuildingConstruction anim_BuildingConstruction = buildingConstructionTransform.GetComponent<Anim_BuildingConstruction>();

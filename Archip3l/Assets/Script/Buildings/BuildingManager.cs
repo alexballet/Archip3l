@@ -53,7 +53,7 @@ public class BuildingManager : MonoBehaviour {
 
     public bool destroyBuilding(TypeBuilding buildingType)
     {
-        //delete the gameobject child (to do)
+        GameObject.Find(this.minorIsland.nameMinorIsland + "_" + buildingType.ToString());
         return (this.buildingList.Remove(this.getBuilding(buildingType)));
     }
 }
