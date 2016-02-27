@@ -138,7 +138,9 @@ public class TouchBuilding : MonoBehaviour {
 
                 break;
             case "Remove":
-                //TODO
+                TypeBuilding typeBuilding = building.TypeBuilding;
+                StartCoroutine(building.minorIsland.buildingManager.destroyBuilding(building.TypeBuilding));
+                Destroy(GameObject.Find("touchBuilding_" + this.island.nameMinorIsland + "_" + typeBuilding.ToString()));
                 break;
             case "Move":
                 Destroy(GameObject.Find(this.transform.parent.parent.name));
@@ -147,14 +149,4 @@ public class TouchBuilding : MonoBehaviour {
                 break;
         }
     }
-
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 }
