@@ -142,8 +142,16 @@ public class TouchBuilding : MonoBehaviour {
                 break;
             case "Move":
                 Destroy(GameObject.Find(this.transform.parent.parent.name));
-                StartCoroutine(island.destroyPopup(island.createPopup("Appuyez sur l'endroit où placer le batiment"), 3));
-                island.moveBuilding = true;
+
+                if (building.TypeBuilding.ToString() == "Harbor")
+                {
+                    StartCoroutine(island.destroyPopup(island.createPopup("Le port ne peut pas être déplacé !"), 3));
+                }
+                else
+                {
+                    StartCoroutine(island.destroyPopup(island.createPopup("Appuyez sur l'endroit où placer le batiment"), 3));
+                    island.moveBuilding = true;
+                }
                 break;
         }
     }
