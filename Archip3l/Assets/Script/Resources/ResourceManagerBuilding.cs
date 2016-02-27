@@ -17,7 +17,7 @@ public class ResourceManagerBuilding : MonoBehaviour {
         StartCoroutine("updateStocks");
     }
 
-    public bool addResource(TypeResource resourceType, string name, int quantity, int production)
+    public bool addResource(TypeResource resourceType, int quantity, int production)
     {
         bool flag = false;
         foreach (Resource item in this.Resources)
@@ -36,7 +36,7 @@ public class ResourceManagerBuilding : MonoBehaviour {
             //GameObject myGameObject = new GameObject();
             //myGameObject.transform.SetParent(GameObject.Find("Virtual_" + minorIsland.nameMinorIsland).transform);
             Resource res = ScriptableObject.CreateInstance<Resource>();
-            res.init(resourceType, name, quantity, production);
+            res.init(resourceType, quantity, production);
             this.Resources.Add(res);
             return true;
         }
@@ -66,7 +66,7 @@ public class ResourceManagerBuilding : MonoBehaviour {
     {
         foreach (Resource item in this.Resources)
         {
-            Debug.Log("+++ " + item.Name);
+            //Debug.Log("+++ " + item.Name);
             if (item.TypeResource == resourceType)
             {
                 return item;

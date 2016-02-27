@@ -43,8 +43,7 @@ public class Building : MonoBehaviour {
             case TypeBuilding.GoldMine:
                 this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Wood, 5));
                 this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Stone, 5));
-                //addResource(TypeResource resourceType, string name, int quantity, int production)
-                this.resourceManager.addResource(TypeResource.Gold, "Gold", 0, 5);
+                this.resourceManager.addResource(TypeResource.Gold, 0, 5);
                 this.constructionTime = 5;
                 break;
             case TypeBuilding.StoneMine:
@@ -136,7 +135,7 @@ public class Building : MonoBehaviour {
         {
             //avoid null references
             Resource resource = this.minorIsland.resourceManager.getResource(item.First);
-            if ((resource == null) || (item.Second < resource.Stock))
+            if (item.Second > resource.Stock)
             {
                 flag = false;
             }
@@ -169,6 +168,7 @@ public class Building : MonoBehaviour {
         else
         {
             //Not enough resources
+            Debug.Log("Not enough resources");
         }
     }
     public bool changeProduction(TypeResource resourceType, int value)

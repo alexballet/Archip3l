@@ -46,9 +46,9 @@ public class MinorIsland : MonoBehaviour {
             resourceManager.transform.SetParent(this.transform);
             this.resourceManager = resourceManager;
         }
-        
+
         /*----------TEST--------*/
-        
+
 
         //if(nameMinorIsland == "sous_ile_3")
         //{
