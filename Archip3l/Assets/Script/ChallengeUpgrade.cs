@@ -7,7 +7,6 @@ using System;
 
 public class ChallengeUpgrade : MonoBehaviour {
 
-    public string buildingConcerned;
     public string question;
     public string answer;
     public string explainations;
@@ -36,25 +35,22 @@ public class ChallengeUpgrade : MonoBehaviour {
 
 
         //CSV part
-        //row[0] : building ; row[1] : question ; row[2] : answer ; row[3] : explainations ; after : propositions
+        //row[0] : question ; row[1] : answer ; row[2] : explainations ; after : propositions
         //VraiFaux : answer = VRAI ou answer = FAUX
         //QCM : answer = Proposition0 ou answer = Proposition1 ou answer = Proposition2
 
-        csv = Resources.Load<TextAsset>("Challenges/" + typeChallenge.ToString() + "/" + typeChallenge.ToString());
+        csv = Resources.Load<TextAsset>("Challenges/" + typeChallenge.ToString() + "/" + typeChallenge.ToString() + "_" + this.building.TypeBuilding.ToString());
 
-        //CSV_reader.DebugOutputGrid(CSV_reader.SplitCsvGrid(csv.text));
         string[] row = CSV_reader.GetRandomLine(csv.text);
 
-        //theme of question is linked to building to construct  --> order ??
-        this.buildingConcerned = row[0];
-        this.question = row[1];
-        this.answer = row[2];
-        this.explainations = row[3];
+        this.question = row[0];
+        this.answer = row[1];
+        this.explainations = row[2];
         this.propositions = new string[nbPropositions];
-        this.propositions[0] = row[4];
-        this.propositions[1] = row[5];
+        this.propositions[0] = row[3];
+        this.propositions[1] = row[4];
         if (this.nbPropositions == 3)
-            this.propositions[2] = row[6];
+            this.propositions[2] = row[5];
 
 
         //graphic part
