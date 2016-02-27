@@ -7,7 +7,6 @@ using UnityEditor;
 public class Building : MonoBehaviour {
 
     public TypeBuilding TypeBuilding { get; private set; }
-    //public ResourceManagerBuilding resourceManager { get; private set; }
     public Resource resourceProduced { get; private set; }
     public int buildState { get; private set; }
     public int constructionTime { get; private set; }
@@ -19,7 +18,6 @@ public class Building : MonoBehaviour {
     private string texturePath;
     public int level;       //possible levels : 0-1-2-3
 
-    //public Transform resourceManagerPrefab;
     public Transform buildingConstructionPrefab;
 
     public void init(TypeBuilding TypeBuilding, MinorIsland island)
@@ -35,18 +33,6 @@ public class Building : MonoBehaviour {
         this.name = this.minorIsland.nameMinorIsland + "_" + this.TypeBuilding.ToString();
 
         this.resourceProduced = ScriptableObject.CreateInstance<Resource>();
-        //this.resourceProduced.init(resourceType, quantity, production);
-
-
-        //var resourceManagerTransform = Instantiate(resourceManagerPrefab) as Transform;
-        //ResourceManagerBuilding resourceManager = resourceManagerTransform.GetComponent<ResourceManagerBuilding>();
-        //if (resourceManager != null)
-        //{
-        //    resourceManager.init(this);
-        //    resourceManager.transform.SetParent(this.transform);
-        //    this.resourceManager = resourceManager;
-        //}
-
         this.texturePath = "Assets/Resources/Building/Icons/wheelIcon_" + TypeBuilding.ToString() + ".png";
 
         this.constructionResourceNeeded = getConstructionResourcesNeeded(TypeBuilding.ToString());
@@ -185,12 +171,6 @@ public class Building : MonoBehaviour {
         for (;;)
         {
             this.changeStock(this.resourceProduced.Production);
-            //foreach (Resource res in this.Resources)
-            //{
-            //    //this.building.resourceManager.changeResourceStock(res.TypeResource, res.Production);
-            //    res.changeStock(res.Production);
-            //    //Debug.Log("Building : " + this.building.name + "\tProduction : " + res.Production + "\tStock  : " + res.Name + " : " + res.Stock);
-            //}
             yield return new WaitForSeconds(5f);
         }
     }
