@@ -16,45 +16,34 @@ public class ResourceManager : MonoBehaviour {
         //Add all resources
         foreach(TypeResource resourceType in Enum.GetValues(typeof(TypeResource)))
         {
-            this.addResource(resourceType, 0, 10);
+            this.addResource(resourceType, 0, 0);
         }
 
-        //To be specified !!
+
         switch (this.minorIsland.nameMinorIsland)
         {
             case "sous_ile_1":
-                this.changeResourceStock(TypeResource.Gold, 40);
-                this.changeResourceStock(TypeResource.Food, 50);
-                this.changeResourceStock(TypeResource.Stone, 40);
-                this.changeResourceStock(TypeResource.Electricity, 40);
-                this.changeResourceStock(TypeResource.Wood, 50);
+                this.changeResourceStock(TypeResource.Gold, 10);
+                this.changeResourceStock(TypeResource.Stone, 5);
                 break;
             case "sous_ile_2":
-                this.changeResourceStock(TypeResource.Gold, 40);
-                this.changeResourceStock(TypeResource.Food, 50);
-                this.changeResourceStock(TypeResource.Stone, 40);
-                this.changeResourceStock(TypeResource.Electricity, 40);
-                this.changeResourceStock(TypeResource.Wood, 50);
+                this.changeResourceStock(TypeResource.Gold, 5);
+                this.changeResourceStock(TypeResource.Stone, 10);
+                this.changeResourceStock(TypeResource.Oil, 20);
+                this.changeResourceStock(TypeResource.Wood, 10);
+                this.changeResourceStock(TypeResource.Food, 5);
                 break;
             case "sous_ile_3":
-                this.changeResourceStock(TypeResource.Gold, 40);
-                this.changeResourceStock(TypeResource.Food, 50);
-                this.changeResourceStock(TypeResource.Stone, 40);
-                this.changeResourceStock(TypeResource.Electricity, 40);
-                this.changeResourceStock(TypeResource.Wood, 50);
+                this.changeResourceStock(TypeResource.Gold, 5);
+                this.changeResourceStock(TypeResource.Stone, 10);
+                this.changeResourceStock(TypeResource.Food, 5);
                 break;
             case "sous_ile_4":
-                this.changeResourceStock(TypeResource.Gold, 40);
-                this.changeResourceStock(TypeResource.Food, 50);
-                this.changeResourceStock(TypeResource.Stone, 40);
-                this.changeResourceStock(TypeResource.Electricity, 40);
-                this.changeResourceStock(TypeResource.Wood, 50);
+                this.changeResourceStock(TypeResource.Stone, 5);
+                this.changeResourceStock(TypeResource.Wood, 10);
                 break;
         }
-        //this.addResource(TypeResource.Gold, "Or", 0, 0);
 
-        //this.Resources.Add(ScriptableObject.CreateInstance<Resource>());*/
-        //this.Resources[-1].init(TypeResource.Bois, "Nourriture");
 
     }
     void Start()

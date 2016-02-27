@@ -33,6 +33,7 @@ public class WheelIcon : MonoBehaviour {
             //modification of the content of the different Text Children of the Canvas
 
             List<Tuple<TypeResource, int>> constructionResourceNeeded = Building.getConstructionResourcesNeeded(island.buildingClicked);
+            
 
             foreach (Text textInCanvas in buildingInfo.GetComponent<Canvas>().GetComponentsInChildren<Text>())
             {
@@ -45,7 +46,7 @@ public class WheelIcon : MonoBehaviour {
                         textInCanvas.text = constructionResourceNeeded[0].Second.ToString();
                         break;
                     case "CostValue2":
-                        if (constructionResourceNeeded[1] != null)
+                        if (constructionResourceNeeded.Count == 2)
                             textInCanvas.text = constructionResourceNeeded[1].Second.ToString();
                         else
                             textInCanvas.text = "-";
@@ -67,7 +68,7 @@ public class WheelIcon : MonoBehaviour {
                         imageInCanvas.sprite = Resources.Load<Sprite>("infoBatiments/ResourcesIcons/" + constructionResourceNeeded[0].First.ToString() + "Icon");
                         break;
                     case "CostImage2":
-                        if (constructionResourceNeeded[1] != null)
+                        if (constructionResourceNeeded.Count == 2)
                             imageInCanvas.sprite = Resources.Load<Sprite>("infoBatiments/ResourcesIcons/" + constructionResourceNeeded[1].First.ToString() + "Icon");
                         else
                             imageInCanvas.sprite = null;
@@ -80,21 +81,20 @@ public class WheelIcon : MonoBehaviour {
                         imageInCanvas.sprite = Resources.Load<Sprite>("infoBatiments/ResourcesIcons/" + Building.getNameResourceOrStatProduced(island.buildingClicked) + "Icon");
                         break;
                     case "Build":
-                        imageInCanvas.GetComponent<BoxCollider2D>().enabled = false;
-                        Debug.Log(island.resourceManager.getResource(constructionResourceNeeded[0].First).Stock.ToString());
-                        Debug.Log(island.resourceManager.getResource(constructionResourceNeeded[1].First).Stock.ToString());
                         if (island.resourceManager.getResource(constructionResourceNeeded[0].First).Stock < constructionResourceNeeded[0].Second)
                         {
                             imageInCanvas.sprite = Resources.Load<Sprite>("infoBatiments/boutonConstruireGrise");
+                            imageInCanvas.GetComponent<BoxCollider2D>().enabled = false;
                         }
-                        else if (constructionResourceNeeded[1] != null)
+                        else if (constructionResourceNeeded.Count == 2)
                         {
                             if (island.resourceManager.getResource(constructionResourceNeeded[1].First).Stock < constructionResourceNeeded[1].Second)
+                            {
                                 imageInCanvas.sprite = Resources.Load<Sprite>("infoBatiments/boutonConstruireGrise");
+                                imageInCanvas.GetComponent<BoxCollider2D>().enabled = false;
+                            }                                
                         }
-
-
-                            break;
+                        break;
                 }
             }
             //rotation of image according to the place of the island

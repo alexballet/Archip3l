@@ -55,19 +55,19 @@ public class TouchBuilding : MonoBehaviour {
                             switch (building.level)
                             {
                                 case 0:
-                                    if (building.upgrade1ResourceNeeded[1] != null)
+                                    if (building.upgrade1ResourceNeeded.Count == 2)
                                         textInCanvas.text = building.upgrade1ResourceNeeded[1].Second.ToString();
                                     else
                                         textInCanvas.text = "-";
                                     break;
                                 case 1:
-                                    if (building.upgrade1ResourceNeeded[1] != null)
+                                    if (building.upgrade2ResourceNeeded.Count == 2)
                                         textInCanvas.text = building.upgrade2ResourceNeeded[1].Second.ToString();
                                     else
                                         textInCanvas.text = "-";
                                     break;
                                 case 2:
-                                    if (building.upgrade1ResourceNeeded[1] != null)
+                                    if (building.upgrade3ResourceNeeded.Count == 2)
                                         textInCanvas.text = building.upgrade3ResourceNeeded[1].Second.ToString();
                                     else
                                         textInCanvas.text = "-";
@@ -105,19 +105,19 @@ public class TouchBuilding : MonoBehaviour {
                             switch (building.level)
                             {
                                 case 0:
-                                    if (building.upgrade1ResourceNeeded[1] != null)
+                                    if (building.upgrade1ResourceNeeded.Count == 2)
                                         imageInCanvas.sprite = Resources.Load<Sprite>("infoBatiments/ResourcesIcons/" + building.upgrade1ResourceNeeded[1].First.ToString() + "Icon");
                                     else
                                         imageInCanvas.sprite = null;
                                     break;
                                 case 1:
-                                    if (building.upgrade1ResourceNeeded[1] != null)
+                                    if (building.upgrade2ResourceNeeded.Count == 2)
                                         imageInCanvas.sprite = Resources.Load<Sprite>("infoBatiments/ResourcesIcons/" + building.upgrade2ResourceNeeded[1].First.ToString() + "Icon");
                                     else
                                         imageInCanvas.sprite = null;
                                     break;
                                 case 2:
-                                    if (building.upgrade1ResourceNeeded[1] != null)
+                                    if (building.upgrade3ResourceNeeded.Count == 2)
                                         imageInCanvas.sprite = Resources.Load<Sprite>("infoBatiments/ResourcesIcons/" + building.upgrade3ResourceNeeded[1].First.ToString() + "Icon");
                                     else
                                         imageInCanvas.sprite = null;
@@ -159,7 +159,7 @@ public class TouchBuilding : MonoBehaviour {
                             textInCanvas.text = (building.constructionResourceNeeded[0].Second / 2).ToString();
                             break;
                         case "GainValue2":
-                            if (building.constructionResourceNeeded[1] != null)
+                            if (building.constructionResourceNeeded.Count == 2)
                                 textInCanvas.text = (building.constructionResourceNeeded[1].Second / 2).ToString();
                             else
                                 textInCanvas.text = "-";
@@ -169,18 +169,14 @@ public class TouchBuilding : MonoBehaviour {
                 //modification of the background of the different Image Children of the Canvas
                 foreach (SpriteRenderer imageInCanvas in removeBuildingWindowCanvas.GetComponent<Canvas>().GetComponentsInChildren<SpriteRenderer>())
                 {
-                    Debug.Log(building.constructionResourceNeeded[0].First.ToString());
-                    Debug.Log(building.constructionResourceNeeded[1].First.ToString());
                     switch (imageInCanvas.name)
                     {
                         //mêmes images
                         case "GainImage1":
-                            Debug.Log("1ok");
                             imageInCanvas.sprite = Resources.Load<Sprite>("infoBatiments/ResourcesIcons/" + building.constructionResourceNeeded[0].First.ToString() + "Icon");
                             break;
                         case "GainImage2":
-                            Debug.Log("2ok");
-                            if (building.constructionResourceNeeded[1] != null)
+                            if (building.constructionResourceNeeded.Count == 2)
                                 imageInCanvas.sprite = Resources.Load<Sprite>("infoBatiments/ResourcesIcons/" + building.constructionResourceNeeded[1].First.ToString() + "Icon");
                             else
                                 imageInCanvas.sprite = null;

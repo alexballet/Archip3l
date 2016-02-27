@@ -3,9 +3,9 @@ using System.Collections;
 
 public class BuildingInfo : MonoBehaviour {
 
-    public string buildingClicked;
-    public MinorIsland island;
-    
+    public string buildingClicked { get; private set; }
+    public MinorIsland island { get; private set; }
+
     void OnMouseDown()
     {
         island = this.transform.parent.parent.parent.GetComponent<MinorIsland>();

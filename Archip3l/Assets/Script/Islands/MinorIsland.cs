@@ -28,6 +28,7 @@ public class MinorIsland : MonoBehaviour {
 
     void Awake()
     {
+
         nbPopupPresent = 0;
         
         var buildingManagerTransform = Instantiate(buildingManagerPrefab) as Transform;
@@ -328,17 +329,17 @@ public class MinorIsland : MonoBehaviour {
             case "sous_ile_1":
                 list.Add("wheelIcon_OilPlant");
                 list.Add("wheelIcon_StoneMine");
-                list.Add("wheelIcon_SawMill");
+                list.Add("wheelIcon_Sawmill");
                 break;
             case "sous_ile_2":
                 list.Add("wheelIcon_GoldMine");
                 list.Add("wheelIcon_StoneMine");
-                list.Add("wheelIcon_SawMill");
+                list.Add("wheelIcon_Sawmill");
                 break;
             case "sous_ile_3":
                 list.Add("wheelIcon_OilPlant");
                 list.Add("wheelIcon_GoldMine");
-                list.Add("wheelIcon_SawMill");
+                list.Add("wheelIcon_Sawmill");
                 break;
             case "sous_ile_4":
                 list.Add("wheelIcon_OilPlant");
