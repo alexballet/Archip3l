@@ -18,7 +18,7 @@ public class ChallengeUpgrade : MonoBehaviour {
     public Button[] propositionsButtons;
     public Text resultText;
     public MinorIsland minorIsland;
-    public Building buidling;
+    public Building building;
     public bool goodAnswer;
 
 
@@ -26,7 +26,7 @@ public class ChallengeUpgrade : MonoBehaviour {
 
     public void init(TypeChallenge tc, MinorIsland island, Building myBuilding)
     {
-        this.buidling = myBuilding;
+        this.building = myBuilding;
         this.minorIsland = island;
         this.typeChallenge = tc;
         if (typeChallenge == TypeChallenge.QCM)
@@ -161,25 +161,21 @@ public class ChallengeUpgrade : MonoBehaviour {
         {
             //TypeBuilding typeBuilding = (TypeBuilding)Enum.Parse(typeof(TypeBuilding), minorIsland.buildingClicked, true);
 
-            TypeResource typeResourceProduced = (TypeResource)Enum.Parse(typeof(TypeResource), Building.getNameResourceOrStatProduced(buidling.TypeBuilding.ToString()), true);
+            TypeResource typeResourceProduced = (TypeResource)Enum.Parse(typeof(TypeResource), Building.getNameResourceOrStatProduced(building.TypeBuilding.ToString()), true);
 
             if (goodAnswer)
             {
-                buidling.level += 1;
+                building.level += 1;
                 Debug.Log(typeResourceProduced);
-                if (buidling.resourceManager.getResource(typeResourceProduced) == null)
-                    Debug.Log("resource not found");
-                Debug.Log(buidling.resourceManager.getResource(typeResourceProduced).Production.ToString());
-                buidling.resourceManager.changeResourceProduction(typeResourceProduced, buidling.resourceManager.getResource(typeResourceProduced).Production * 2);
-                Debug.Log(buidling.resourceManager.getResource(typeResourceProduced).Production.ToString());
-
+                //Debug.Log(building.resourceManager.getResource(typeResourceProduced).Production.ToString());
+                building.changeProduction(building.resourceProduced.Production);
             }
             else
             {
-                if (buidling.level > 0)
+                if (building.level > 0)
                 {
-                    buidling.level -= 1;
-                    //TODO
+                    building.level -= 1;
+                    building.changeProduction(-(building.resourceProduced.Production / 2));
                 }
             }
 

@@ -170,8 +170,9 @@ public class ChallengeBuild : MonoBehaviour {
                 StartCoroutine(minorIsland.destroyPopup(minorIsland.createPopup("Grâce à votre bonne réponse, la production du bâtiment " + typeBuilding.ToString() + " double !"), 3));
                 //TODO : increase production building
                 Building buildingConstructed = minorIsland.buildingManager.getBuilding(typeBuilding);
-                TypeResource resourceProducedByBuilding = (TypeResource)System.Enum.Parse(typeof(TypeResource), Building.getNameResourceOrStatProduced(buildingConcerned));
-                buildingConstructed.resourceManager.changeResourceProduction(resourceProducedByBuilding, buildingConstructed.resourceManager.getResource(resourceProducedByBuilding).Production * 2);
+                //TypeResource resourceProducedByBuilding = (TypeResource)System.Enum.Parse(typeof(TypeResource), Building.getNameResourceOrStatProduced(buildingConcerned));
+                //buildingConstructed.resourceManager.changeResourceProduction(resourceProducedByBuilding, buildingConstructed.resourceManager.getResource(resourceProducedByBuilding).Production * 2);
+                buildingConstructed.changeProduction(buildingConstructed.resourceProduced.Production);
             }
         }
 

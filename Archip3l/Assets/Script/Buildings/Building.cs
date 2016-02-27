@@ -7,7 +7,8 @@ using UnityEditor;
 public class Building : MonoBehaviour {
 
     public TypeBuilding TypeBuilding { get; private set; }
-    public ResourceManagerBuilding resourceManager { get; private set; }
+    //public ResourceManagerBuilding resourceManager { get; private set; }
+    public Resource resourceProduced { get; private set; }
     public int buildState { get; private set; }
     public int constructionTime { get; private set; }
     public MinorIsland minorIsland { get; private set; }
@@ -18,7 +19,7 @@ public class Building : MonoBehaviour {
     private string texturePath;
     public int level;       //possible levels : 0-1-2-3
 
-    public Transform resourceManagerPrefab;
+    //public Transform resourceManagerPrefab;
     public Transform buildingConstructionPrefab;
 
     public void init(TypeBuilding TypeBuilding, MinorIsland island)
@@ -33,14 +34,18 @@ public class Building : MonoBehaviour {
         this.upgrade3ResourceNeeded = new List<Tuple<TypeResource, int>>();
         this.name = this.minorIsland.nameMinorIsland + "_" + this.TypeBuilding.ToString();
 
-        var resourceManagerTransform = Instantiate(resourceManagerPrefab) as Transform;
-        ResourceManagerBuilding resourceManager = resourceManagerTransform.GetComponent<ResourceManagerBuilding>();
-        if (resourceManager != null)
-        {
-            resourceManager.init(this);
-            resourceManager.transform.SetParent(this.transform);
-            this.resourceManager = resourceManager;
-        }
+        this.resourceProduced = ScriptableObject.CreateInstance<Resource>();
+        //this.resourceProduced.init(resourceType, quantity, production);
+
+
+        //var resourceManagerTransform = Instantiate(resourceManagerPrefab) as Transform;
+        //ResourceManagerBuilding resourceManager = resourceManagerTransform.GetComponent<ResourceManagerBuilding>();
+        //if (resourceManager != null)
+        //{
+        //    resourceManager.init(this);
+        //    resourceManager.transform.SetParent(this.transform);
+        //    this.resourceManager = resourceManager;
+        //}
 
         this.texturePath = "Assets/Resources/Building/Icons/wheelIcon_" + TypeBuilding.ToString() + ".png";
 
@@ -49,71 +54,69 @@ public class Building : MonoBehaviour {
         switch (TypeBuilding)
         {
             case TypeBuilding.GoldMine:
-                this.resourceManager.addResource(TypeResource.Gold, 0, 5);
-                this.resourceManager.addResource(TypeResource.Gold, 0, 5);
+                this.resourceProduced.init(TypeResource.Gold, 0, 5);
+                //this.resourceManager.addResource(TypeResource.Gold, 0, 5);
                 this.constructionTime = 5;
                 break;
             case TypeBuilding.StoneMine:
-                this.resourceManager.addResource(TypeResource.Stone, 0, 5);
+                this.resourceProduced.init(TypeResource.Stone, 0, 5);
                 this.constructionTime = 5;
                 break;
             case TypeBuilding.OilPlant:
-                this.resourceManager.addResource(TypeResource.Oil, 0, 5);
+                this.resourceProduced.init(TypeResource.Oil, 0, 5);
                 this.constructionTime = 5;
                 break;
             case TypeBuilding.Sawmill:
-                this.resourceManager.addResource(TypeResource.Wood, 0, 5);
+                this.resourceProduced.init(TypeResource.Wood, 0, 5);
                 this.constructionTime = 5;
                 break;
             case TypeBuilding.Factory:
-                this.resourceManager.addResource(TypeResource.Gold, 0, 5);
-                this.resourceManager.addResource(TypeResource.Manufacture, 0, 5);
+                this.resourceProduced.init(TypeResource.Manufacture, 0, 5);
                 this.constructionTime = 5;
                 break;
             case TypeBuilding.WindTurbine:
-                this.resourceManager.addResource(TypeResource.Electricity, 0, 5);
+                this.resourceProduced.init(TypeResource.Electricity, 0, 5);
                 this.constructionTime = 5;
                 break;
             case TypeBuilding.Farm:
                 this.upgrade1ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 2));
                 this.upgrade1ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Wood, 2));
-                this.resourceManager.addResource(TypeResource.Food, 0, 5);
                 this.constructionTime = 5;
                 break;
             case TypeBuilding.Harbor:
-                this.resourceManager.addResource(TypeResource.Food, 0, 10);
+                this.resourceProduced.init(TypeResource.Food, 0, 5);
                 this.constructionTime = 5;
                 break;
             case TypeBuilding.PowerPlant:
-                this.resourceManager.addResource(TypeResource.Electricity, 0, 10);
+                this.resourceProduced.init(TypeResource.Electricity, 0, 5);
                 this.constructionTime = 5;
                 break;
             case TypeBuilding.Lab:
-                this.resourceManager.addResource(TypeResource.Health, 0, 5);
+                this.resourceProduced.init(TypeResource.Health, 0, 5);
                 this.constructionTime = 5;
                 break;
             case TypeBuilding.Airport:
-                this.resourceManager.addResource(TypeResource.Tourism, 0, 20);
+                this.resourceProduced.init(TypeResource.Tourism, 0, 5);
                 this.constructionTime = 30;
                 break;
             case TypeBuilding.Hotel:
-                this.resourceManager.addResource(TypeResource.Tourism, 0, 5);
+                this.resourceProduced.init(TypeResource.Tourism, 0, 5);
                 this.constructionTime = 30;
                 break;
             case TypeBuilding.School:
-                this.resourceManager.addResource(TypeResource.Education, 0, 5);
+                this.resourceProduced.init(TypeResource.Education, 0, 5);
                 this.constructionTime = 5;
                 break;
             case TypeBuilding.Church:
-                this.resourceManager.addResource(TypeResource.Religion, 0, 5);
+                this.resourceProduced.init(TypeResource.Religion, 0, 5);
                 this.constructionTime = 10;
                 break;
             case TypeBuilding.Cinema:
-                this.resourceManager.addResource(TypeResource.Happiness, 0, 5);
+                this.resourceProduced.init(TypeResource.Happiness, 0, 5);
                 this.constructionTime = 15;
                 break;
             case TypeBuilding.AmusementPark:
-                this.resourceManager.addResource(TypeResource.Happiness, 0, 10);
+                this.resourceProduced.init(TypeResource.Happiness, 0, 5);
                 this.constructionTime = 30;
                 break;
         }
@@ -158,6 +161,7 @@ public class Building : MonoBehaviour {
 
             yield return new WaitForSeconds(this.constructionTime);
             this.buildState = 1;
+            StartCoroutine("updateStocks");
             Destroy(buildingConstructionTransform.gameObject);
         }
         else
@@ -166,9 +170,29 @@ public class Building : MonoBehaviour {
             Debug.Log("Not enough resources");
         }
     }
-    public bool changeProduction(TypeResource resourceType, int value)
+    public bool changeProduction(int value)
     {
-        return this.resourceManager.changeResourceProduction(resourceType, value);
+        this.minorIsland.resourceManager.changeResourceProduction(this.resourceProduced.TypeResource, value);
+        return this.resourceProduced.changeProduction(value); // resourceManager.changeResourceProduction(resourceType, value);
+
+    }
+    public bool changeStock(int value)
+    {
+        return this.minorIsland.resourceManager.changeResourceStock(this.resourceProduced.TypeResource, value);
+    }
+    IEnumerator updateStocks()
+    {
+        for (;;)
+        {
+            this.changeStock(this.resourceProduced.Production);
+            //foreach (Resource res in this.Resources)
+            //{
+            //    //this.building.resourceManager.changeResourceStock(res.TypeResource, res.Production);
+            //    res.changeStock(res.Production);
+            //    //Debug.Log("Building : " + this.building.name + "\tProduction : " + res.Production + "\tStock  : " + res.Name + " : " + res.Stock);
+            //}
+            yield return new WaitForSeconds(5f);
+        }
     }
 
     void OnMouseDown()
