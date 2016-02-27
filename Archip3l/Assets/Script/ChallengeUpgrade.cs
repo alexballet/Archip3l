@@ -159,7 +159,7 @@ public class ChallengeUpgrade : MonoBehaviour {
         //minorIsland.buildingClicked is a string --> conversion necessary
         if(Enum.IsDefined(typeof(TypeBuilding), minorIsland.buildingClicked))
         {
-            TypeBuilding typeBuilding = (TypeBuilding)Enum.Parse(typeof(TypeBuilding), minorIsland.buildingClicked, true);
+            //TypeBuilding typeBuilding = (TypeBuilding)Enum.Parse(typeof(TypeBuilding), minorIsland.buildingClicked, true);
 
             TypeResource typeResourceProduced = (TypeResource)Enum.Parse(typeof(TypeResource), Building.getNameResourceOrStatProduced(buidling.TypeBuilding.ToString()), true);
 

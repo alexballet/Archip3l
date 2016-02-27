@@ -11,13 +11,45 @@ public class ResourceManager : MonoBehaviour {
     public void init(MinorIsland island)
     {
         this.minorIsland = island;
-
         this.Resources = new List<Resource>();
 
         //Add all resources
         foreach(TypeResource resourceType in Enum.GetValues(typeof(TypeResource)))
         {
-            this.addResource(resourceType, resourceType.ToString(), 0, 10);
+            this.addResource(resourceType, 0, 10);
+        }
+
+        //To be specified !!
+        switch (this.minorIsland.nameMinorIsland)
+        {
+            case "sous_ile_1":
+                this.changeResourceStock(TypeResource.Gold, 40);
+                this.changeResourceStock(TypeResource.Food, 50);
+                this.changeResourceStock(TypeResource.Stone, 40);
+                this.changeResourceStock(TypeResource.Electricity, 40);
+                this.changeResourceStock(TypeResource.Wood, 50);
+                break;
+            case "sous_ile_2":
+                this.changeResourceStock(TypeResource.Gold, 40);
+                this.changeResourceStock(TypeResource.Food, 50);
+                this.changeResourceStock(TypeResource.Stone, 40);
+                this.changeResourceStock(TypeResource.Electricity, 40);
+                this.changeResourceStock(TypeResource.Wood, 50);
+                break;
+            case "sous_ile_3":
+                this.changeResourceStock(TypeResource.Gold, 40);
+                this.changeResourceStock(TypeResource.Food, 50);
+                this.changeResourceStock(TypeResource.Stone, 40);
+                this.changeResourceStock(TypeResource.Electricity, 40);
+                this.changeResourceStock(TypeResource.Wood, 50);
+                break;
+            case "sous_ile_4":
+                this.changeResourceStock(TypeResource.Gold, 40);
+                this.changeResourceStock(TypeResource.Food, 50);
+                this.changeResourceStock(TypeResource.Stone, 40);
+                this.changeResourceStock(TypeResource.Electricity, 40);
+                this.changeResourceStock(TypeResource.Wood, 50);
+                break;
         }
         //this.addResource(TypeResource.Gold, "Or", 0, 0);
 
@@ -30,7 +62,7 @@ public class ResourceManager : MonoBehaviour {
         StartCoroutine("updateStocks");
     }
 
-    public bool addResource(TypeResource resourceType, string name, int quantity, int production)
+    public bool addResource(TypeResource resourceType, int quantity, int production)
     {
         bool flag = false;
         foreach (Resource item in this.Resources)
@@ -50,7 +82,7 @@ public class ResourceManager : MonoBehaviour {
             myGameObject.name = name + "_" + minorIsland.nameMinorIsland;
             myGameObject.transform.SetParent(GameObject.Find("Virtual_" + minorIsland.nameMinorIsland).transform);
             Resource res = ScriptableObject.CreateInstance<Resource>();
-            res.init(resourceType, name, quantity, production);
+            res.init(resourceType, quantity, production);
             this.Resources.Add(res);
             return true;
         }
@@ -73,7 +105,7 @@ public class ResourceManager : MonoBehaviour {
         {
             if(value >= 0)
             {
-                this.addResource(resourceType, resourceType.ToString(), value, 0);
+                this.addResource(resourceType, value, 0);
                 result = true;
             }
             else

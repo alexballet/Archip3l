@@ -15,6 +15,7 @@ public class Building : MonoBehaviour {
     public List<Tuple<TypeResource, int>> upgrade1ResourceNeeded { get; private set; }
     public List<Tuple<TypeResource, int>> upgrade2ResourceNeeded { get; private set; }
     public List<Tuple<TypeResource, int>> upgrade3ResourceNeeded { get; private set; }
+    private string texturePath;
     public int level;       //possible levels : 0-1-2-3
 
     public Transform resourceManagerPrefab;
@@ -41,116 +42,85 @@ public class Building : MonoBehaviour {
             this.resourceManager = resourceManager;
         }
 
-        //string texturePath = "Assets/Resources/Building/Icons/mapIcon" + TypeBuilding.ToString() + ".png";
-        string texturePath = "Assets/Resources/Building/Icons/wheelIcon_" + TypeBuilding.ToString() + ".png";
+        this.texturePath = "Assets/Resources/Building/Icons/wheelIcon_" + TypeBuilding.ToString() + ".png";
 
         this.constructionResourceNeeded = getConstructionResourcesNeeded(TypeBuilding.ToString());
 
         switch (TypeBuilding)
         {
             case TypeBuilding.GoldMine:
-                this.resourceManager.addResource(TypeResource.Gold, "", 0, 5);
+                this.resourceManager.addResource(TypeResource.Gold, 0, 5);
+                this.resourceManager.addResource(TypeResource.Gold, 0, 5);
                 this.constructionTime = 5;
                 break;
             case TypeBuilding.StoneMine:
-                this.resourceManager.addResource(TypeResource.Stone, "", 0, 5);
+                this.resourceManager.addResource(TypeResource.Stone, 0, 5);
                 this.constructionTime = 5;
                 break;
             case TypeBuilding.OilPlant:
-                this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Wood, 20));
-                this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Stone, 40));
-                this.resourceManager.addResource(TypeResource.Oil, "", 0, 5);
+                this.resourceManager.addResource(TypeResource.Oil, 0, 5);
                 this.constructionTime = 5;
                 break;
             case TypeBuilding.Sawmill:
-                this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Stone, 5));
-                this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Food, 5));
-                this.resourceManager.addResource(TypeResource.Wood, "", 0, 5);
+                this.resourceManager.addResource(TypeResource.Wood, 0, 5);
                 this.constructionTime = 5;
                 break;
             case TypeBuilding.Factory:
-                this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Oil, 50));
-                this.resourceManager.addResource(TypeResource.Gold, "", 0, 5);
-                this.resourceManager.addResource(TypeResource.Manufacture, "", 0, 5);
+                this.resourceManager.addResource(TypeResource.Gold, 0, 5);
+                this.resourceManager.addResource(TypeResource.Manufacture, 0, 5);
                 this.constructionTime = 5;
                 break;
             case TypeBuilding.WindTurbine:
-                this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 10));
-                this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Oil, 20));
-                this.resourceManager.addResource(TypeResource.Electricity, "", 0, 5);
+                this.resourceManager.addResource(TypeResource.Electricity, 0, 5);
                 this.constructionTime = 5;
                 break;
             case TypeBuilding.Farm:
-                this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 5));
-                this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Wood, 5));
                 this.upgrade1ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 2));
                 this.upgrade1ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Wood, 2));
-                this.resourceManager.addResource(TypeResource.Food, "", 0, 5);
+                this.resourceManager.addResource(TypeResource.Food, 0, 5);
                 this.constructionTime = 5;
                 break;
             case TypeBuilding.Harbor:
-                this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Wood, 20));
-                this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 40));
-                this.resourceManager.addResource(TypeResource.Food, "", 0, 10);
+                this.resourceManager.addResource(TypeResource.Food, 0, 10);
                 this.constructionTime = 5;
                 break;
             case TypeBuilding.PowerPlant:
-                this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 20));
-                this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Oil, 40));
-                this.resourceManager.addResource(TypeResource.Electricity, "", 0, 10);
+                this.resourceManager.addResource(TypeResource.Electricity, 0, 10);
                 this.constructionTime = 5;
                 break;
             case TypeBuilding.Lab:
-                this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 5));
-                this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Food, 10));
-                this.resourceManager.addResource(TypeResource.Health, "", 0, 5);
+                this.resourceManager.addResource(TypeResource.Health, 0, 5);
                 this.constructionTime = 5;
                 break;
             case TypeBuilding.Airport:
-                this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 200));
-                this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Food, 200));
-                this.resourceManager.addResource(TypeResource.Tourism, "", 0, 20);
+                this.resourceManager.addResource(TypeResource.Tourism, 0, 20);
                 this.constructionTime = 30;
                 break;
             case TypeBuilding.Hotel:
-                this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 20));
-                this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Food, 40));
-                this.resourceManager.addResource(TypeResource.Tourism, "", 0, 5);
+                this.resourceManager.addResource(TypeResource.Tourism, 0, 5);
                 this.constructionTime = 30;
                 break;
             case TypeBuilding.School:
-                this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Stone, 20));
-                this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Food, 20));
-                this.resourceManager.addResource(TypeResource.Education, "", 0, 5);
+                this.resourceManager.addResource(TypeResource.Education, 0, 5);
                 this.constructionTime = 5;
                 break;
             case TypeBuilding.Church:
-                this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Wood, 40));
-                this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Stone, 80));
-                this.resourceManager.addResource(TypeResource.Religion, "", 0, 5);
+                this.resourceManager.addResource(TypeResource.Religion, 0, 5);
                 this.constructionTime = 10;
                 break;
             case TypeBuilding.Cinema:
-                this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 30));
-                this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Oil, 50));
-                this.resourceManager.addResource(TypeResource.Happiness, "", 0, 5);
+                this.resourceManager.addResource(TypeResource.Happiness, 0, 5);
                 this.constructionTime = 15;
                 break;
             case TypeBuilding.AmusementPark:
-                this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 60));
-                this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Oil, 100));
-                this.resourceManager.addResource(TypeResource.Happiness, "", 0, 10);
+                this.resourceManager.addResource(TypeResource.Happiness, 0, 10);
                 this.constructionTime = 30;
                 break;
         }
 
-        Texture2D texture = (Texture2D)AssetDatabase.LoadAssetAtPath(texturePath, typeof(Texture2D));
-        GetComponent<SpriteRenderer>().sprite = Sprite.Create(texture, new Rect(0f, 0f, texture.width, texture.height), new Vector2(0.5f, 0.5f));
-        //GetComponent<Transform>().localScale = new Vector3(100f, 100f, 1f);
         GetComponent<Transform>().localScale = new Vector3(9f, 9f, 1f);
 
         StartCoroutine("build");
-        //Debug.Log("Construction " + this.TypeBuilding);
     }
     IEnumerator build()
     {
@@ -160,20 +130,24 @@ public class Building : MonoBehaviour {
         {
             //avoid null references
             Resource resource = this.minorIsland.resourceManager.getResource(item.First);
-            if ((resource == null) || (item.Second < resource.Stock))
+            if (item.Second > resource.Stock)
             {
                 flag = false;
             }
         }
 
-        if(flag)
+        if (flag == true)
         {
             foreach (Tuple<TypeResource, int> item in this.constructionResourceNeeded)
             {
                 this.minorIsland.resourceManager.changeResourceStock(item.First, -item.Second);
             }
+
+            //texture
+            Texture2D texture = (Texture2D)AssetDatabase.LoadAssetAtPath(this.texturePath, typeof(Texture2D));
+            GetComponent<SpriteRenderer>().sprite = Sprite.Create(texture, new Rect(0f, 0f, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+
             //Animation
-            
             var buildingConstructionTransform = Instantiate(buildingConstructionPrefab) as Transform;
             buildingConstructionTransform.name = "BuildingAnnimation_" + minorIsland.nameMinorIsland;
             Anim_BuildingConstruction anim_BuildingConstruction = buildingConstructionTransform.GetComponent<Anim_BuildingConstruction>();
@@ -189,6 +163,7 @@ public class Building : MonoBehaviour {
         else
         {
             //Not enough resources
+            Debug.Log("Not enough resources");
         }
     }
     public bool changeProduction(TypeResource resourceType, int value)

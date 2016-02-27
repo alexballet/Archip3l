@@ -4,30 +4,28 @@ using System.Collections;
 public class Resource : ScriptableObject{
 
     public TypeResource TypeResource { get; private set; }
-    public string Name { get; private set; }
     public int Stock { get; private set; }
     public int Production { get; private set; }
     public int ProductionInit { get; private set; }
 
-    public void init(TypeResource TypeResource, string argName)
+    public void init(TypeResource TypeResource)
     {
         this.TypeResource = TypeResource;
-        this.Name = argName;
         this.Stock = 0;
         this.Production = 0;
         this.ProductionInit = 0;
     }
-    public void init(TypeResource TypeResource, string argName, int quantity)
+    public void init(TypeResource TypeResource, int quantity)
     {
-        init(TypeResource, argName);
+        init(TypeResource);
         if (quantity > 0)
         {
             this.Stock = quantity;
         }
     }
-    public void init(TypeResource TypeResource, string argName, int quantity, int production)
+    public void init(TypeResource TypeResource, int quantity, int production)
     {
-        init(TypeResource, argName, quantity);
+        init(TypeResource, quantity);
         this.Production = production;
         this.ProductionInit = production;
     }
