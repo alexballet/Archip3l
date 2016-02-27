@@ -3,7 +3,7 @@ using System.Collections;
 
 public enum TypeStat
 {
-    Meds,
+    Health,
     Tourism,
     Education,
     Religion,

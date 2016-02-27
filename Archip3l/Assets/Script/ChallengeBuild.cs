@@ -168,23 +168,8 @@ public class ChallengeBuild : MonoBehaviour {
             else if (goodAnswer)
             {
                 StartCoroutine(minorIsland.destroyPopup(minorIsland.createPopup("Grâce à votre bonne réponse, la production du bâtiment " + typeBuilding.ToString() + " double !"), 3));
+                    //TODO : increase production building
             }
-        }
-        else if(Enum.IsDefined(typeof(TypeBuildingStat), minorIsland.buildingClicked))
-        {
-            TypeBuildingStat typeBuildingStat = (TypeBuildingStat)Enum.Parse(typeof(TypeBuildingStat), minorIsland.buildingClicked, true);
-
-            //TODO : gérer le cas de la construction d'un batiment qui ne produit pas de ressources, mais des stats (ex : Hotel, Airport...)
-
-            //construction of building
-            /*if (minorIsland.buildingManager.createBuilding(typeBuildingStat, minorIsland.placeToConstruct) == false)
-            {
-                minorIsland.createPopup("Le bâtiment " + typeBuildingStat.ToString() + " a déjà été créé !");
-            }
-            else if (goodAnswer)
-            {
-                minorIsland.createPopup("Grâce à votre bonne réponse, la production du bâtiment " + typeBuildingStat.ToString() + " double !");
-            }*/
         }
 
 

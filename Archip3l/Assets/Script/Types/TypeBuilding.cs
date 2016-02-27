@@ -11,5 +11,12 @@ public enum TypeBuilding
         WindTurbine,
         Farm,
         Harbor,
-        PowerPlant
+        PowerPlant,
+        Lab,
+        Airport,
+        Hotel,
+        School,
+        Church,
+        Cinema,
+        AmusementPark
 }

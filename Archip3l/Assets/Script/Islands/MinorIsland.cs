@@ -73,7 +73,7 @@ public class MinorIsland : MonoBehaviour {
         else
             type = TypeChallenge.QCM;
 
-        challengeBuild.init(type, this, (TypeBuilding)System.Enum.Parse(typeof(TypeBuilding), buildingClicked));      //pb with TypeStat +++ adapt TypeBuilding
+        challengeBuild.init(type, this, (TypeBuilding)System.Enum.Parse(typeof(TypeBuilding), buildingClicked));      //TODO : adapt challenge to TypeBuilding
 
         GameObject.Find(nameMinorIsland).GetComponent<PolygonCollider2D>().enabled = true;
     }
@@ -93,7 +93,7 @@ public class MinorIsland : MonoBehaviour {
         else
             type = TypeChallenge.QCM;
 
-        challengeUpgrade.init(type, this, building);      //pb with TypeStat
+        challengeUpgrade.init(type, this, building);             //TODO : adapt challenge to TypeBuilding
 
         GameObject.Find(nameMinorIsland).GetComponent<PolygonCollider2D>().enabled = true;
     }
@@ -109,7 +109,10 @@ public class MinorIsland : MonoBehaviour {
         this.nbPopupPresent++;
         popupCanvas.name = "PopupCanvas" + nbPopupPresent.ToString() + "_" + this.nameMinorIsland;
         popupCanvas.transform.SetParent(GameObject.Find(this.nameMinorIsland).transform);
-        popupCanvas.transform.position = GameObject.Find(this.nameMinorIsland).transform.position;
+        Vector3 vector3 = GameObject.Find(this.nameMinorIsland).transform.position;
+        vector3.z = (-1) * nbPopupPresent;
+        popupCanvas.transform.position = vector3;
+        //popupCanvas.transform.position = GameObject.Find(this.nameMinorIsland).transform.position;
         //rotation of image according to the place of the island
         char id = this.nameMinorIsland[this.nameMinorIsland.Length - 1];
         if (id == '1' || id == '2')
@@ -304,6 +307,40 @@ public class MinorIsland : MonoBehaviour {
         }
     }
 
+    //translation of the building's name to french
+    public string translateResourceName(string buildingName)
+    {
+        switch (buildingName)
+        {
+            case "Gold":
+                return "Or";
+            case "Stone":
+                return "Pierre";
+            case "Oil":
+                return "Pétrole";
+            case "Wood":
+                return "Bois";
+            case "Manufacture":
+                return "Manufacture";
+            case "Electricity":
+                return "Electricité";
+            case "Food":
+                return "Nourriture";
+            case "Health":
+                return "Santé";
+            case "Tourism":
+                return "Tourisme";
+            case "Education":
+                return "Education";
+            case "Religion":
+                return "Religion";
+            case "Happiness":
+                return "Bonheur";
+            default:
+                return string.Empty;
+        }
+    }
+
     //returns the name of the resource (or stat) produced
     public string getNameResourceOrStatProduced(string buildingName)
     {
@@ -324,7 +361,7 @@ public class MinorIsland : MonoBehaviour {
             case "Farm":
                 return "Food";
             case "Lab":
-                return "Meds";
+                return "Health";
             case "Airport":
                 return "Tourism";
             case "Hotel":

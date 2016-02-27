@@ -9,5 +9,10 @@ public enum TypeResource
         Wood,
         Manufacture,
         Electricity,
-        Food
-    }
+        Food,
+        Health,
+        Tourism,
+        Education,
+        Religion,
+        Happiness
+}

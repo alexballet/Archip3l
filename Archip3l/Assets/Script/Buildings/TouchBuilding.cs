@@ -31,7 +31,7 @@ public class TouchBuilding : MonoBehaviour {
                     switch (textInCanvas.name)
                     {
                         case "Name":
-                            textInCanvas.text = "Amélioration" + "";                            //TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                            textInCanvas.text = "Amélioration " + (building.level + 1).ToString();  
                             break;
                         //write in a script functions which return these values (long switch)
                         case "CostValue":

@@ -24,7 +24,7 @@ public class ChallengeUpgrade : MonoBehaviour {
 
     public TextAsset csv;
 
-    public void init(TypeChallenge tc, MinorIsland island, Building myBuilding)         //pb with TypeBuildingStat
+    public void init(TypeChallenge tc, MinorIsland island, Building myBuilding)
     {
         this.buidling = myBuilding;
         this.minorIsland = island;
@@ -161,23 +161,29 @@ public class ChallengeUpgrade : MonoBehaviour {
         {
             TypeBuilding typeBuilding = (TypeBuilding)Enum.Parse(typeof(TypeBuilding), minorIsland.buildingClicked, true);
 
-            //TODO : upgrade of the building
             TypeResource typeResourceProduced = (TypeResource)Enum.Parse(typeof(TypeResource), minorIsland.getNameResourceOrStatProduced(buidling.TypeBuilding.ToString()), true);
-            Debug.Log(typeResourceProduced);
-            if (buidling.resourceManager.getResource(typeResourceProduced) == null)
-                Debug.Log("resource not found");
-            Debug.Log(buidling.resourceManager.getResource(typeResourceProduced).Production.ToString());
-            buidling.resourceManager.changeResourceProduction(typeResourceProduced, buidling.resourceManager.getResource(typeResourceProduced).Production * 2);
-            Debug.Log(buidling.resourceManager.getResource(typeResourceProduced).Production.ToString());
+
+            if (goodAnswer)
+            {
+                buidling.level += 1;
+                Debug.Log(typeResourceProduced);
+                if (buidling.resourceManager.getResource(typeResourceProduced) == null)
+                    Debug.Log("resource not found");
+                Debug.Log(buidling.resourceManager.getResource(typeResourceProduced).Production.ToString());
+                buidling.resourceManager.changeResourceProduction(typeResourceProduced, buidling.resourceManager.getResource(typeResourceProduced).Production * 2);
+                Debug.Log(buidling.resourceManager.getResource(typeResourceProduced).Production.ToString());
+
+            }
+            else
+            {
+                if (buidling.level > 0)
+                {
+                    buidling.level -= 1;
+                    //TODO
+                }
+            }
 
 
-        }
-        else if(Enum.IsDefined(typeof(TypeBuildingStat), minorIsland.buildingClicked))
-        {
-            TypeBuildingStat typeBuildingStat = (TypeBuildingStat)Enum.Parse(typeof(TypeBuildingStat), minorIsland.buildingClicked, true);
-
-            //TODO : gérer le cas de la construction d'un batiment qui ne produit pas de ressources, mais des stats (ex : Hotel, Airport...)
-            
         }
 
 
