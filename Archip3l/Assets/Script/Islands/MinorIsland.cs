@@ -237,9 +237,8 @@ public class MinorIsland : MonoBehaviour {
                         List<string> list = getDisabledBuildings(this.nameMinorIsland);
                         foreach (SpriteRenderer sr in wheelImage.GetComponentsInChildren<SpriteRenderer>())
                         {
-                            //Debug.Log(sr.name);
                             if (list.Contains(sr.name)) {    
-                                sr.sprite = Resources.Load<Sprite>("Building/Icons/" + sr.name + "_disabled");
+                                sr.sprite = Resources.Load<Sprite>("Building/Icons_Disabled/" + sr.name + "_disabled");
                                 sr.GetComponent<PolygonCollider2D>().enabled = false;
                             }
                         }
@@ -327,16 +326,24 @@ public class MinorIsland : MonoBehaviour {
         switch (nameMinorIsland)
         {
             case "sous_ile_1":
-                list.Add("toto");
+                list.Add("wheelIcon_OilPlant");
+                list.Add("wheelIcon_StoneMine");
+                list.Add("wheelIcon_SawMill");
                 break;
             case "sous_ile_2":
-                list.Add("toto");
+                list.Add("wheelIcon_GoldMine");
+                list.Add("wheelIcon_StoneMine");
+                list.Add("wheelIcon_SawMill");
                 break;
             case "sous_ile_3":
-                list.Add("toto");
+                list.Add("wheelIcon_OilPlant");
+                list.Add("wheelIcon_GoldMine");
+                list.Add("wheelIcon_SawMill");
                 break;
             case "sous_ile_4":
-                list.Add("toto");
+                list.Add("wheelIcon_OilPlant");
+                list.Add("wheelIcon_GoldMine");
+                list.Add("wheelIcon_StoneMine");
                 break;
         }
         return list;

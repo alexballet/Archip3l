@@ -50,70 +50,159 @@ public class Building : MonoBehaviour {
         {
             case TypeBuilding.GoldMine:
                 this.resourceManager.addResource(TypeResource.Gold, 0, 5);
-                this.resourceManager.addResource(TypeResource.Gold, 0, 5);
+                this.upgrade1ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 2));
+                this.upgrade1ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Stone, 2));
+                this.upgrade2ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 5));
+                this.upgrade2ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Stone, 5));
+                this.upgrade3ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 7));
+                this.upgrade3ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Stone, 7));
                 this.constructionTime = 5;
                 break;
             case TypeBuilding.StoneMine:
                 this.resourceManager.addResource(TypeResource.Stone, 0, 5);
+                this.upgrade1ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 2));
+                this.upgrade1ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Food, 2));
+                this.upgrade2ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 5));
+                this.upgrade2ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Food, 5));
+                this.upgrade3ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 7));
+                this.upgrade3ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Food, 7));
                 this.constructionTime = 5;
                 break;
             case TypeBuilding.OilPlant:
                 this.resourceManager.addResource(TypeResource.Oil, 0, 5);
+                this.upgrade1ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Wood, 10));
+                this.upgrade1ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Stone, 20));
+                this.upgrade2ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Wood, 20));
+                this.upgrade2ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Stone, 40));
+                this.upgrade3ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Wood, 25));
+                this.upgrade3ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Stone, 50));
                 this.constructionTime = 5;
                 break;
             case TypeBuilding.Sawmill:
                 this.resourceManager.addResource(TypeResource.Wood, 0, 5);
+                this.upgrade1ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Stone, 2));
+                this.upgrade1ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Food, 2));
+                this.upgrade2ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Stone, 5));
+                this.upgrade2ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Food, 5));
+                this.upgrade3ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Stone, 7));
+                this.upgrade3ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Food, 7));
                 this.constructionTime = 5;
                 break;
             case TypeBuilding.Factory:
-                this.resourceManager.addResource(TypeResource.Gold, 0, 5);
                 this.resourceManager.addResource(TypeResource.Manufacture, 0, 5);
+                this.upgrade1ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Oil, 25));
+                this.upgrade2ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Oil, 50));
+                this.upgrade3ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Oil, 63));
                 this.constructionTime = 5;
                 break;
             case TypeBuilding.WindTurbine:
                 this.resourceManager.addResource(TypeResource.Electricity, 0, 5);
+                this.upgrade1ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Food, 5));
+                this.upgrade1ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Oil, 10));
+                this.upgrade2ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Food, 10));
+                this.upgrade2ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Oil, 20));
+                this.upgrade3ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Food, 13));
+                this.upgrade3ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Oil, 25));
                 this.constructionTime = 5;
                 break;
             case TypeBuilding.Farm:
                 this.upgrade1ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 2));
                 this.upgrade1ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Wood, 2));
+                this.upgrade2ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 5));
+                this.upgrade2ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Wood, 5));
+                this.upgrade3ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 7));
+                this.upgrade3ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Wood, 7));
                 this.resourceManager.addResource(TypeResource.Food, 0, 5);
                 this.constructionTime = 5;
                 break;
             case TypeBuilding.Harbor:
                 this.resourceManager.addResource(TypeResource.Food, 0, 10);
+                this.upgrade1ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Wood, 10));
+                this.upgrade1ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 20));
+                this.upgrade2ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Wood, 20));
+                this.upgrade2ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 40));
+                this.upgrade3ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Wood, 25));
+                this.upgrade3ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 50));
                 this.constructionTime = 5;
                 break;
             case TypeBuilding.PowerPlant:
                 this.resourceManager.addResource(TypeResource.Electricity, 0, 10);
+                this.upgrade1ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Wood, 10));
+                this.upgrade1ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Oil, 20));
+                this.upgrade2ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Wood, 20));
+                this.upgrade2ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Oil, 40));
+                this.upgrade3ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Wood, 25));
+                this.upgrade3ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Oil, 50));
                 this.constructionTime = 5;
                 break;
             case TypeBuilding.Lab:
                 this.resourceManager.addResource(TypeResource.Health, 0, 5);
+                this.upgrade1ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 2));
+                this.upgrade1ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Food, 5));
+                this.upgrade2ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 5));
+                this.upgrade2ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Food, 10));
+                this.upgrade3ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 7));
+                this.upgrade3ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Food, 13));
                 this.constructionTime = 5;
                 break;
             case TypeBuilding.Airport:
                 this.resourceManager.addResource(TypeResource.Tourism, 0, 20);
+                this.upgrade1ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 100));
+                this.upgrade1ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Food, 100));
+                this.upgrade2ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 200));
+                this.upgrade2ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Food, 200));
+                this.upgrade3ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 250));
+                this.upgrade3ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Food, 250));
                 this.constructionTime = 30;
                 break;
             case TypeBuilding.Hotel:
                 this.resourceManager.addResource(TypeResource.Tourism, 0, 5);
+                this.upgrade1ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 10));
+                this.upgrade1ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Food, 20));
+                this.upgrade2ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 20));
+                this.upgrade2ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Food, 40));
+                this.upgrade3ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 25));
+                this.upgrade3ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Food, 50));
                 this.constructionTime = 30;
                 break;
             case TypeBuilding.School:
                 this.resourceManager.addResource(TypeResource.Education, 0, 5);
+                this.upgrade1ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Stone, 10));
+                this.upgrade1ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Food, 10));
+                this.upgrade2ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Stone, 20));
+                this.upgrade2ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Food, 20));
+                this.upgrade3ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Stone, 25));
+                this.upgrade3ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Food, 25));
                 this.constructionTime = 5;
                 break;
             case TypeBuilding.Church:
                 this.resourceManager.addResource(TypeResource.Religion, 0, 5);
+                this.upgrade1ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Wood, 20));
+                this.upgrade1ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Stone, 40));
+                this.upgrade2ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Wood, 40));
+                this.upgrade2ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Stone, 80));
+                this.upgrade3ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Wood, 50));
+                this.upgrade3ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Stone, 100));
                 this.constructionTime = 10;
                 break;
             case TypeBuilding.Cinema:
                 this.resourceManager.addResource(TypeResource.Happiness, 0, 5);
+                this.upgrade1ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 15));
+                this.upgrade1ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Oil, 25));
+                this.upgrade2ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 30));
+                this.upgrade2ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Oil, 50));
+                this.upgrade3ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 38));
+                this.upgrade3ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Oil, 63));
                 this.constructionTime = 15;
                 break;
             case TypeBuilding.AmusementPark:
                 this.resourceManager.addResource(TypeResource.Happiness, 0, 10);
+                this.upgrade1ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 30));
+                this.upgrade1ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Oil, 50));
+                this.upgrade2ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 60));
+                this.upgrade2ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Oil, 100));
+                this.upgrade3ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 75));
+                this.upgrade3ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Oil, 125));
                 this.constructionTime = 30;
                 break;
         }
@@ -174,7 +263,7 @@ public class Building : MonoBehaviour {
     void OnMouseDown()
     {
 
-        if (!minorIsland.wheelPresent && !minorIsland.buildingInfoPresent && !minorIsland.challengePresent && !minorIsland.moveBuilding && minorIsland.nameBuildingTouchCanvas == String.Empty)
+        if ((this.buildState == 1) && !minorIsland.wheelPresent && !minorIsland.buildingInfoPresent && !minorIsland.challengePresent && !minorIsland.moveBuilding && minorIsland.nameBuildingTouchCanvas == String.Empty)
         {
             minorIsland.createBuildingTouch(this);
         }
