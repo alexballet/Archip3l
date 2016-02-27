@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEditor;
 using System;
 
 public class ChallengeUpgrade : MonoBehaviour {
@@ -12,17 +13,16 @@ public class ChallengeUpgrade : MonoBehaviour {
     public string explainations;
     public string[] propositions;
     public int nbPropositions;
-    public TypeChallenge typeChallenge;
-    public Canvas canvasChallenge;
-    public SpriteRenderer background;
-    public Button[] propositionsButtons;
-    public Text resultText;
-    public MinorIsland minorIsland;
-    public Building building;
+    public TypeChallenge typeChallenge { get; private set; }
+    public Canvas canvasChallenge { get; private set; }
+    public SpriteRenderer background { get; private set; }
+    public Button[] propositionsButtons { get; private set; }
+    public Text resultText { get; private set; }
+    public MinorIsland minorIsland { get; private set; }
+    public Building building { get; private set; }
     public bool goodAnswer;
 
-
-    public TextAsset csv;
+    public TextAsset csv { get; private set; }
 
     public void init(TypeChallenge tc, MinorIsland island, Building myBuilding)
     {
@@ -167,8 +167,8 @@ public class ChallengeUpgrade : MonoBehaviour {
             {
                 building.level += 1;
                 Debug.Log(typeResourceProduced);
-                //Debug.Log(building.resourceManager.getResource(typeResourceProduced).Production.ToString());
                 building.changeProduction(building.resourceProduced.Production);
+                StartCoroutine(minorIsland.destroyPopup(minorIsland.createPopup("Bonne réponse ! Votre bâtiment passe au niveau " + building.level.ToString()), 3));
             }
             else
             {
@@ -176,10 +176,14 @@ public class ChallengeUpgrade : MonoBehaviour {
                 {
                     building.level -= 1;
                     building.changeProduction(-(building.resourceProduced.Production / 2));
+                    StartCoroutine(minorIsland.destroyPopup(minorIsland.createPopup("Mauvaise réponse ! Votre bâtiment passe au niveau " + building.level.ToString()), 3));
                 }
+                StartCoroutine(minorIsland.destroyPopup(minorIsland.createPopup("Mauvaise réponse ! Votre bâtiment est déjà au nivau le plus bas ..."), 3));
             }
 
-
+            //upgrading animation
+            building.buildState = 0;
+            StartCoroutine(building.launchUpgradeAnimation());
         }
 
 

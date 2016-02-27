@@ -1,10 +1,18 @@
 fileFormatVersion: 2
 guid: b956c451c43cfcc4a81180d9fe70d8e0
-timeCreated: 1456511619
+timeCreated: 1456591852
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - canvasChallenge: {instanceID: 0}
+  - background: {instanceID: 0}
+  - resultText: {instanceID: 0}
+  - minorIsland: {instanceID: 0}
+  - building: {instanceID: 0}
+  - buildingConstructionPrefab: {fileID: 486132, guid: 5719c30f56eedfa48b450e0d423764a7,
+      type: 2}
+  - csv: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
