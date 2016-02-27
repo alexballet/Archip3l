@@ -11,7 +11,10 @@ public class Building : MonoBehaviour {
     public int buildState { get; private set; }
     public int constructionTime { get; private set; }
     public MinorIsland minorIsland { get; private set; }
-    private List<Tuple<TypeResource, int>> constructionResourceNeeded;
+    public List<Tuple<TypeResource, int>> constructionResourceNeeded { get; private set; }
+    public List<Tuple<TypeResource, int>> upgrade1ResourceNeeded { get; private set; }
+    public List<Tuple<TypeResource, int>> upgrade2ResourceNeeded { get; private set; }
+    public List<Tuple<TypeResource, int>> upgrade3ResourceNeeded { get; private set; }
     public int level;       //possible levels : 0-1-2-3
 
     public Transform resourceManagerPrefab;
@@ -24,6 +27,9 @@ public class Building : MonoBehaviour {
         this.buildState = 0;
         this.minorIsland = island;
         this.constructionResourceNeeded = new List<Tuple<TypeResource, int>>();
+        this.upgrade1ResourceNeeded = new List<Tuple<TypeResource, int>>();
+        this.upgrade2ResourceNeeded = new List<Tuple<TypeResource, int>>();
+        this.upgrade3ResourceNeeded = new List<Tuple<TypeResource, int>>();
         this.name = this.minorIsland.nameMinorIsland + "_" + this.TypeBuilding.ToString();
 
         var resourceManagerTransform = Instantiate(resourceManagerPrefab) as Transform;
@@ -36,90 +42,104 @@ public class Building : MonoBehaviour {
         }
 
         //string texturePath = "Assets/Resources/Building/Icons/mapIcon" + TypeBuilding.ToString() + ".png";
-        string texturePath = "Assets/Resources/Building/Icons/wheelIcon" + TypeBuilding.ToString() + ".png";
+        string texturePath = "Assets/Resources/Building/Icons/wheelIcon_" + TypeBuilding.ToString() + ".png";
+
+        this.constructionResourceNeeded = getConstructionResourcesNeeded(TypeBuilding.ToString());
 
         switch (TypeBuilding)
         {
             case TypeBuilding.GoldMine:
-                this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Wood, 5));
-                this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Stone, 5));
-                //addResource(TypeResource resourceType, string name, int quantity, int production)
-                this.resourceManager.addResource(TypeResource.Gold, "Gold", 0, 5);
+                this.resourceManager.addResource(TypeResource.Gold, "", 0, 5);
                 this.constructionTime = 5;
                 break;
             case TypeBuilding.StoneMine:
-                this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 5));
-                this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Food, 5));
-                //this.resourceManager.addResource(TypeResource.Or, "Or", 0, 1);
+                this.resourceManager.addResource(TypeResource.Stone, "", 0, 5);
                 this.constructionTime = 5;
                 break;
             case TypeBuilding.OilPlant:
                 this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Wood, 20));
                 this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Stone, 40));
+                this.resourceManager.addResource(TypeResource.Oil, "", 0, 5);
                 this.constructionTime = 5;
                 break;
             case TypeBuilding.Sawmill:
                 this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Stone, 5));
                 this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Food, 5));
+                this.resourceManager.addResource(TypeResource.Wood, "", 0, 5);
                 this.constructionTime = 5;
                 break;
             case TypeBuilding.Factory:
                 this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Oil, 50));
+                this.resourceManager.addResource(TypeResource.Gold, "", 0, 5);
+                this.resourceManager.addResource(TypeResource.Manufacture, "", 0, 5);
                 this.constructionTime = 5;
                 break;
             case TypeBuilding.WindTurbine:
                 this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 10));
                 this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Oil, 20));
+                this.resourceManager.addResource(TypeResource.Electricity, "", 0, 5);
                 this.constructionTime = 5;
                 break;
             case TypeBuilding.Farm:
                 this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 5));
                 this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Wood, 5));
+                this.upgrade1ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 2));
+                this.upgrade1ResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Wood, 2));
+                this.resourceManager.addResource(TypeResource.Food, "", 0, 5);
                 this.constructionTime = 5;
                 break;
             case TypeBuilding.Harbor:
                 this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Wood, 20));
                 this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 40));
+                this.resourceManager.addResource(TypeResource.Food, "", 0, 10);
                 this.constructionTime = 5;
                 break;
             case TypeBuilding.PowerPlant:
                 this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 20));
                 this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Oil, 40));
+                this.resourceManager.addResource(TypeResource.Electricity, "", 0, 10);
                 this.constructionTime = 5;
                 break;
             case TypeBuilding.Lab:
                 this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 5));
                 this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Food, 10));
+                this.resourceManager.addResource(TypeResource.Health, "", 0, 5);
                 this.constructionTime = 5;
                 break;
             case TypeBuilding.Airport:
                 this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 200));
                 this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Food, 200));
+                this.resourceManager.addResource(TypeResource.Tourism, "", 0, 20);
                 this.constructionTime = 30;
                 break;
             case TypeBuilding.Hotel:
                 this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 20));
                 this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Food, 40));
+                this.resourceManager.addResource(TypeResource.Tourism, "", 0, 5);
                 this.constructionTime = 30;
                 break;
             case TypeBuilding.School:
                 this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Stone, 20));
                 this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Food, 20));
+                this.resourceManager.addResource(TypeResource.Education, "", 0, 5);
                 this.constructionTime = 5;
                 break;
             case TypeBuilding.Church:
                 this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Wood, 40));
                 this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Stone, 80));
+                this.resourceManager.addResource(TypeResource.Religion, "", 0, 5);
                 this.constructionTime = 10;
                 break;
             case TypeBuilding.Cinema:
                 this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 30));
                 this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Oil, 50));
+                this.resourceManager.addResource(TypeResource.Happiness, "", 0, 5);
                 this.constructionTime = 15;
                 break;
             case TypeBuilding.AmusementPark:
                 this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 60));
                 this.constructionResourceNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Oil, 100));
+                this.resourceManager.addResource(TypeResource.Happiness, "", 0, 10);
                 this.constructionTime = 30;
                 break;
         }
@@ -185,4 +205,121 @@ public class Building : MonoBehaviour {
         }
 
     }
+
+    static public List<Tuple<TypeResource, int>> getConstructionResourcesNeeded(string nameBuilding)
+    {
+        List<Tuple<TypeResource, int>> constructionResourcesNeeded = new List<Tuple<TypeResource, int>>();
+
+        switch (nameBuilding)
+        {
+            case "GoldMine":
+                constructionResourcesNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Wood, 5));
+                constructionResourcesNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Stone, 5));
+                break;
+            case "StoneMine":
+                constructionResourcesNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 5));
+                constructionResourcesNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Food, 5));
+                break;
+            case "OilPlant":
+                constructionResourcesNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Wood, 20));
+                constructionResourcesNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Stone, 40));
+                break;
+            case "Sawmill":
+                constructionResourcesNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Stone, 5));
+                constructionResourcesNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Food, 5));
+                break;
+            case "Factory":
+                constructionResourcesNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Oil, 50));
+                break;
+            case "WindTurbine":
+                constructionResourcesNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 10));
+                constructionResourcesNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Oil, 20));
+                break;
+            case "Farm":
+                constructionResourcesNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 5));
+                constructionResourcesNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Wood, 5));
+                break;
+            case "Harbor":
+                constructionResourcesNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Wood, 20));
+                constructionResourcesNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 40));
+                break;
+            case "PowerPlant":
+                constructionResourcesNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 20));
+                constructionResourcesNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Oil, 40));
+                break;
+            case "Lab":
+                constructionResourcesNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 5));
+                constructionResourcesNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Food, 10));
+                break;
+            case "Airport":
+                constructionResourcesNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 200));
+                constructionResourcesNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Food, 200));
+                break;
+            case "Hotel":
+                constructionResourcesNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 20));
+                constructionResourcesNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Food, 40));
+                break;
+            case "School":
+                constructionResourcesNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Stone, 20));
+                constructionResourcesNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Food, 20));
+                break;
+            case "Church":
+                constructionResourcesNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Wood, 40));
+                constructionResourcesNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Stone, 80));
+                break;
+            case "Cinema":
+                constructionResourcesNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 30));
+                constructionResourcesNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Oil, 50));
+                break;
+            case "AmusementPark":
+                constructionResourcesNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Gold, 60));
+                constructionResourcesNeeded.Add(new Tuple<TypeResource, int>(TypeResource.Oil, 100));
+                break;
+        }
+        return constructionResourcesNeeded;
+    }
+
+
+    //returns the name of the resource (or stat) produced
+    static public string getNameResourceOrStatProduced(string buildingName)
+    {
+        switch (buildingName)
+        {
+            case "GoldMine":
+                return "Gold";
+            case "StoneMine":
+                return "Stone";
+            case "OilPlant":
+                return "Oil";
+            case "Sawmill":
+                return "Wood";
+            case "Factory":
+                return "Manufacture";
+            case "WindTurbine":
+                return "Electricity";
+            case "Farm":
+                return "Food";
+            case "Lab":
+                return "Health";
+            case "Airport":
+                return "Tourism";
+            case "Hotel":
+                return "Tourism";
+            case "Harbor":
+                return "Food";
+            case "School":
+                return "Education";
+            case "Church":
+                return "Religion";
+            case "Cinema":
+                return "Happiness";
+            case "AmusementPark":
+                return "Happiness";
+            case "PowerPlant":
+                return "Electricity";
+            default:
+                return string.Empty;
+        }
+    }
+
 }

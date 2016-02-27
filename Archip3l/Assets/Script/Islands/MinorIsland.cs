@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 using System;
 
@@ -232,6 +233,17 @@ public class MinorIsland : MonoBehaviour {
                         if (id == '1' || id == '2')
                             wheelImage.transform.Rotate(Vector3.forward * 180);
 
+                        //disable specific buildings
+                        List<string> list = getDisabledBuildings(this.nameMinorIsland);
+                        foreach (SpriteRenderer sr in wheelImage.GetComponentsInChildren<SpriteRenderer>())
+                        {
+                            //Debug.Log(sr.name);
+                            if (list.Contains(sr.name)) {    
+                                sr.sprite = Resources.Load<Sprite>("Building/Icons/" + sr.name + "_disabled");
+                                sr.GetComponent<PolygonCollider2D>().enabled = false;
+                            }
+                        }
+
                         this.wheelPresent = true;
                     }
                     else
@@ -307,79 +319,26 @@ public class MinorIsland : MonoBehaviour {
         }
     }
 
-    //translation of the building's name to french
-    public string translateResourceName(string buildingName)
-    {
-        switch (buildingName)
-        {
-            case "Gold":
-                return "Or";
-            case "Stone":
-                return "Pierre";
-            case "Oil":
-                return "Pétrole";
-            case "Wood":
-                return "Bois";
-            case "Manufacture":
-                return "Manufacture";
-            case "Electricity":
-                return "Electricité";
-            case "Food":
-                return "Nourriture";
-            case "Health":
-                return "Santé";
-            case "Tourism":
-                return "Tourisme";
-            case "Education":
-                return "Education";
-            case "Religion":
-                return "Religion";
-            case "Happiness":
-                return "Bonheur";
-            default:
-                return string.Empty;
-        }
-    }
+    
 
-    //returns the name of the resource (or stat) produced
-    public string getNameResourceOrStatProduced(string buildingName)
+    private List<string> getDisabledBuildings(string nameMinorIsland)
     {
-        switch (buildingName)
+        List<string> list = new List<string>();
+        switch (nameMinorIsland)
         {
-            case "GoldMine":
-                return "Gold";
-            case "StoneMine":
-                return "Stone";
-            case "OilPlant":
-                return "Oil";
-            case "Sawmill":
-                return "Wood";
-            case "Factory":
-                return "Manufacture";
-            case "WindTurbine":
-                return "Electricity";
-            case "Farm":
-                return "Food";
-            case "Lab":
-                return "Health";
-            case "Airport":
-                return "Tourism";
-            case "Hotel":
-                return "Tourism";
-            case "Harbor":
-                return "Food";
-            case "School":
-                return "Education";
-            case "Church":
-                return "Religion";
-            case "Cinema":
-                return "Happiness";
-            case "AmusementPark":
-                return "Happiness";
-            case "PowerPlant":
-                return "Electricity";
-            default:
-                return string.Empty;
+            case "sous_ile_1":
+                list.Add("toto");
+                break;
+            case "sous_ile_2":
+                list.Add("toto");
+                break;
+            case "sous_ile_3":
+                list.Add("toto");
+                break;
+            case "sous_ile_4":
+                list.Add("toto");
+                break;
         }
+        return list;
     }
 }

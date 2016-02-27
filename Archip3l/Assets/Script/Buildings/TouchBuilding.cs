@@ -33,9 +33,48 @@ public class TouchBuilding : MonoBehaviour {
                         case "Name":
                             textInCanvas.text = "Amélioration " + (building.level + 1).ToString();  
                             break;
-                        //write in a script functions which return these values (long switch)
-                        case "CostValue":
-                            textInCanvas.text = "5";                                            //linked to the level of upgrade --> TODO
+                        case "CostValue1":
+                            switch (building.level)
+                            {
+                                case 0:
+                                    textInCanvas.text = building.upgrade1ResourceNeeded[0].Second.ToString();
+                                    break;
+                                case 1:
+                                    textInCanvas.text = building.upgrade2ResourceNeeded[0].Second.ToString();
+                                    break;
+                                case 2:
+                                    textInCanvas.text = building.upgrade3ResourceNeeded[0].Second.ToString();
+                                    break;
+                                default:
+                                    textInCanvas.text = "-";
+                                    break;
+                            }                                          
+                            break;
+                        case "CostValue2":
+                            switch (building.level)
+                            {
+                                case 0:
+                                    if (building.upgrade1ResourceNeeded[1] != null)
+                                        textInCanvas.text = building.upgrade1ResourceNeeded[1].Second.ToString();
+                                    else
+                                        textInCanvas.text = "-";
+                                    break;
+                                case 1:
+                                    if (building.upgrade1ResourceNeeded[1] != null)
+                                        textInCanvas.text = building.upgrade2ResourceNeeded[1].Second.ToString();
+                                    else
+                                        textInCanvas.text = "-";
+                                    break;
+                                case 2:
+                                    if (building.upgrade1ResourceNeeded[1] != null)
+                                        textInCanvas.text = building.upgrade3ResourceNeeded[1].Second.ToString();
+                                    else
+                                        textInCanvas.text = "-";
+                                    break;
+                                default:
+                                    textInCanvas.text = "-";
+                                    break;
+                            }
                             break;
                     }
                 }
@@ -44,15 +83,55 @@ public class TouchBuilding : MonoBehaviour {
                 {
                     switch (imageInCanvas.name)
                     {
-                        case "CostImage":
-                            //imageInCanvas.sprite = Resources.Load<Sprite>("infoBatiments/ResourcesIcons/" + getResourceConsumedFromBuilding(island.buildingClicked) + "Icon");
+                        case "CostImage1":
+                            switch (building.level)
+                            {
+                                case 0:
+                                    imageInCanvas.sprite = Resources.Load<Sprite>("infoBatiments/ResourcesIcons/" + building.upgrade1ResourceNeeded[0].First.ToString() + "Icon"); 
+                                    break;
+                                case 1:
+                                    imageInCanvas.sprite = Resources.Load<Sprite>("infoBatiments/ResourcesIcons/" + building.upgrade2ResourceNeeded[0].First.ToString() + "Icon");
+                                    break;
+                                case 2:
+                                    imageInCanvas.sprite = Resources.Load<Sprite>("infoBatiments/ResourcesIcons/" + building.upgrade3ResourceNeeded[0].First.ToString() + "Icon");
+                                    break;
+                                default:
+                                    imageInCanvas.sprite = null;
+                                    break;
+                            }
+                            break;
+                        case "CostImage2":
+                            switch (building.level)
+                            {
+                                case 0:
+                                    if (building.upgrade1ResourceNeeded[1] != null)
+                                        imageInCanvas.sprite = Resources.Load<Sprite>("infoBatiments/ResourcesIcons/" + building.upgrade1ResourceNeeded[1].First.ToString() + "Icon");
+                                    else
+                                        imageInCanvas.sprite = null;
+                                    break;
+                                case 1:
+                                    if (building.upgrade1ResourceNeeded[1] != null)
+                                        imageInCanvas.sprite = Resources.Load<Sprite>("infoBatiments/ResourcesIcons/" + building.upgrade2ResourceNeeded[1].First.ToString() + "Icon");
+                                    else
+                                        imageInCanvas.sprite = null;
+                                    break;
+                                case 2:
+                                    if (building.upgrade1ResourceNeeded[1] != null)
+                                        imageInCanvas.sprite = Resources.Load<Sprite>("infoBatiments/ResourcesIcons/" + building.upgrade3ResourceNeeded[1].First.ToString() + "Icon");
+                                    else
+                                        imageInCanvas.sprite = null;
+                                    break;
+                                default:
+                                    imageInCanvas.sprite = null;
+                                    break;
+                            }
                             break;
                         //mêmes images
                         case "ProductionImage":
-                            imageInCanvas.sprite = Resources.Load<Sprite>("infoBatiments/ResourcesIcons/" + island.getNameResourceOrStatProduced(building.name.Split('_')[3]) + "Icon");
+                            imageInCanvas.sprite = Resources.Load<Sprite>("infoBatiments/ResourcesIcons/" + Building.getNameResourceOrStatProduced(building.name.Split('_')[3]) + "Icon");
                             break;
                         case "ProductionImage2":
-                            imageInCanvas.sprite = Resources.Load<Sprite>("infoBatiments/ResourcesIcons/" + island.getNameResourceOrStatProduced(building.name.Split('_')[3]) + "Icon");
+                            imageInCanvas.sprite = Resources.Load<Sprite>("infoBatiments/ResourcesIcons/" + Building.getNameResourceOrStatProduced(building.name.Split('_')[3]) + "Icon");
                             break;
                     }
                 }

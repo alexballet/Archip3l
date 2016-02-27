@@ -7,6 +7,7 @@ public class Resource : ScriptableObject{
     public string Name { get; private set; }
     public int Stock { get; private set; }
     public int Production { get; private set; }
+    public int ProductionInit { get; private set; }
 
     public void init(TypeResource TypeResource, string argName)
     {
@@ -14,6 +15,7 @@ public class Resource : ScriptableObject{
         this.Name = argName;
         this.Stock = 0;
         this.Production = 0;
+        this.ProductionInit = 0;
     }
     public void init(TypeResource TypeResource, string argName, int quantity)
     {
@@ -27,6 +29,7 @@ public class Resource : ScriptableObject{
     {
         init(TypeResource, argName, quantity);
         this.Production = production;
+        this.ProductionInit = production;
     }
 
     public bool changeProduction(int value)
@@ -61,5 +64,39 @@ public class Resource : ScriptableObject{
     public bool checkChangeStockPossibility(int value)
     {
         return this.Stock + value >= 0;
+    }
+
+    //translation of the building's name to french
+    static public string translateResourceName(string buildingName)
+    {
+        switch (buildingName)
+        {
+            case "Gold":
+                return "Or";
+            case "Stone":
+                return "Pierre";
+            case "Oil":
+                return "Pétrole";
+            case "Wood":
+                return "Bois";
+            case "Manufacture":
+                return "Manufacture";
+            case "Electricity":
+                return "Electricité";
+            case "Food":
+                return "Nourriture";
+            case "Health":
+                return "Santé";
+            case "Tourism":
+                return "Tourisme";
+            case "Education":
+                return "Education";
+            case "Religion":
+                return "Religion";
+            case "Happiness":
+                return "Bonheur";
+            default:
+                return string.Empty;
+        }
     }
 }

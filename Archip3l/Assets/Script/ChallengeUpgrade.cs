@@ -161,7 +161,7 @@ public class ChallengeUpgrade : MonoBehaviour {
         {
             TypeBuilding typeBuilding = (TypeBuilding)Enum.Parse(typeof(TypeBuilding), minorIsland.buildingClicked, true);
 
-            TypeResource typeResourceProduced = (TypeResource)Enum.Parse(typeof(TypeResource), minorIsland.getNameResourceOrStatProduced(buidling.TypeBuilding.ToString()), true);
+            TypeResource typeResourceProduced = (TypeResource)Enum.Parse(typeof(TypeResource), Building.getNameResourceOrStatProduced(buidling.TypeBuilding.ToString()), true);
 
             if (goodAnswer)
             {

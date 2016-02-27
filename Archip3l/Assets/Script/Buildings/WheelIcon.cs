@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 
 public class WheelIcon : MonoBehaviour {
@@ -30,22 +31,32 @@ public class WheelIcon : MonoBehaviour {
             buildingInfo.transform.SetParent(this.transform.parent.parent.parent);  //parent : minorIsland
             buildingInfo.transform.position = island.transform.position;
             //modification of the content of the different Text Children of the Canvas
-            foreach(Text textInCanvas in buildingInfo.GetComponent<Canvas>().GetComponentsInChildren<Text>())
+
+            List<Tuple<TypeResource, int>> constructionResourceNeeded = Building.getConstructionResourcesNeeded(island.buildingClicked);
+
+            foreach (Text textInCanvas in buildingInfo.GetComponent<Canvas>().GetComponentsInChildren<Text>())
             {
                 switch (textInCanvas.name)
                 {
                     case "Name":
                         textInCanvas.text = island.translateBuildingName(island.buildingClicked);
                         break;
-                    //write in a script functions which return these values (long switch)
-                    case "CostValue":
-                        textInCanvas.text = "5";
+                    case "CostValue1":
+                        textInCanvas.text = constructionResourceNeeded[0].Second.ToString();
                         break;
-                    case "ProductionValueGoodAnswer":       // 2 * productionValueBadAnswer
-                        textInCanvas.text = "20";
+                    case "CostValue2":
+                        if (constructionResourceNeeded[1] != null)
+                            textInCanvas.text = constructionResourceNeeded[1].Second.ToString();
+                        else
+                            textInCanvas.text = "-";
+                        break;
+                    case "ProductionValueGoodAnswer":
+                        //TODO
+                        textInCanvas.text = "TODO";
                         break;
                     case "ProductionValueBadAnswer":
-                        textInCanvas.text = "10";
+                        //TODO
+                        textInCanvas.text = "TODO";
                         break;
                 }
             }
@@ -54,15 +65,21 @@ public class WheelIcon : MonoBehaviour {
             {
                 switch (imageInCanvas.name)
                 {
-                    case "CostImage":
-                        //imageInCanvas.sprite = Resources.Load<Sprite>("infoBatiments/ResourcesIcons/" + getResourceConsumedFromBuilding(island.buildingClicked) + "Icon");
+                    case "CostImage1":
+                        imageInCanvas.sprite = Resources.Load<Sprite>("infoBatiments/ResourcesIcons/" + constructionResourceNeeded[0].First.ToString() + "Icon");
                         break;
-                        //mêmes images
+                    case "CostImage2":
+                        if (constructionResourceNeeded[1] != null)
+                            imageInCanvas.sprite = Resources.Load<Sprite>("infoBatiments/ResourcesIcons/" + constructionResourceNeeded[1].First.ToString() + "Icon");
+                        else
+                            imageInCanvas.sprite = null;
+                        break;
+                    //mêmes images
                     case "ProductionImage":
-                        imageInCanvas.sprite = Resources.Load<Sprite>("infoBatiments/ResourcesIcons/" + island.getNameResourceOrStatProduced(island.buildingClicked) + "Icon");
+                        imageInCanvas.sprite = Resources.Load<Sprite>("infoBatiments/ResourcesIcons/" + Building.getNameResourceOrStatProduced(island.buildingClicked) + "Icon");
                         break;
                     case "ProductionImage2":
-                        imageInCanvas.sprite = Resources.Load<Sprite>("infoBatiments/ResourcesIcons/" + island.getNameResourceOrStatProduced(island.buildingClicked) + "Icon");
+                        imageInCanvas.sprite = Resources.Load<Sprite>("infoBatiments/ResourcesIcons/" + Building.getNameResourceOrStatProduced(island.buildingClicked) + "Icon");
                         break;
                 }
             }
