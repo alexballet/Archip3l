@@ -66,7 +66,7 @@ public class TouchBuilding : MonoBehaviour {
                 StartCoroutine(island.destroyPopup(island.createPopup("Appuyez sur l'endroit où placer le batiment"), 3));
                 island.moveBuilding = true;
                 break;
-                }
+        }
     }
 
 	// Use this for initialization

@@ -38,6 +38,7 @@ public class ChallengeBuild : MonoBehaviour {
         //VraiFaux : answer = VRAI ou answer = FAUX
         //QCM : answer = Proposition0 ou answer = Proposition1 ou answer = Proposition2
 
+        //ENCODAGE : UTF8-16-LE
         csv = Resources.Load<TextAsset>("Challenges/" + typeChallenge.ToString() + "/" + typeChallenge.ToString());
 
         //CSV_reader.DebugOutputGrid(CSV_reader.SplitCsvGrid(csv.text));

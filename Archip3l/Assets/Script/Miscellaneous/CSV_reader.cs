@@ -75,6 +75,7 @@ public class CSV_reader : MonoBehaviour
 
     static public string[] GetRandomLine(string csvText)
     {
+
         string[] lines = csvText.Split("\n"[0]);
 
         // finds the max width of row
@@ -99,6 +100,7 @@ public class CSV_reader : MonoBehaviour
         @"(((?<x>(?=[,\r\n]+))|""(?<x>([^""]|"""")+)""|(?<x>[^,\r\n]+)),?)",
         System.Text.RegularExpressions.RegexOptions.ExplicitCapture)
                 select m.Groups[1].Value).ToArray();*/
+
         return (from System.Text.RegularExpressions.Match m in System.Text.RegularExpressions.Regex.Matches(line,
         @"(((?<x>(?=[;\r\n]+))|""(?<x>([^""]|"""")+)""|(?<x>[^;\r\n]+));?)",
         System.Text.RegularExpressions.RegexOptions.ExplicitCapture)

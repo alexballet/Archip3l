@@ -66,7 +66,8 @@ public class Building : MonoBehaviour {
         Texture2D texture = (Texture2D)AssetDatabase.LoadAssetAtPath(texturePath, typeof(Texture2D));
         //GetComponent<SpriteRenderer>().sprite = Sprite.Create(texture, new Rect(0f, 0f, texture.width, texture.height), new Vector2(0.5f, 0.5f));
         GetComponent<SpriteRenderer>().sprite = Sprite.Create(texture, new Rect(0f, 0f, texture.width, texture.height), new Vector2(0.5f, 0.5f));
-        GetComponent<Transform>().localScale = new Vector3(100f, 100f, 1f);
+        //GetComponent<Transform>().localScale = new Vector3(100f, 100f, 1f);
+        GetComponent<Transform>().localScale = new Vector3(9f, 9f, 1f);
 
         StartCoroutine("build");
         //Debug.Log("Construction " + this.TypeBuilding);
