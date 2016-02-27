@@ -74,7 +74,7 @@ public class MinorIsland : MonoBehaviour {
         else
             type = TypeChallenge.QCM;
 
-        challengeBuild.init(type, this, (TypeBuilding)System.Enum.Parse(typeof(TypeBuilding), buildingClicked));      //TODO : adapt challenge to TypeBuilding
+        challengeBuild.init(type, this, (TypeBuilding)System.Enum.Parse(typeof(TypeBuilding), buildingClicked));
 
         GameObject.Find(nameMinorIsland).GetComponent<PolygonCollider2D>().enabled = true;
     }

@@ -67,6 +67,7 @@
     <Compile Include="Assets\Script\Buildings\Building.cs" />
     <Compile Include="Assets\Script\Buildings\BuildingInfo.cs" />
     <Compile Include="Assets\Script\Buildings\BuildingManager.cs" />
+    <Compile Include="Assets\Script\Buildings\RemoveBuilding.cs" />
     <Compile Include="Assets\Script\Buildings\TouchBuilding.cs" />
     <Compile Include="Assets\Script\Buildings\UpgradeBuilding.cs" />
     <Compile Include="Assets\Script\Buildings\WheelIcon.cs" />

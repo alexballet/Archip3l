@@ -370,6 +370,48 @@ public class Building : MonoBehaviour {
     }
 
 
+    //translation of the building's name to french
+    static public string translateBuildingName(string buildingName)
+    {
+        switch (buildingName)
+        {
+            case "GoldMine":
+                return "Mine d'or";
+            case "StoneMine":
+                return "Mine de pierre";
+            case "OilPlant":
+                return "Puit de pétrole";
+            case "Sawmill":
+                return "Scierie";
+            case "Factory":
+                return "Usine";
+            case "WindTurbine":
+                return "Eolienne";
+            case "Farm":
+                return "Ferme";
+            case "Lab":
+                return "Laboratoire";
+            case "Airport":
+                return "Aéroport";
+            case "Hotel":
+                return "Hôtel";
+            case "Harbor":
+                return "Port";
+            case "School":
+                return "Ecole";
+            case "Church":
+                return "Eglise";
+            case "Cinema":
+                return "Cinéma";
+            case "AmusementPark":
+                return "Parc d'attraction";
+            case "PowerPlant":
+                return "Centrale électrique";
+            default:
+                return string.Empty;
+        }
+    }
+
     //returns the name of the resource (or stat) produced
     static public string getNameResourceOrStatProduced(string buildingName)
     {
@@ -409,6 +451,48 @@ public class Building : MonoBehaviour {
                 return "Electricity";
             default:
                 return string.Empty;
+        }
+    }
+
+    //returns the initial quantity of the resource (or stat) produced
+    static public int getQuantityResourceOrStatProduced(string buildingName)
+    {
+        switch (buildingName)
+        {
+            case "GoldMine":
+                return 5;
+            case "StoneMine":
+                return 5;
+            case "OilPlant":
+                return 5;
+            case "Sawmill":
+                return 5;
+            case "Factory":
+                return 5;
+            case "WindTurbine":
+                return 5;
+            case "Farm":
+                return 5;
+            case "Lab":
+                return 5;
+            case "Airport":
+                return 20;
+            case "Hotel":
+                return 5;
+            case "Harbor":
+                return 10;
+            case "School":
+                return 5;
+            case "Church":
+                return 5;
+            case "Cinema":
+                return 5;
+            case "AmusementPark":
+                return 10;
+            case "PowerPlant":
+                return 10;
+            default:
+                return 0;
         }
     }
 
