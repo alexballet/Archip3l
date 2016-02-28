@@ -25,6 +25,11 @@ public class MinorIsland : MonoBehaviour {
     public string buildingClicked;
     public int numPopup = 0;
 
+    //for exchange resources window
+    public bool otherWindowOpen = false;     //choice of Island or Resource
+    public string resource = string.Empty;
+    public string islandToSend = string.Empty;
+
     public Canvas startCanvas;
 
     void Awake()
@@ -266,15 +271,19 @@ public class MinorIsland : MonoBehaviour {
     {
 
         //TESTS for exchangeResource
-        /*this.wheelPresent = true;
+        this.wheelPresent = true;
         if (!exchangeWindowPresent)
         {
             Canvas exchangeWindowCanvasPrefab = Resources.Load<Canvas>("Prefab/exchangeWindowCanvas");
             Canvas exchangeWindowCanvas = Instantiate(exchangeWindowCanvasPrefab);
             exchangeWindowCanvas.transform.parent = GameObject.Find(this.nameMinorIsland).transform;
+            exchangeWindowCanvas.name = "ExchangeWindowCanvas_" + this.nameMinorIsland;
+            Vector3 vector3 = GameObject.Find(this.nameMinorIsland).transform.position;
+            vector3.z = -2;
+            exchangeWindowCanvas.transform.position = vector3;
 
             this.exchangeWindowPresent = true;
-        }*/
+        }
 
         //--------------
 

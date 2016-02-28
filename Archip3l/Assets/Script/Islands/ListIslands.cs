@@ -3,22 +3,27 @@ using System.Collections;
 
 public class ListIslands : MonoBehaviour {
 
+    public MinorIsland island;
+
     void OnMouseDown()
     {
-        Debug.Log(this.name);
-        ExchangeResource.islandToSend = this.name;
+        if (this.name != "Close")
+        {
+            Debug.Log(this.name);
+            island.islandToSend = this.name;
+        }
         Destroy(GameObject.Find(this.transform.parent.name));
-        ExchangeResource.otherWindowOpen = false;
+        island.otherWindowOpen = false;
     }
 
 
     // Use this for initialization
     void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
+        island = GameObject.Find(this.transform.parent.parent.parent.name).GetComponent<MinorIsland>();
+    }
+
+    // Update is called once per frame
+    void Update () {
 	
 	}
 }
