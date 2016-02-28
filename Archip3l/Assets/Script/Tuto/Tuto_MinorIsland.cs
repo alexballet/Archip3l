@@ -10,6 +10,8 @@ public class Tuto_MinorIsland : MonoBehaviour {
 
     public Transform tuto_buildingManagerPrefab;
 
+    Canvas startCanvas;
+
     public string nameTuto_MinorIsland;
 
     //communication with WheelIcon, BuildingInfo & Tuto_ChallengeBuild scripts + Popups & TouchBuilding
@@ -44,6 +46,36 @@ public class Tuto_MinorIsland : MonoBehaviour {
         }
 
         StartCoroutine(this.destroyPopup(this.createPopup("Bienvenue dans le tutoriel. \nPour commencer, appuyez n'importe où puis créez le port."), 5));        
+    }
+
+    public void Start()
+    {
+        if (nameTuto_MinorIsland == "sous_ile_1")
+        {
+            Canvas startCanvasPrefab = Resources.Load<Canvas>("Prefab/Tuto/StartCanvas");
+            startCanvas = Instantiate(startCanvasPrefab);
+            startCanvas.name = "StartCanvas";
+            StartCoroutine(this.startFade());
+        }
+    }
+
+    public IEnumerator startFade()
+    {
+        SpriteRenderer[] sp = startCanvas.GetComponentsInChildren<SpriteRenderer>();
+        Color colorBlack;
+        Color colorLogo;
+        yield return new WaitForSeconds(1);
+        for (int i = 0; i < 200; i++)
+        {
+            yield return new WaitForSeconds(0.01f);
+            colorBlack = sp[1].color;
+            colorBlack.a -= 0.005f;
+            sp[1].color = colorBlack;
+            colorLogo = sp[0].color;
+            colorLogo.a -= 0.005f;
+            sp[0].color = colorLogo;
+        }
+        Destroy(GameObject.Find("StartCanvas"));
     }
 
     public IEnumerator endFade()

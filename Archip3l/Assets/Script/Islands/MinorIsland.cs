@@ -271,7 +271,7 @@ public class MinorIsland : MonoBehaviour {
     {
 
         //TESTS for exchangeResource
-        this.wheelPresent = true;
+        /*this.wheelPresent = true;
         if (!exchangeWindowPresent)
         {
             Canvas exchangeWindowCanvasPrefab = Resources.Load<Canvas>("Prefab/exchangeWindowCanvas");
@@ -283,7 +283,7 @@ public class MinorIsland : MonoBehaviour {
             exchangeWindowCanvas.transform.position = vector3;
 
             this.exchangeWindowPresent = true;
-        }
+        }*/
 
         //--------------
 
@@ -355,49 +355,6 @@ public class MinorIsland : MonoBehaviour {
         }
         
     }
-
-    //translation of the building's name to french
-    public string translateBuildingName(string buildingName)
-    {
-        switch (buildingName)
-        {
-            case "GoldMine":
-                return "Mine d'or";
-            case "StoneMine":
-                return "Mine de pierre";
-            case "OilPlant":
-                return "Puit de pétrole";
-            case "Sawmill":
-                return "Scierie";
-            case "Factory":
-                return "Usine";
-            case "WindTurbine":
-                return "Eolienne";
-            case "Farm":
-                return "Ferme";
-            case "Lab":
-                return "Laboratoire";
-            case "Airport":
-                return "Aéroport";
-            case "Hotel":
-                return "Hôtel";
-            case "Harbor":
-                return "Port";
-            case "School":
-                return "Ecole";
-            case "Church":
-                return "Eglise";
-            case "Cinema":
-                return "Cinéma";
-            case "AmusementPark":
-                return "Parc d'attraction";
-            case "PowerPlant":
-                return "Centrale électrique"; 
-            default:
-                return string.Empty;
-        }
-    }
-
     
 
     private List<string> getDisabledBuildings(string nameMinorIsland)

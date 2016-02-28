@@ -40,7 +40,7 @@ public class WheelIcon : MonoBehaviour {
                 switch (textInCanvas.name)
                 {
                     case "Name":
-                        textInCanvas.text = island.translateBuildingName(island.buildingClicked);
+                        textInCanvas.text = Building.translateBuildingName(island.buildingClicked);
                         break;
                     case "CostValue1":
                         textInCanvas.text = constructionResourceNeeded[0].Second.ToString();
@@ -107,8 +107,6 @@ public class WheelIcon : MonoBehaviour {
         }
 
     }
-
     
-
     
 }
