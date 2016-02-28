@@ -22,14 +22,12 @@ public class MinorIsland : MonoBehaviour {
     public bool moveBuilding = false;                   //moving a building
     public string nameBuildingTouchCanvas;
     public string buildingClicked;
-    public int nbPopupPresent;
+    public int numPopup = 0;
 
-
+    public Canvas startCanvas;
 
     void Awake()
     {
-
-        nbPopupPresent = 0;
         
         var buildingManagerTransform = Instantiate(buildingManagerPrefab) as Transform;
         BuildingManager buildingManager = buildingManagerTransform.GetComponent<BuildingManager>();
@@ -49,15 +47,54 @@ public class MinorIsland : MonoBehaviour {
             this.resourceManager = resourceManager;
         }
 
-        /*----------TEST--------*/
+        Vector3 harborPosition;
+        switch (this.nameMinorIsland)
+        {
+            case "sous_ile_1":
+                harborPosition = new Vector3(-84, 88, -1);
+                break;
+            case "sous_ile_2":
+                harborPosition = new Vector3(132, 111, -1);
+                break;
+            case "sous_ile_3":
+                harborPosition = new Vector3(-107, -71, -1);
+                break;
+            default:
+                harborPosition = new Vector3(111, -77, -1);
+                break;
+        }
+        buildingManager.createBuilding(TypeBuilding.Harbor, harborPosition);
 
+        StartCoroutine(destroyPopup(createPopup("C'est parti !"), 3));
 
-        //if(nameMinorIsland == "sous_ile_3")
-        //{
-        //    this.resourceManager.addResource(TypeResource.Gold, "Or", 10, 5);
-        //}
+    }
 
-        /*------------------*/
+    public void Start()
+    {
+        if (nameMinorIsland == "sous_ile_1")
+        {
+            Canvas startCanvasPrefab = Resources.Load<Canvas>("Prefab/StartCanvas");
+            startCanvas = Instantiate(startCanvasPrefab);
+            startCanvas.name = "StartCanvas";
+            Color color = startCanvas.GetComponentInChildren<SpriteRenderer>().color;
+            color.a = 1;
+            startCanvas.GetComponentInChildren<SpriteRenderer>().color = color;
+            StartCoroutine(this.startFade());
+        }
+    }
+
+    public IEnumerator startFade()
+    {
+        SpriteRenderer sp = startCanvas.GetComponentInChildren<SpriteRenderer>();
+        Color color;
+        for (int i = 0; i < 200; i++)
+        {
+            yield return new WaitForSeconds(0.01f);
+            color = sp.color;
+            color.a -= 0.005f;
+            sp.color = color;
+        }
+        Destroy(GameObject.Find("StartCanvas"));
     }
 
     public void createChallengeBuild(string buildingClicked)
@@ -104,15 +141,15 @@ public class MinorIsland : MonoBehaviour {
     //returns the name of the Popup (GameObject) created
     public string createPopup(string popupText)
     {
-        //TODO : gérer superposition des textes des Popup
+        this.removeAllPopups();
 
         Canvas popupCanvasPrefab = Resources.Load<Canvas>("Prefab/PopupCanvas");
         Canvas popupCanvas = Instantiate(popupCanvasPrefab);
-        this.nbPopupPresent++;
-        popupCanvas.name = "PopupCanvas" + nbPopupPresent.ToString() + "_" + this.nameMinorIsland;
+        this.numPopup++;
+        popupCanvas.name = "PopupCanvas" + numPopup.ToString() + "_" + this.nameMinorIsland;
         popupCanvas.transform.SetParent(GameObject.Find(this.nameMinorIsland).transform);
         Vector3 vector3 = GameObject.Find(this.nameMinorIsland).transform.position;
-        vector3.z = (-1) * nbPopupPresent;
+        vector3.z = (-1) * numPopup;
         popupCanvas.transform.position = vector3;
         //popupCanvas.transform.position = GameObject.Find(this.nameMinorIsland).transform.position;
         //rotation of image according to the place of the island
@@ -146,7 +183,17 @@ public class MinorIsland : MonoBehaviour {
         }
 
         Destroy(GameObject.Find(namePopup));
-        this.nbPopupPresent--;
+    }
+
+    public void removeAllPopups()
+    {
+        for (int i = this.numPopup; i > 0; i--)
+        {
+            if (GameObject.Find("PopupCanvas" + i.ToString() + "_" + nameMinorIsland) != null)
+            {
+                Destroy(GameObject.Find("PopupCanvas" + i.ToString() + "_" + nameMinorIsland));
+            }
+        }
     }
 
     public void createBuildingTouch(Building building)
@@ -159,7 +206,39 @@ public class MinorIsland : MonoBehaviour {
         touchBuildingCanvas.name = "touchBuilding_" + this.nameBuildingTouchCanvas;
         touchBuildingCanvas.transform.position = GameObject.Find(this.nameBuildingTouchCanvas).transform.position;
 
-        foreach(TouchBuilding touchBuilding in touchBuildingCanvas.GetComponentsInChildren<TouchBuilding>())
+        //Exception: moving and removing are impossible for Harbor
+        if (building.TypeBuilding == TypeBuilding.Harbor)
+        {
+            foreach(SpriteRenderer sr in touchBuildingCanvas.GetComponentsInChildren<SpriteRenderer>())
+            {
+                switch (sr.name)
+                {
+                    case "Move":
+                        sr.sprite = Resources.Load<Sprite>("wheelAppuiBatiment/boutonDeplacer_disabled");
+                        sr.GetComponent<PolygonCollider2D>().enabled = false;
+                        break;
+                    case "Remove":
+                        sr.sprite = Resources.Load<Sprite>("wheelAppuiBatiment/boutonSupprimer_disabled");
+                        sr.GetComponent<PolygonCollider2D>().enabled = false;
+                        break;
+                }
+            }
+        }
+
+        //last level of upgrade : 3
+        if (building.level == 3)
+        {
+            foreach (SpriteRenderer sr in touchBuildingCanvas.GetComponentsInChildren<SpriteRenderer>())
+            {
+                if (sr.name == "Upgrade")
+                {
+                    sr.sprite = Resources.Load<Sprite>("wheelAppuiBatiment/boutonAmeliorer_disabled");
+                    sr.GetComponent<PolygonCollider2D>().enabled = false;
+                }
+            }
+        }
+
+        foreach (TouchBuilding touchBuilding in touchBuildingCanvas.GetComponentsInChildren<TouchBuilding>())
         {
             touchBuilding.island = this;
             touchBuilding.building = building;

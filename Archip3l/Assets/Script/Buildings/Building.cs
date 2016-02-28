@@ -225,22 +225,29 @@ public class Building : MonoBehaviour {
     IEnumerator build()
     {
         bool flag = true;
-        //check needed resources
-        foreach (Tuple<TypeResource, int> item in this.constructionResourceNeeded)
+        //check needed resources (except for Harbor, already created on islands)
+        if (this.TypeBuilding != TypeBuilding.Harbor)
         {
-            //avoid null references
-            Resource resource = this.minorIsland.resourceManager.getResource(item.First);
-            if (item.Second > resource.Stock)
+            foreach (Tuple<TypeResource, int> item in this.constructionResourceNeeded)
             {
-                flag = false;
+                //avoid null references
+                Resource resource = this.minorIsland.resourceManager.getResource(item.First);
+                if (item.Second > resource.Stock)
+                {
+                    flag = false;
+                }
             }
         }
 
         if (flag == true)
         {
-            foreach (Tuple<TypeResource, int> item in this.constructionResourceNeeded)
+            //again, Harbor already created on islands
+            if (this.TypeBuilding != TypeBuilding.Harbor)
             {
-                this.minorIsland.resourceManager.changeResourceStock(item.First, -item.Second);
+                foreach (Tuple<TypeResource, int> item in this.constructionResourceNeeded)
+                {
+                    this.minorIsland.resourceManager.changeResourceStock(item.First, -item.Second);
+                }
             }
 
             //texture

@@ -19,7 +19,7 @@ public class Tuto_MinorIsland : MonoBehaviour {
     public bool moveBuilding = false;                   //moving a building
     public string nameBuildingTouchCanvas;
     public string buildingClicked;
-    public int nbPopupPresent;
+    public int numPopup = 0;
 
     //steps of tuto
     public bool harborBuilt = false;
@@ -27,11 +27,12 @@ public class Tuto_MinorIsland : MonoBehaviour {
     public bool harborUpgraded = false;
     public bool harborRemoved = false;
 
+    public Canvas endCanvas;
+    public bool ended = false;
+
 
     void Awake()
-    {
-        nbPopupPresent = 0;
-        
+    {        
         var buildingManagerTransform = Instantiate(tuto_buildingManagerPrefab) as Transform;
         Tuto_BuildingManager mytuto_buildingManager = buildingManagerTransform.GetComponent<Tuto_BuildingManager>();
         if (mytuto_buildingManager != null)
@@ -42,8 +43,21 @@ public class Tuto_MinorIsland : MonoBehaviour {
             this.tuto_buildingManager = mytuto_buildingManager;
         }
 
-        StartCoroutine(this.destroyPopup(this.createPopup("Appuyez n'importe où puis créez le port."), 5));
+        StartCoroutine(this.destroyPopup(this.createPopup("Bienvenue dans le tutoriel. \nPour commencer, appuyez n'importe où puis créez le port."), 5));        
+    }
 
+    public IEnumerator endFade()
+    {
+        SpriteRenderer sp = endCanvas.GetComponentInChildren<SpriteRenderer>();
+        Color color;
+        for (int i = 0; i < 200; i++)
+        {
+            yield return new WaitForSeconds(0.01f);
+            color = sp.color;
+            color.a += 0.005f;
+            sp.color = color;
+        }
+        Application.LoadLevel("playingScene");
     }
 
     public void createTuto_ChallengeBuild(string buildingClicked)
@@ -62,14 +76,15 @@ public class Tuto_MinorIsland : MonoBehaviour {
     //returns the name of the Popup (GameObject) created
     public string createPopup(string popupText)
     {
+        this.removeAllPopups();
 
         Canvas popupCanvasPrefab = Resources.Load<Canvas>("Prefab/Tuto/PopupCanvasTuto");
         Canvas popupCanvas = Instantiate(popupCanvasPrefab);
-        this.nbPopupPresent++;
-        popupCanvas.name = "PopupCanvas" + nbPopupPresent.ToString() + "_" + this.nameTuto_MinorIsland;
+        this.numPopup++;
+        popupCanvas.name = "PopupCanvas" + this.numPopup.ToString() + "_" + this.nameTuto_MinorIsland;
         popupCanvas.transform.SetParent(GameObject.Find(this.nameTuto_MinorIsland).transform);
         Vector3 vector3 = GameObject.Find(this.nameTuto_MinorIsland).transform.position;
-        vector3.z = (-1) * nbPopupPresent;
+        vector3.z = (-1) * numPopup;
         popupCanvas.transform.position = vector3;
         //popupCanvas.transform.position = GameObject.Find(this.nameTuto_MinorIsland).transform.position;
         //rotation of image according to the place of the island
@@ -103,7 +118,17 @@ public class Tuto_MinorIsland : MonoBehaviour {
         }
 
         Destroy(GameObject.Find(namePopup));
-        this.nbPopupPresent--;
+    }
+
+    public void removeAllPopups()
+    {
+        for (int i = this.numPopup; i > 0; i--)
+        {
+            if (GameObject.Find("PopupCanvas" + i.ToString() + "_" + nameTuto_MinorIsland) != null)
+            {
+                Destroy(GameObject.Find("PopupCanvas" + i.ToString() + "_" + nameTuto_MinorIsland));
+            }
+        }
     }
 
 
@@ -136,13 +161,27 @@ public class Tuto_MinorIsland : MonoBehaviour {
     // Update is called once per frame
     void Update () {
 
-        //when all islands have finished the tuto, change scene
+        if (!ended)
+        {
+            //when all islands have finished the tuto, change scene
 
-        if (GameObject.Find("sous_ile_1").GetComponent<Tuto_MinorIsland>().harborRemoved &&
-            GameObject.Find("sous_ile_2").GetComponent<Tuto_MinorIsland>().harborRemoved &&
-            GameObject.Find("sous_ile_3").GetComponent<Tuto_MinorIsland>().harborRemoved &&
-            GameObject.Find("sous_ile_4").GetComponent<Tuto_MinorIsland>().harborRemoved)
-                Application.LoadLevel("playingScene");
+            if (GameObject.Find("sous_ile_1").GetComponent<Tuto_MinorIsland>().harborRemoved &&
+                GameObject.Find("sous_ile_2").GetComponent<Tuto_MinorIsland>().harborRemoved &&
+                GameObject.Find("sous_ile_3").GetComponent<Tuto_MinorIsland>().harborRemoved &&
+                GameObject.Find("sous_ile_4").GetComponent<Tuto_MinorIsland>().harborRemoved)
+            {
+                this.ended = true;
+                if (nameTuto_MinorIsland == "sous_ile_1")
+                {
+                    Canvas endCanvasPrefab = Resources.Load<Canvas>("Prefab/Tuto/EndCanvas");
+                    endCanvas = Instantiate(endCanvasPrefab);
+                    Color color = endCanvas.GetComponentInChildren<SpriteRenderer>().color;
+                    color.a = 0;
+                    endCanvas.GetComponentInChildren<SpriteRenderer>().color = color;
+                    StartCoroutine(this.endFade());
+                }
+            }
+        }
     }
 
 
