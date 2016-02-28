@@ -59,7 +59,8 @@ public class WheelIcon : MonoBehaviour {
                         break;
                 }
             }
-            //modification of the background of the different Image Children of the Canvas
+
+            //modification of the background of the different SpriteRenderer Children of the Canvas
             foreach (SpriteRenderer imageInCanvas in buildingInfo.GetComponent<Canvas>().GetComponentsInChildren<SpriteRenderer>())
             {
                 switch (imageInCanvas.name)

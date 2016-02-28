@@ -295,7 +295,6 @@ public class Building : MonoBehaviour {
 
     void OnMouseDown()
     {
-
         if ((this.buildState == 1) && !minorIsland.wheelPresent && !minorIsland.buildingInfoPresent && !minorIsland.challengePresent && !minorIsland.moveBuilding && minorIsland.nameBuildingTouchCanvas == String.Empty)
         {
             minorIsland.createBuildingTouch(this);

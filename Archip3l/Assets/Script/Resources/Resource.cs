@@ -64,10 +64,10 @@ public class Resource : ScriptableObject{
         return this.Stock + value >= 0;
     }
 
-    //translation of the building's name to french
-    static public string translateResourceName(string buildingName)
+    //translation of the resource's name to french
+    static public string translateResourceName(string resourceName)
     {
-        switch (buildingName)
+        switch (resourceName)
         {
             case "Gold":
                 return "Or";
@@ -93,6 +93,40 @@ public class Resource : ScriptableObject{
                 return "Religion";
             case "Happiness":
                 return "Bonheur";
+            default:
+                return string.Empty;
+        }
+    }
+
+    //returns le resource corresponding to the icon's name
+    static public string getResourceFromIconName(string iconName)
+    {
+        switch (iconName)
+        {
+            case "goldIcon":
+                return "Gold";
+            case "stoneIcon":
+                return "Stone";
+            case "oilIcon":
+                return "Oil";
+            case "woodIcon":
+                return "Wood";
+            case "manufactureIcon":
+                return "Manufacture";
+            case "electricityIcon":
+                return "Electricity";
+            case "foodIcon":
+                return "Food";
+            case "healthIcon":
+                return "Health";
+            case "tourismIcon":
+                return "Tourism";
+            case "educationIcon":
+                return "Education";
+            case "religionIcon":
+                return "Religion";
+            case "happinessIcon":
+                return "Happiness";
             default:
                 return string.Empty;
         }

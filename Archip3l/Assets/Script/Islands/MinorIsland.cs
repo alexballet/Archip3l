@@ -20,6 +20,7 @@ public class MinorIsland : MonoBehaviour {
     public bool buildingInfoPresent = false;            //buildingInfo present on the island
     public bool challengePresent = false;               //challenge present on the island
     public bool moveBuilding = false;                   //moving a building
+    public bool exchangeWindowPresent = false;          //exchangeWindow present on the island
     public string nameBuildingTouchCanvas;
     public string buildingClicked;
     public int numPopup = 0;
@@ -169,6 +170,7 @@ public class MinorIsland : MonoBehaviour {
     public IEnumerator destroyPopup(string namePopup, int timer)
     {
         SpriteRenderer popupImage = GameObject.Find(namePopup).GetComponentInChildren<SpriteRenderer>();
+        popupImage.GetComponent<BoxCollider2D>().enabled = false;
         
         yield return new WaitForSeconds(timer);
         Color color;
@@ -257,20 +259,25 @@ public class MinorIsland : MonoBehaviour {
     // Update is called once per frame
     void Update () {
 
-        /*for (int i = 0; i < Input.touchCount; i++)
-        {
-            Touch touch = Input.GetTouch(i);
-
-            if (touch.phase == TouchPhase.Began)
-            {
-                Debug.Log("toto " + i.ToString());
-            }
-        }*/
-	}
-
+    }
+    
 
     void OnMouseDown()
     {
+
+        //TESTS for exchangeResource
+        /*this.wheelPresent = true;
+        if (!exchangeWindowPresent)
+        {
+            Canvas exchangeWindowCanvasPrefab = Resources.Load<Canvas>("Prefab/exchangeWindowCanvas");
+            Canvas exchangeWindowCanvas = Instantiate(exchangeWindowCanvasPrefab);
+            exchangeWindowCanvas.transform.parent = GameObject.Find(this.nameMinorIsland).transform;
+
+            this.exchangeWindowPresent = true;
+        }*/
+
+        //--------------
+
         //Debug.Log(Input.mousePosition.ToString());
 
         //moving a building
@@ -337,23 +344,7 @@ public class MinorIsland : MonoBehaviour {
                 }
             }
         }
-
-        //pas ici ! le transfert se fait suite à un appui long sur l'ile ^^
         
-        //Transfert test
-        /*MinorIsland remote = GameObject.Find("sous_ile_3").GetComponent<MinorIsland>();
-        if (this.resourceManager.donateResource(remote, TypeResource.Gold, 10))
-        {
-            Debug.Log("Transfer Resource " + TypeResource.Gold.ToString() + " from " + this.nameMinorIsland + " to " + remote.nameMinorIsland);
-        }
-        else
-        {
-            Debug.Log("Impossible to tranfert " + TypeResource.Gold.ToString() + " from " + this.nameMinorIsland + " to " + remote.nameMinorIsland);
-        }
-
-        */
-        //Bulding creation test
-        //this.buildingManager.createBuilding(TypeBuilding.GoldMine, Input.mousePosition);
     }
 
     //translation of the building's name to french

@@ -73,10 +73,13 @@
     <Compile Include="Assets\Script\Buildings\WheelIcon.cs" />
     <Compile Include="Assets\Script\ChallengeBuild.cs" />
     <Compile Include="Assets\Script\ChallengeUpgrade.cs" />
+    <Compile Include="Assets\Script\Islands\ListIslands.cs" />
     <Compile Include="Assets\Script\Islands\MinorIsland.cs" />
     <Compile Include="Assets\Script\Miscellaneous\CSV_reader.cs" />
     <Compile Include="Assets\Script\Miscellaneous\Tuple.cs" />
     <Compile Include="Assets\Script\Popup.cs" />
+    <Compile Include="Assets\Script\Resources\ExchangeResource.cs" />
+    <Compile Include="Assets\Script\Resources\ListResources.cs" />
     <Compile Include="Assets\Script\Resources\Resource.cs" />
     <Compile Include="Assets\Script\Resources\ResourceManager.cs" />
     <Compile Include="Assets\Script\Resources\ResourceManagerBuilding.cs" />
@@ -98,9 +101,11 @@
   <ItemGroup>
     <None Include="Assets\Resources\Challenges\QCM\QCM.txt" />
     <None Include="Assets\Resources\Challenges\QCM\QCM_GoldMine.txt" />
+    <None Include="Assets\Resources\Challenges\QCM\QCM_Tests.txt" />
     <None Include="Assets\Resources\Challenges\VraiFaux\VraiFaux.txt" />
     <None Include="Assets\Resources\Challenges\VraiFaux\VraiFaux_Farm.txt" />
     <None Include="Assets\Resources\Challenges\VraiFaux\VraiFaux_GoldMine.txt" />
+    <None Include="Assets\Resources\Challenges\VraiFaux\VraiFaux_Tests.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

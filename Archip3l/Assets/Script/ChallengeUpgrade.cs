@@ -40,7 +40,8 @@ public class ChallengeUpgrade : MonoBehaviour {
         //QCM : answer = Proposition0 ou answer = Proposition1 ou answer = Proposition2
 
         //csv = Resources.Load<TextAsset>("Challenges/" + typeChallenge.ToString() + "/" + typeChallenge.ToString() + "_" + this.building.TypeBuilding.ToString());
-        csv = Resources.Load<TextAsset>("Challenges/" + typeChallenge.ToString() + "/" + typeChallenge.ToString());
+        //csv = Resources.Load<TextAsset>("Challenges/" + typeChallenge.ToString() + "/" + typeChallenge.ToString());
+        csv = Resources.Load<TextAsset>("Challenges/" + typeChallenge.ToString() + "/" + typeChallenge.ToString() + "_Tests");
 
 
         string[] row = CSV_reader.GetRandomLine(csv.text);
@@ -166,6 +167,24 @@ public class ChallengeUpgrade : MonoBehaviour {
                 building.level += 1;
                 Debug.Log(typeResourceProduced);
                 building.changeProduction(building.resourceProduced.Production);
+                switch (building.level)
+                {
+                    case 1:
+                        minorIsland.resourceManager.changeResourceStock(building.upgrade1ResourceNeeded[0].First, -building.upgrade1ResourceNeeded[0].Second);
+                        if (building.upgrade1ResourceNeeded.Count == 2)
+                            minorIsland.resourceManager.changeResourceStock(building.upgrade1ResourceNeeded[1].First, -building.upgrade1ResourceNeeded[1].Second);
+                        break;
+                    case 2:
+                        minorIsland.resourceManager.changeResourceStock(building.upgrade2ResourceNeeded[0].First, -building.upgrade2ResourceNeeded[0].Second);
+                        if (building.upgrade2ResourceNeeded.Count == 2)
+                            minorIsland.resourceManager.changeResourceStock(building.upgrade2ResourceNeeded[1].First, -building.upgrade2ResourceNeeded[1].Second);
+                        break;
+                    case 3:
+                        minorIsland.resourceManager.changeResourceStock(building.upgrade3ResourceNeeded[0].First, -building.upgrade3ResourceNeeded[0].Second);
+                        if (building.upgrade3ResourceNeeded.Count == 2)
+                            minorIsland.resourceManager.changeResourceStock(building.upgrade3ResourceNeeded[1].First, -building.upgrade3ResourceNeeded[1].Second);
+                        break;
+                }
                 StartCoroutine(minorIsland.destroyPopup(minorIsland.createPopup("Bonne réponse ! Votre bâtiment passe au niveau " + building.level.ToString()), 3));
             }
             else

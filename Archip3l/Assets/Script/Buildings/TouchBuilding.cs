@@ -88,7 +88,7 @@ public class TouchBuilding : MonoBehaviour {
                             switch (building.level)
                             {
                                 case 0:
-                                    imageInCanvas.sprite = Resources.Load<Sprite>("infoBatiments/ResourcesIcons/" + building.upgrade1ResourceNeeded[0].First.ToString() + "Icon"); 
+                                    imageInCanvas.sprite = Resources.Load<Sprite>("infoBatiments/ResourcesIcons/" + building.upgrade1ResourceNeeded[0].First.ToString() + "Icon");
                                     break;
                                 case 1:
                                     imageInCanvas.sprite = Resources.Load<Sprite>("infoBatiments/ResourcesIcons/" + building.upgrade2ResourceNeeded[0].First.ToString() + "Icon");
@@ -135,7 +135,63 @@ public class TouchBuilding : MonoBehaviour {
                             imageInCanvas.sprite = Resources.Load<Sprite>("infoBatiments/ResourcesIcons/" + Building.getNameResourceOrStatProduced(building.name.Split('_')[3]) + "Icon");
                             break;
                     }
-                }
+
+                    //check if upgrade is possible
+                    foreach (SpriteRenderer sr in upgradeBuildingWindowCanvas.GetComponent<Canvas>().GetComponentsInChildren<SpriteRenderer>())
+                    {
+                        if (sr.name == "Upgrade")
+                        {
+                            switch (building.level)
+                            {
+                                case 0:
+                                    if (island.resourceManager.getResource(building.upgrade1ResourceNeeded[0].First).Stock < building.upgrade1ResourceNeeded[0].Second)
+                                    {
+                                        sr.sprite = Resources.Load<Sprite>("infoBatiments/boutonAmeliorerGrise");
+                                        sr.GetComponent<PolygonCollider2D>().enabled = false;
+                                    }
+                                    else if (building.upgrade1ResourceNeeded.Count == 2)
+                                    {
+                                        if (island.resourceManager.getResource(building.upgrade1ResourceNeeded[1].First).Stock < building.upgrade1ResourceNeeded[1].Second)
+                                        {
+                                            sr.sprite = Resources.Load<Sprite>("infoBatiments/boutonAmeliorerGrise");
+                                            sr.GetComponent<PolygonCollider2D>().enabled = false;
+                                        }
+                                    }
+                                    break;
+                                case 1:
+                                    if (island.resourceManager.getResource(building.upgrade2ResourceNeeded[0].First).Stock < building.upgrade2ResourceNeeded[0].Second)
+                                    {
+                                        sr.sprite = Resources.Load<Sprite>("infoBatiments/boutonAmeliorerGrise");
+                                        sr.GetComponent<PolygonCollider2D>().enabled = false;
+                                    }
+                                    else if (building.upgrade2ResourceNeeded.Count == 2)
+                                    {
+                                        if (island.resourceManager.getResource(building.upgrade2ResourceNeeded[1].First).Stock < building.upgrade2ResourceNeeded[1].Second)
+                                        {
+                                            sr.sprite = Resources.Load<Sprite>("infoBatiments/boutonAmeliorerGrise");
+                                            sr.GetComponent<PolygonCollider2D>().enabled = false;
+                                        }
+                                    }
+                                    break;
+                                case 2:
+                                    if (island.resourceManager.getResource(building.upgrade3ResourceNeeded[0].First).Stock < building.upgrade3ResourceNeeded[0].Second)
+                                    {
+                                        sr.sprite = Resources.Load<Sprite>("infoBatiments/boutonAmeliorerGrise");
+                                        sr.GetComponent<PolygonCollider2D>().enabled = false;
+                                    }
+                                    else if (building.upgrade3ResourceNeeded.Count == 2)
+                                    {
+                                        if (island.resourceManager.getResource(building.upgrade3ResourceNeeded[1].First).Stock < building.upgrade3ResourceNeeded[1].Second)
+                                        {
+                                            sr.sprite = Resources.Load<Sprite>("infoBatiments/boutonAmeliorerGrise");
+                                            sr.GetComponent<PolygonCollider2D>().enabled = false;
+                                        }
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+                    }
 
                 break;
             case "Remove":
