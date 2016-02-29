@@ -1,0 +1,19 @@
+Building;Question;Answer;Explaination;Proposition0;Proposition1;Proposition2
+Tourisme;Quelle est la capitale de la Grèce;Proposition2;_;Corinthe;Delphes;Athènes
+Tourisme;Quelle est la capitale de la Finlande?;Proposition2;_;Kemi;Salo;Helsinki
+Tourisme;En 2016, le nombre de touristes de votre île est de 16000 personnes. Sachant que celui-ci diminue de 25% chaque année, quel sera-t-il en 2017?;Proposition2;_;14000 personnes;15000 personnes;12000 personnes
+Ecole;"Laquelle de ces 3 propositions est fausse: ""il existe une école de sorcellerie à Salem (Massachussets)"","" il existe une école centrée sur l'étude du monde elfique en Islande"","" il existe une école nommée ""Walt Disney"" en France.""?";Proposition2;"Il y en a bien une nommée ""Walt Disney"" mais située aux Etats-Unis et visitée par le producteur-même en 1955.";il existe une école de sorcellerie à Salem (Massachussets);il existe une école centrée sur l'étude du monde elfique en Islande;"il existe une école nommée ""Walt Disney"" en France"
+Labos;Vous disposez de 50kg de médicaments dans votre entrepôt n°1. Sachant que votre stock total de médicaments, tous entrepôts confondus, représente 200 kg, quelle proportion de ce stock est contenue dans l’entrepôt n°1?;Proposition2;_;20%;35%;25%
+Scierie;Quelle superficie représentent les forêts du territoire français?;Proposition1;_;20%;30%;40%
+Scierie;Vous disposez de 20kg de bois dans votre entrepôt A. Sachant que votre stock total de bois, tous entrepôts confondus, représente 200 kg, quelle proportion de ce stock est contenue dans l’entrepôt A?;Proposition0;_;10%;15%;5%
+MinePierre;Vous disposez de 90 kg de pierres. Suite à un cyclone, vous perdez ? de vos ressources. Combien de kilos de pierres vous reste-t-il alors?;Proposition1;_;40kg;60kg;80kg
+MineOr;Quelle est la température de fusion de l’or?;Proposition2;_;823°C;940°C;1064°C
+PuitsPétrole;Qu’est-ce-que le naphta?;Proposition2;Il s’agit d’un matériau à la base de la pétrochimie servant, entre autres, à produire du plastique et de nombreux autres textiles synthétiques.;Un animal vivant dans les profondeurs marines;Un élément chimique rare et gazeux;Un liquide issu de la distillation du pétrole
+PuitsPétrole;En 2014, combien d’années de production représentent les réserves de pétrole mondiales restantes, selon la British Petroleum Compagny?;Proposition1;Si l’on suit le même rythme de production que celui de 2014.;23 ans;52 ans;46 ans
+Eolienne;En quelle année a été inscrit le mot “éolienne” dans le dictionnaire?;Proposition0;Après avoir été employé pour la 1ère fois en 1885 par M. Ernest Sylvain Bollée.;1907;1895;1883
+Eolienne;Aujourd’hui, combien mesurent les plus grandes éoliennes en bout de pale?;Proposition2;_;25m;125m;180m
+Eolienne;Quel est le seuil de sécurité (vitesse du vent) à partir duquel une éolienne doit être bridée (diminution de la vitesse de rotation des pales) ou mise à l’arrêt?;Proposition2;_;40 à 65 km/h;65 à 90 km/h;90 à 126km/h
+Parc d'Attraction;Combien de visiteurs les parcs d’attraction ont-ils compté en France en 2012?;Proposition2;_;10 millions de personnes;20 millions de personnes;30 millions de personnes
+Parc d'Attraction;Combien y a-t-il de parcs d’attraction et de loisirs en France?;Proposition1;_;200;300;400
+Parc d'Attraction;Quelle est la vitesse de parcours du grand huit le plus rapide au monde?;Proposition2;"Le parc d'attraction contenant ce manège se nomme ""Portaventura"" et est situé à Tarragone, à une heure de Barcelone, en Espagne.";70 km/h;110 km/h;134 km/h
+Parc d'Attraction;En quelle année fut construit le plus vieux parc d’attraction au monde encore en activité aujourd’hui?;Proposition1;Il se nomme Bakken (“la colline”) et est situé au Danemark.;1562;1583;1575
