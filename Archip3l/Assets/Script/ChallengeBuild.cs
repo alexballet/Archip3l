@@ -154,9 +154,9 @@ public class ChallengeBuild : MonoBehaviour {
         minorIsland.challengePresent = false;
         
         //minorIsland.buildingClicked is a string --> conversion necessary
-        if(Enum.IsDefined(typeof(TypeBuilding), minorIsland.buildingClicked))
+        if(Enum.IsDefined(typeof(TypeBuilding), minorIsland.buildingClickedWheel))
         {
-            TypeBuilding typeBuilding = (TypeBuilding)Enum.Parse(typeof(TypeBuilding), minorIsland.buildingClicked, true);
+            TypeBuilding typeBuilding = (TypeBuilding)Enum.Parse(typeof(TypeBuilding), minorIsland.buildingClickedWheel, true);
 
             //construction of building
             if(minorIsland.buildingManager.createBuilding(typeBuilding, minorIsland.placeToConstruct) == false)

@@ -9,7 +9,7 @@ public class BuildingInfo : MonoBehaviour {
     void OnMouseDown()
     {
         island = this.transform.parent.parent.parent.GetComponent<MinorIsland>();
-        buildingClicked = island.buildingClicked;
+        buildingClicked = island.buildingClickedWheel;
         if (this.name == "Build")
         {
             Destroy(GameObject.Find("WheelCanvas_" + this.transform.parent.parent.parent.name));

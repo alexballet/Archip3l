@@ -195,64 +195,75 @@ public class TouchBuilding : MonoBehaviour {
 
                 break;
             case "Remove":
-                Canvas removeBuildingWindowCanvasPrefab = Resources.Load<Canvas>("Prefab/RemoveBuildingWindowCanvas");
-                Canvas removeBuildingWindowCanvas = Instantiate(removeBuildingWindowCanvasPrefab);
-                removeBuildingWindowCanvas.name = "RemoveBuildingWindowCanvas_" + building.name;
-                removeBuildingWindowCanvas.transform.SetParent(this.transform.parent.parent.parent);  //parent : sous_ile
-                removeBuildingWindowCanvas.transform.position = island.transform.position;
-                //rotation of image according to the place of the island
-                if (id == '1' || id == '2')
-                    removeBuildingWindowCanvas.transform.Rotate(Vector3.forward * 180);
-                //modification of the content of the different Text Children of the Canvas
-                foreach (Text textInCanvas in removeBuildingWindowCanvas.GetComponent<Canvas>().GetComponentsInChildren<Text>())
+                if (this.building.name.Split('_')[3] == TypeBuilding.Harbor.ToString())
                 {
-                    switch (textInCanvas.name)
-                    {
-                        case "Question":
-                            textInCanvas.text = "Etes vous sûr de vouloir détruire le bâtiment \"" + Building.translateBuildingName(building.TypeBuilding.ToString()) + "\" ?";
-                            break;
-                        case "GainValue1":
-                            textInCanvas.text = (building.constructionResourceNeeded[0].Second / 2).ToString();
-                            break;
-                        case "GainValue2":
-                            if (building.constructionResourceNeeded.Count == 2)
-                                textInCanvas.text = (building.constructionResourceNeeded[1].Second / 2).ToString();
-                            else
-                                textInCanvas.text = "-";
-                        break;
-                    }
+                    StartCoroutine(this.island.destroyPopup(this.island.createPopup("Impossible de supprimer le port !"), 3));
                 }
-                //modification of the background of the different Image Children of the Canvas
-                foreach (SpriteRenderer imageInCanvas in removeBuildingWindowCanvas.GetComponent<Canvas>().GetComponentsInChildren<SpriteRenderer>())
-                {
-                    switch (imageInCanvas.name)
+                else {
+                    Canvas removeBuildingWindowCanvasPrefab = Resources.Load<Canvas>("Prefab/RemoveBuildingWindowCanvas");
+                    Canvas removeBuildingWindowCanvas = Instantiate(removeBuildingWindowCanvasPrefab);
+                    removeBuildingWindowCanvas.name = "RemoveBuildingWindowCanvas_" + building.name;
+                    removeBuildingWindowCanvas.transform.SetParent(this.transform.parent.parent.parent);  //parent : sous_ile
+                    removeBuildingWindowCanvas.transform.position = island.transform.position;
+                    //rotation of image according to the place of the island
+                    if (id == '1' || id == '2')
+                        removeBuildingWindowCanvas.transform.Rotate(Vector3.forward * 180);
+                    //modification of the content of the different Text Children of the Canvas
+                    foreach (Text textInCanvas in removeBuildingWindowCanvas.GetComponent<Canvas>().GetComponentsInChildren<Text>())
                     {
-                        //mêmes images
-                        case "GainImage1":
-                            imageInCanvas.sprite = Resources.Load<Sprite>("infoBatiments/ResourcesIcons/" + building.constructionResourceNeeded[0].First.ToString() + "Icon");
-                            break;
-                        case "GainImage2":
-                            if (building.constructionResourceNeeded.Count == 2)
-                                imageInCanvas.sprite = Resources.Load<Sprite>("infoBatiments/ResourcesIcons/" + building.constructionResourceNeeded[1].First.ToString() + "Icon");
-                            else
-                                imageInCanvas.sprite = null;
-                            break;
+                        switch (textInCanvas.name)
+                        {
+                            case "Question":
+                                textInCanvas.text = "Etes vous sûr de vouloir détruire le bâtiment \"" + Building.translateBuildingName(building.TypeBuilding.ToString()) + "\" ?";
+                                break;
+                            case "GainValue1":
+                                textInCanvas.text = (building.constructionResourceNeeded[0].Second / 2).ToString();
+                                break;
+                            case "GainValue2":
+                                if (building.constructionResourceNeeded.Count == 2)
+                                    textInCanvas.text = (building.constructionResourceNeeded[1].Second / 2).ToString();
+                                else
+                                    textInCanvas.text = "-";
+                                break;
+                        }
                     }
+                    //modification of the background of the different Image Children of the Canvas
+                    foreach (SpriteRenderer imageInCanvas in removeBuildingWindowCanvas.GetComponent<Canvas>().GetComponentsInChildren<SpriteRenderer>())
+                    {
+                        switch (imageInCanvas.name)
+                        {
+                            //mêmes images
+                            case "GainImage1":
+                                imageInCanvas.sprite = Resources.Load<Sprite>("infoBatiments/ResourcesIcons/" + building.constructionResourceNeeded[0].First.ToString() + "Icon");
+                                break;
+                            case "GainImage2":
+                                if (building.constructionResourceNeeded.Count == 2)
+                                    imageInCanvas.sprite = Resources.Load<Sprite>("infoBatiments/ResourcesIcons/" + building.constructionResourceNeeded[1].First.ToString() + "Icon");
+                                else
+                                    imageInCanvas.sprite = null;
+                                break;
+                        }
+                    }
+                    Destroy(GameObject.Find(this.transform.parent.parent.name));
                 }
-                Destroy(GameObject.Find(this.transform.parent.parent.name));
-                //Destroy(GameObject.Find("touchBuilding_" + this.island.nameMinorIsland + "_" + typeBuilding.ToString()));
                 break;
             case "Move":
-                Destroy(GameObject.Find(this.transform.parent.parent.name));
-
-                if (building.TypeBuilding.ToString() == "Harbor")
+                if (this.building.name.Split('_')[3] == TypeBuilding.Harbor.ToString())
                 {
-                    StartCoroutine(island.destroyPopup(island.createPopup("Le port ne peut pas être déplacé !"), 3));
+                    StartCoroutine(this.island.destroyPopup(this.island.createPopup("Impossible de déplacer le port !"), 3));
                 }
-                else
-                {
-                    StartCoroutine(island.destroyPopup(island.createPopup("Appuyez sur l'endroit où placer le batiment"), 3));
-                    island.moveBuilding = true;
+                else {
+                    Destroy(GameObject.Find(this.transform.parent.parent.name));
+
+                    if (building.TypeBuilding.ToString() == "Harbor")
+                    {
+                        StartCoroutine(island.destroyPopup(island.createPopup("Le port ne peut pas être déplacé !"), 3));
+                    }
+                    else
+                    {
+                        StartCoroutine(island.destroyPopup(island.createPopup("Appuyez sur l'endroit où placer le batiment"), 3));
+                        island.moveBuilding = true;
+                    }
                 }
                 break;
         }

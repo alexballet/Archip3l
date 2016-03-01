@@ -20,7 +20,7 @@ public class WheelIcon : MonoBehaviour {
     {
         MinorIsland island = GameObject.Find(this.transform.parent.parent.parent.name).GetComponent<MinorIsland>();
 
-        island.buildingClicked = this.name.Split('_')[1];
+        island.buildingClickedWheel = this.name.Split('_')[1];
 
         if (island.buildingInfoPresent == false)        //if any buildingInfo is open (not more than one at the same time)
         {
@@ -32,7 +32,7 @@ public class WheelIcon : MonoBehaviour {
             buildingInfo.transform.position = island.transform.position;
             //modification of the content of the different Text Children of the Canvas
 
-            List<Tuple<TypeResource, int>> constructionResourceNeeded = Building.getConstructionResourcesNeeded(island.buildingClicked);
+            List<Tuple<TypeResource, int>> constructionResourceNeeded = Building.getConstructionResourcesNeeded(island.buildingClickedWheel);
             
 
             foreach (Text textInCanvas in buildingInfo.GetComponent<Canvas>().GetComponentsInChildren<Text>())
@@ -40,7 +40,7 @@ public class WheelIcon : MonoBehaviour {
                 switch (textInCanvas.name)
                 {
                     case "Name":
-                        textInCanvas.text = Building.translateBuildingName(island.buildingClicked);
+                        textInCanvas.text = Building.translateBuildingName(island.buildingClickedWheel);
                         break;
                     case "CostValue1":
                         textInCanvas.text = constructionResourceNeeded[0].Second.ToString();
@@ -52,10 +52,10 @@ public class WheelIcon : MonoBehaviour {
                             textInCanvas.text = "-";
                         break;
                     case "ProductionValueGoodAnswer":
-                        textInCanvas.text = (Building.getQuantityResourceOrStatProduced(island.buildingClicked) * 2).ToString();
+                        textInCanvas.text = (Building.getQuantityResourceOrStatProduced(island.buildingClickedWheel) * 2).ToString();
                         break;
                     case "ProductionValueBadAnswer":
-                        textInCanvas.text = (Building.getQuantityResourceOrStatProduced(island.buildingClicked)).ToString();
+                        textInCanvas.text = (Building.getQuantityResourceOrStatProduced(island.buildingClickedWheel)).ToString();
                         break;
                 }
             }
@@ -76,10 +76,10 @@ public class WheelIcon : MonoBehaviour {
                         break;
                     //mêmes images
                     case "ProductionImage":
-                        imageInCanvas.sprite = Resources.Load<Sprite>("infoBatiments/ResourcesIcons/" + Building.getNameResourceOrStatProduced(island.buildingClicked) + "Icon");
+                        imageInCanvas.sprite = Resources.Load<Sprite>("infoBatiments/ResourcesIcons/" + Building.getNameResourceOrStatProduced(island.buildingClickedWheel) + "Icon");
                         break;
                     case "ProductionImage2":
-                        imageInCanvas.sprite = Resources.Load<Sprite>("infoBatiments/ResourcesIcons/" + Building.getNameResourceOrStatProduced(island.buildingClicked) + "Icon");
+                        imageInCanvas.sprite = Resources.Load<Sprite>("infoBatiments/ResourcesIcons/" + Building.getNameResourceOrStatProduced(island.buildingClickedWheel) + "Icon");
                         break;
                     case "Build":
                         if (island.resourceManager.getResource(constructionResourceNeeded[0].First).Stock < constructionResourceNeeded[0].Second)

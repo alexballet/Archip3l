@@ -81,7 +81,7 @@ public class ChallengeUpgrade : MonoBehaviour {
             propositionsButtons[i].onClick.AddListener(() => { propositionClick();});
         }
 
-        
+
         canvasChallenge.transform.position = GameObject.Find("Virtual_" + minorIsland.nameMinorIsland).transform.position;
 
         //rotation if other side of the table
@@ -148,15 +148,16 @@ public class ChallengeUpgrade : MonoBehaviour {
             color.a -= 0.01f;
             background.material.color = color;
         }
-        
+
+
         Destroy(GameObject.Find("Challenge_" + typeChallenge + "_" + minorIsland.nameMinorIsland));
 
-        StartCoroutine(minorIsland.destroyPopup(minorIsland.createPopup(explainations), 8));
+        //StartCoroutine(minorIsland.destroyPopup(minorIsland.createPopup(explainations), 8));
 
         minorIsland.challengePresent = false;
-        
-        //minorIsland.buildingClicked is a string --> conversion necessary
-        if(Enum.IsDefined(typeof(TypeBuilding), minorIsland.buildingClicked))
+
+        //this.building.name is a string --> conversion necessary + split (name like: "sous_ile_X_nameBuilding")
+        if (Enum.IsDefined(typeof(TypeBuilding), this.building.name.Split('_')[3]))
         {
             //TypeBuilding typeBuilding = (TypeBuilding)Enum.Parse(typeof(TypeBuilding), minorIsland.buildingClicked, true);
 
@@ -185,7 +186,7 @@ public class ChallengeUpgrade : MonoBehaviour {
                             minorIsland.resourceManager.changeResourceStock(building.upgrade3ResourceNeeded[1].First, -building.upgrade3ResourceNeeded[1].Second);
                         break;
                 }
-                StartCoroutine(minorIsland.destroyPopup(minorIsland.createPopup("Bonne réponse ! Votre bâtiment passe au niveau " + building.level.ToString()), 3));
+                StartCoroutine(minorIsland.destroyPopup(minorIsland.createPopup("Bonne réponse ! Votre bâtiment passe au niveau " + building.level.ToString() + " !"), 3));
             }
             else
             {
@@ -193,15 +194,18 @@ public class ChallengeUpgrade : MonoBehaviour {
                 {
                     building.level -= 1;
                     building.changeProduction(-(building.resourceProduced.Production / 2));
-                    StartCoroutine(minorIsland.destroyPopup(minorIsland.createPopup("Mauvaise réponse ! Votre bâtiment passe au niveau " + building.level.ToString()), 3));
+                    StartCoroutine(minorIsland.destroyPopup(minorIsland.createPopup("Mauvaise réponse ! Votre bâtiment redescend au niveau " + building.level.ToString() + " ..."), 3));
                 }
-                StartCoroutine(minorIsland.destroyPopup(minorIsland.createPopup("Mauvaise réponse ! Votre bâtiment est déjà au nivau le plus bas ..."), 3));
+                else
+                    StartCoroutine(minorIsland.destroyPopup(minorIsland.createPopup("Mauvaise réponse ! L'amélioration n'a donc pas pu se faire ..."), 3));
             }
 
             //upgrading animation
             building.buildState = 0;
             StartCoroutine(building.launchUpgradeAnimation());
         }
+        else
+            Debug.Log("pb");
 
 
     }

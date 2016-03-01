@@ -22,7 +22,7 @@ public class MinorIsland : MonoBehaviour {
     public bool moveBuilding = false;                   //moving a building
     public bool exchangeWindowPresent = false;          //exchangeWindow present on the island
     public string nameBuildingTouchCanvas;
-    public string buildingClicked;
+    public string buildingClickedWheel;
     public int numPopup = 0;
 
     //for exchange resources window
@@ -147,7 +147,7 @@ public class MinorIsland : MonoBehaviour {
     //returns the name of the Popup (GameObject) created
     public string createPopup(string popupText)
     {
-        this.removeAllPopups();
+        //this.removeAllPopups();
 
         Canvas popupCanvasPrefab = Resources.Load<Canvas>("Prefab/PopupCanvas");
         Canvas popupCanvas = Instantiate(popupCanvasPrefab);
@@ -175,7 +175,6 @@ public class MinorIsland : MonoBehaviour {
     public IEnumerator destroyPopup(string namePopup, int timer)
     {
         SpriteRenderer popupImage = GameObject.Find(namePopup).GetComponentInChildren<SpriteRenderer>();
-        popupImage.GetComponent<BoxCollider2D>().enabled = false;
         
         yield return new WaitForSeconds(timer);
         Color color;
@@ -188,7 +187,6 @@ public class MinorIsland : MonoBehaviour {
             popupImage.color = color;
 
         }
-
         Destroy(GameObject.Find(namePopup));
     }
 
@@ -222,11 +220,11 @@ public class MinorIsland : MonoBehaviour {
                 {
                     case "Move":
                         sr.sprite = Resources.Load<Sprite>("wheelAppuiBatiment/boutonDeplacer_disabled");
-                        sr.GetComponent<PolygonCollider2D>().enabled = false;
+                        //sr.GetComponent<PolygonCollider2D>().enabled = false;
                         break;
                     case "Remove":
                         sr.sprite = Resources.Load<Sprite>("wheelAppuiBatiment/boutonSupprimer_disabled");
-                        sr.GetComponent<PolygonCollider2D>().enabled = false;
+                        //sr.GetComponent<PolygonCollider2D>().enabled = false;
                         break;
                 }
             }
@@ -385,4 +383,6 @@ public class MinorIsland : MonoBehaviour {
         }
         return list;
     }
+
+    
 }
