@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using TouchScript.Examples.Cube;
 
 public class BuildingManager : MonoBehaviour {
 

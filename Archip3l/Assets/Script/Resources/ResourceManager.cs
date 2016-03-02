@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using TouchScript.Examples.Cube;
 
 public class ResourceManager : MonoBehaviour {
 

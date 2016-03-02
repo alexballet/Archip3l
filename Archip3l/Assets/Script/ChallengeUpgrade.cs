@@ -2,8 +2,8 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using UnityEditor;
 using System;
+using TouchScript.Examples.Cube;
 
 public class ChallengeUpgrade : MonoBehaviour {
 

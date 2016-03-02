@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
+using TouchScript.Examples.Cube;
 
 public class ChallengeBuild : MonoBehaviour {
 
@@ -159,7 +160,7 @@ public class ChallengeBuild : MonoBehaviour {
             TypeBuilding typeBuilding = (TypeBuilding)Enum.Parse(typeof(TypeBuilding), minorIsland.buildingClickedWheel, true);
 
             //construction of building
-            if(minorIsland.buildingManager.createBuilding(typeBuilding, minorIsland.placeToConstruct) == false)
+            if(minorIsland.buildingManager.createBuilding(typeBuilding, minorIsland.positionTouched) == false)
             {
                 StartCoroutine(minorIsland.destroyPopup(minorIsland.createPopup("Le bâtiment " + typeBuilding.ToString() + " a déjà été créé !"), 3));
             }

@@ -2,7 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
+
 
 public class Tuto_Building : MonoBehaviour {
 
@@ -22,7 +22,7 @@ public class Tuto_Building : MonoBehaviour {
         this.tuto_minorIsland = island;
         this.name = this.tuto_minorIsland.nameTuto_MinorIsland + "_Harbor";
 
-        this.texturePath = "Assets/Resources/Building/Icons/wheelIcon_Harbor.png";
+        this.texturePath = "Building/Icons/wheelIcon_Harbor";
 
         this.constructionTime = 5;
 
@@ -54,10 +54,7 @@ public class Tuto_Building : MonoBehaviour {
     IEnumerator build()
     {
         //texture
-        Texture2D texture = (Texture2D)AssetDatabase.LoadAssetAtPath(this.texturePath, typeof(Texture2D));
-        if (texture == null)
-            Debug.Log("toto");
-        GetComponent<SpriteRenderer>().sprite = Sprite.Create(texture, new Rect(0f, 0f, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+        GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(texturePath);
 
         //Animation
         var buildingConstructionTransform = Instantiate(buildingConstructionPrefab) as Transform;
