@@ -12,10 +12,13 @@ namespace TouchScript.Examples.Cube
     public class WheelIcon : InputSource
     {
 
+        MinorIsland island;
+
+
         // Use this for initialization
         void Start()
         {
-
+            island = GameObject.Find(this.transform.parent.parent.parent.name).GetComponent<MinorIsland>();
         }
 
         // Update is called once per frame
@@ -27,8 +30,6 @@ namespace TouchScript.Examples.Cube
 
         void OnMouseDownSimulation()
         {
-            MinorIsland island = GameObject.Find(this.transform.parent.parent.parent.name).GetComponent<MinorIsland>();
-
             island.buildingClickedWheel = this.name.Split('_')[1];
 
             if (island.buildingInfoPresent == false)        //if any buildingInfo is open (not more than one at the same time)
@@ -38,7 +39,9 @@ namespace TouchScript.Examples.Cube
 
                 buildingInfo.name = "BuildingInfo_" + this.name;
                 buildingInfo.transform.SetParent(this.transform.parent.parent.parent);  //parent : minorIsland
-                buildingInfo.transform.position = island.transform.position;
+                Vector3 pos = island.transform.position;
+                pos.z = -2;
+                buildingInfo.transform.position = pos;
                 //modification of the content of the different Text Children of the Canvas
 
                 List<Tuple<TypeResource, int>> constructionResourceNeeded = Building.getConstructionResourcesNeeded(island.buildingClickedWheel);
@@ -180,6 +183,7 @@ namespace TouchScript.Examples.Cube
             map.Add(touch.Id, beginTouch(processCoords(touch.Hit.RaycastHit.textureCoord), touch.Tags).Id);
             //this.OnMouseDownSimulation();
             TouchTime = Time.time;
+            island.positionTouched = touch.Position;
         }
 
         private void touchMovedhandler(object sender, MetaGestureEventArgs metaGestureEventArgs)
@@ -200,7 +204,6 @@ namespace TouchScript.Examples.Cube
             if (touch.InputSource == this) return;
             if (!map.TryGetValue(touch.Id, out id)) return;
             endTouch(id);
-            Debug.Log((Time.time - TouchTime).ToString());
             if (Time.time - TouchTime < 1)
                 this.OnMouseDownSimulation();
         }

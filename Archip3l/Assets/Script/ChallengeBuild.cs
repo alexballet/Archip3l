@@ -160,7 +160,7 @@ public class ChallengeBuild : MonoBehaviour {
             TypeBuilding typeBuilding = (TypeBuilding)Enum.Parse(typeof(TypeBuilding), minorIsland.buildingClickedWheel, true);
 
             //construction of building
-            if(minorIsland.buildingManager.createBuilding(typeBuilding, minorIsland.positionTouched) == false)
+            if(minorIsland.buildingManager.createBuilding(typeBuilding, minorIsland.placeOfBuildingConstruction) == false)
             {
                 StartCoroutine(minorIsland.destroyPopup(minorIsland.createPopup("Le bâtiment " + typeBuilding.ToString() + " a déjà été créé !"), 3));
             }

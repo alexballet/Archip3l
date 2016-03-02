@@ -60,8 +60,17 @@ namespace TouchScript.Examples.Cube
 
             if (!island.otherWindowOpen)
             {
-                string resourceName = Resource.getResourceFromIconName(resource_sp.GetComponent<SpriteRenderer>().sprite.name);
-                int resourceQuantity = this.island.resourceManager.getResource((TypeResource)System.Enum.Parse(typeof(TypeResource), resourceName)).Stock;
+                string resourceName;
+                int resourceQuantity;
+                if (resource_sp.GetComponent<SpriteRenderer>().sprite.name == "Knob"){  //default sprite
+                    resourceName = string.Empty;
+                    resourceQuantity = 0;
+                }
+                else
+                {
+                    resourceName = Resource.getResourceFromIconName(resource_sp.GetComponent<SpriteRenderer>().sprite.name);
+                    resourceQuantity = this.island.resourceManager.getResource((TypeResource)System.Enum.Parse(typeof(TypeResource), resourceName)).Stock;
+                }
 
                 switch (this.name)
                 {
@@ -75,11 +84,11 @@ namespace TouchScript.Examples.Cube
                         listResourcesCanvas.transform.position = vector3;
                         foreach (SpriteRenderer sr in listResourcesCanvas.GetComponentsInChildren<SpriteRenderer>())
                         {
-                            sr.GetComponent<BoxCollider2D>().enabled = true;
+                            sr.GetComponent<BoxCollider>().enabled = true;
                             if ((sr.name != "Close") && (this.island.resourceManager.getResource((TypeResource)System.Enum.Parse(typeof(TypeResource), sr.name)).Stock < 5))
                             {
                                 sr.sprite = Resources.Load<Sprite>("infoBatiments/ResourcesIcons/" + sr.name + "Icon_disabled");
-                                sr.GetComponent<BoxCollider2D>().enabled = false;
+                                sr.GetComponent<BoxCollider>().enabled = false;
                             }
                         }
                         island.otherWindowOpen = true;
@@ -87,19 +96,19 @@ namespace TouchScript.Examples.Cube
                         break;
                     case "Less":
                         if (quantityValue.text == "0")
-                            this.GetComponent<PolygonCollider2D>().enabled = false;
+                            this.GetComponent<BoxCollider>().enabled = false;
                         else
                         {
                             quantityValue.text = (int.Parse(quantityValue.text) - 5).ToString();
-                            more.GetComponent<PolygonCollider2D>().enabled = true;
+                            more.GetComponent<BoxCollider>().enabled = true;
                         }
                         break;
                     case "More":
-                        this.GetComponent<PolygonCollider2D>().enabled = true;
+                        this.GetComponent<BoxCollider>().enabled = true;
                         if ((quantityValue.name == "QuantityValue") && (int.Parse(quantityValue.text) + 5 <= resourceQuantity))
                         {
                             quantityValue.text = (int.Parse(quantityValue.text) + 5).ToString();
-                            less.GetComponent<PolygonCollider2D>().enabled = true;
+                            less.GetComponent<BoxCollider>().enabled = true;
                         }
                         break;
                     case "Island":
@@ -127,9 +136,14 @@ namespace TouchScript.Examples.Cube
                             {
                                 StartCoroutine(island.destroyPopup(island.createPopup("Veuillez sélectionner une quantité à envoyer"), 3));
                             }
-                            else
+                            else if (resource_sp.sprite.name == "Knob") //defaults sprite when not already clicked on
+                                {
+                                    StartCoroutine(island.destroyPopup(island.createPopup("Veuillez sélectionner une ressource à envoyer"), 3));
+                                }
+                                else
                             {
                                 //TODO 
+                                Destroy(GameObject.Find(this.transform.parent.parent.name));
                                 Debug.Log("Start of sending resource");
                             }
                         }
@@ -160,6 +174,8 @@ namespace TouchScript.Examples.Cube
             {
                 refresh();
                 resource_sp.sprite = Resources.Load<Sprite>("infoBatiments/ResourcesIcons/" + island.resource + "Icon");
+                resource_sp.transform.localScale = new Vector2(0.1f, 0.1f);
+                resource_sp.GetComponent<BoxCollider>().size = new Vector2(5, 5);
                 island.resource = string.Empty;
             }
             if (island.islandToSend != string.Empty)

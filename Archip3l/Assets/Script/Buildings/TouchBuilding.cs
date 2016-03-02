@@ -19,6 +19,7 @@ namespace TouchScript.Examples.Cube
 
         void OnMouseDownSimulation()
         {
+            Vector3 pos;
             island = GameObject.Find(this.transform.parent.parent.parent.name).GetComponent<MinorIsland>();
             building = GameObject.Find(island.nameBuildingTouchCanvas).GetComponent<Building>();
 
@@ -32,7 +33,9 @@ namespace TouchScript.Examples.Cube
                     Canvas upgradeBuildingWindowCanvas = Instantiate(upgradeBuildingWindowCanvasPrefab);
                     upgradeBuildingWindowCanvas.name = "UpgradeBuildingWindowCanvas_" + building.name;
                     upgradeBuildingWindowCanvas.transform.SetParent(this.transform.parent.parent.parent);  //parent : sous_ile
-                    upgradeBuildingWindowCanvas.transform.position = island.transform.position;
+                    pos = island.transform.position;
+                    pos.z = -2;
+                    upgradeBuildingWindowCanvas.transform.position = pos;
                     //rotation of image according to the place of the island
                     if (id == '1' || id == '2')
                         upgradeBuildingWindowCanvas.transform.Rotate(Vector3.forward * 180);
@@ -214,7 +217,9 @@ namespace TouchScript.Examples.Cube
                         Canvas removeBuildingWindowCanvas = Instantiate(removeBuildingWindowCanvasPrefab);
                         removeBuildingWindowCanvas.name = "RemoveBuildingWindowCanvas_" + building.name;
                         removeBuildingWindowCanvas.transform.SetParent(this.transform.parent.parent.parent);  //parent : sous_ile
-                        removeBuildingWindowCanvas.transform.position = island.transform.position;
+                        pos = island.transform.position;
+                        pos.z = -2;
+                        removeBuildingWindowCanvas.transform.position = pos;
                         //rotation of image according to the place of the island
                         if (id == '1' || id == '2')
                             removeBuildingWindowCanvas.transform.Rotate(Vector3.forward * 180);

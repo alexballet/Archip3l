@@ -11,6 +11,7 @@ namespace TouchScript.Examples.Cube
 {
     public class MinorIsland : InputSource
     {
+        
 
         public BuildingManager buildingManager { get; private set; }
         public ResourceManager resourceManager { get; private set; }
@@ -22,6 +23,7 @@ namespace TouchScript.Examples.Cube
 
         //communication with WheelIcon, BuildingInfo & ChallengeBuild scripts + Popups & TouchBuilding
         public Vector2 positionTouched;
+        public Vector2 placeOfBuildingConstruction;
         public bool wheelPresent = false;                   //wheel present on the island
         public bool buildingInfoPresent = false;            //buildingInfo present on the island
         public bool challengePresent = false;               //challenge present on the island
@@ -215,7 +217,9 @@ namespace TouchScript.Examples.Cube
             Canvas touchBuildingCanvas = Instantiate(touchBuildingCanvasPrefab);
             touchBuildingCanvas.transform.SetParent(this.transform);
             touchBuildingCanvas.name = "touchBuilding_" + this.nameBuildingTouchCanvas;
-            touchBuildingCanvas.transform.position = GameObject.Find(this.nameBuildingTouchCanvas).transform.position;
+            Vector3 pos = GameObject.Find(this.nameBuildingTouchCanvas).transform.position;
+            pos.z = -2;
+            touchBuildingCanvas.transform.position = pos;
 
             //Exception: moving and removing are impossible for Harbor
             if (building.TypeBuilding == TypeBuilding.Harbor)
@@ -270,10 +274,10 @@ namespace TouchScript.Examples.Cube
         }
 
 
-        //test
+        
         void createExchangeWindow()
         {
-            if (!exchangeWindowPresent)
+            if (!exchangeWindowPresent && !wheelPresent)
             {
                 Canvas exchangeWindowCanvasPrefab = Resources.Load<Canvas>("Prefab/exchangeWindowCanvas");
                 Canvas exchangeWindowCanvas = Instantiate(exchangeWindowCanvasPrefab);
@@ -312,7 +316,7 @@ namespace TouchScript.Examples.Cube
             //moving a building
             if (moveBuilding)
             {
-                Vector3 pos = new Vector3(positionTouched.x, positionTouched.y, 0);
+                Vector3 pos = Camera.main.ScreenToWorldPoint(new Vector3(positionTouched.x, positionTouched.y, 0));
                 pos.z = -1;
                 GameObject.Find(this.nameBuildingTouchCanvas).transform.position = pos;
                 this.moveBuilding = false;
@@ -332,6 +336,7 @@ namespace TouchScript.Examples.Cube
                         if (!wheelPresent)  //if the wheel is not on the island
                         {
                             //Wheel appearance
+                            this.placeOfBuildingConstruction = this.positionTouched;
                             Canvas prefabWheelCanvas = Resources.Load<Canvas>("Prefab/WheelCanvas");
                             Canvas wheelCanvas = Instantiate(prefabWheelCanvas);
                             wheelCanvas.name = "WheelCanvas_" + nameMinorIsland;
@@ -339,7 +344,9 @@ namespace TouchScript.Examples.Cube
                             wheelCanvas.transform.SetParent(GameObject.Find(nameMinorIsland).transform);
                             SpriteRenderer wheelImage = wheelCanvas.GetComponentInChildren<SpriteRenderer>();
                             //position of wheel where it was clicked on
-                            wheelImage.transform.position = positionTouched;
+                            Vector3 pos = Camera.main.ScreenToWorldPoint(this.positionTouched);
+                            pos.z = -1;
+                            wheelImage.transform.position = pos;
                             //rotation of image according to the place of the island
                             char id = this.nameMinorIsland[this.nameMinorIsland.Length - 1];
                             if (id == '1' || id == '2')
@@ -463,9 +470,12 @@ namespace TouchScript.Examples.Cube
             var touch = metaGestureEventArgs.Touch;
             if (touch.InputSource == this) return;
             map.Add(touch.Id, beginTouch(processCoords(touch.Hit.RaycastHit.textureCoord), touch.Tags).Id);
-            positionTouched = Camera.main.ScreenToWorldPoint(touch.Position);
-            //this.OnMouseDownSimulation();
-            TouchTime = Time.time;
+            if (TouchTime == 0)
+            {
+                TouchTime = Time.time;
+                this.positionTouched = touch.Position;
+            }
+
         }
 
         private void touchMovedhandler(object sender, MetaGestureEventArgs metaGestureEventArgs)
@@ -486,10 +496,16 @@ namespace TouchScript.Examples.Cube
             if (touch.InputSource == this) return;
             if (!map.TryGetValue(touch.Id, out id)) return;
             endTouch(id);
-            if (Time.time - TouchTime < 1)
+            if (Time.time - TouchTime < 0.5)
+            {
+                TouchTime = 0;
                 this.OnMouseDownSimulation();
-            else
+            }
+            else if(Time.time - TouchTime < 1.5)
+            {
+                TouchTime = 0;
                 this.createExchangeWindow();
+            }
         }
 
         private void touchCancelledhandler(object sender, MetaGestureEventArgs metaGestureEventArgs)
