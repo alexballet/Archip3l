@@ -28,7 +28,7 @@ public class SoundPlayer : MonoBehaviour {
     {
         if (Instance != null)
         {
-            Debug.LogError("Multiple instances of SoundManager!");
+            //Debug.LogError("Multiple instances of SoundManager!");
         }
         Instance = this;
     }
