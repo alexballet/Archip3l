@@ -15,28 +15,20 @@ public class Anim_BuildingUpgrade : MonoBehaviour
     {
         for (;;)
         {
+            SoundPlayer.Instance.playUpgradeSound();
+            for (int i = 0; i < 7; i++)
+            {
 
-            MoveUp();
-            yield return new WaitForSeconds(this.interval);
-            MoveLeft();
-            yield return new WaitForSeconds(this.interval);
-            MoveDown();
-            yield return new WaitForSeconds(this.interval);
-            MoveRight();
-            yield return new WaitForSeconds(this.interval);
-            //for (int i = 0; i < 3; i++)
-            //{
-            //    MoveUp();
-            //    yield return new WaitForSeconds(this.interval);
-            //}
-            //for (int i = 0; i < 3; i++)
-            //{
-            //    MoveDown();
-            //    yield return new WaitForSeconds(this.interval);
-            //}
-            //yield return new WaitForSeconds(this.interval);
+                MoveUp();
+                yield return new WaitForSeconds(this.interval);
+                MoveLeft();
+                yield return new WaitForSeconds(this.interval);
+                MoveDown();
+                yield return new WaitForSeconds(this.interval);
+                MoveRight();
+                yield return new WaitForSeconds(this.interval);
+            }
         }
-
     }
     void MoveUp()
     {

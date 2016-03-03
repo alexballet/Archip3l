@@ -13,8 +13,6 @@ public class Anim_BuildingConstruction : MonoBehaviour
         this.startQuaternion = transform.GetChild(0).rotation;
         this.interval = 0.02f;
 
-        SoundPlayer.Instance.playConstructionSound();
-
         //Instantiate(hammerPrefab).SetParent(this.transform);
         StartCoroutine("Rotate");
     }
@@ -22,6 +20,7 @@ public class Anim_BuildingConstruction : MonoBehaviour
     {
         for (;;)
         {
+            SoundPlayer.Instance.playConstructionSound();
             for (int i = 0; i < 23; i++)
             {
                 RotateLeft();
