@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using TouchScript.Examples.Cube;
 using TouchScript.InputSources;
 using TouchScript.Gestures;
 using TouchScript.Hit;

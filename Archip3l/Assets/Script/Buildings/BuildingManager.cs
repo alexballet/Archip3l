@@ -68,12 +68,12 @@ public class BuildingManager : MonoBehaviour {
     {
         Building buildingToDestroy = this.getBuilding(buildingType);
         GameObject objectToDestroy = GameObject.Find(this.minorIsland.nameMinorIsland + "_" + buildingType.ToString());
-        //Delete game object
-        yield return StartCoroutine(fadeAndDestroy(objectToDestroy));
         //update resource production in island resource manager
         this.minorIsland.resourceManager.changeResourceProduction(buildingToDestroy.resourceProduced.TypeResource, buildingToDestroy.resourceProduced.Production);
         //remove the building in the list of this manager
         this.buildingList.Remove(this.getBuilding(buildingType));
+        //Delete game object
+        yield return StartCoroutine(fadeAndDestroy(objectToDestroy));
     }
     IEnumerator fadeAndDestroy(GameObject obj)
     {

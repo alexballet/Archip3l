@@ -380,11 +380,11 @@ namespace TouchScript.Examples.Cube
 
         }
 
-
+        //disabled building: default disabled (because of Islands specializations) + building already built on the Island
         private List<string> getDisabledBuildings(string nameMinorIsland)
         {
             List<string> list = new List<string>();
-            switch (nameMinorIsland)
+            switch (this.nameMinorIsland)
             {
                 case "sous_ile_1":
                     list.Add("wheelIcon_OilPlant");
@@ -406,6 +406,11 @@ namespace TouchScript.Examples.Cube
                     list.Add("wheelIcon_GoldMine");
                     list.Add("wheelIcon_StoneMine");
                     break;
+            }
+            foreach (Building building in this.buildingManager.buildingList)
+            {
+                Debug.Log(building.TypeBuilding.ToString());
+                list.Add("wheelIcon_" + building.TypeBuilding.ToString());
             }
             return list;
         }
@@ -516,6 +521,8 @@ namespace TouchScript.Examples.Cube
             if (!map.TryGetValue(touch.Id, out id)) return;
             cancelTouch(id);
         }
+
+
 
     }
 }
