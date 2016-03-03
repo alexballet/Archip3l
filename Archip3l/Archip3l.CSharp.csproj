@@ -58,12 +58,6 @@
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Networking">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
@@ -92,6 +86,7 @@
     <Compile Include="Assets\Script\Miscellaneous\Tuple.cs" />
     <Compile Include="Assets\Script\Network\Client.cs" />
     <Compile Include="Assets\Script\Network\Server.cs" />
+    <Compile Include="Assets\Script\Network\Trigger.cs" />
     <Compile Include="Assets\Script\Popup.cs" />
     <Compile Include="Assets\Script\Resources\ExchangeResource.cs" />
     <Compile Include="Assets\Script\Resources\ListResources.cs" />

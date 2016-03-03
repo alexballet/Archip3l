@@ -75,6 +75,13 @@ public class Client : MonoBehaviour
 
     private void ProcessMessage(string message)
     {
+        //The message must start with @ because ip sender automaticaly added
+        string[] split = message.Split('@');
+        
+        if(split[1]=="TABLE")
+        {
+
+        }
         Debug.Log("Client proccessing " + message);
     }
 }

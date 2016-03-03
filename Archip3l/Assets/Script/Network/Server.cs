@@ -109,7 +109,7 @@ public class Server : MonoBehaviour
             byte[] donnees = Encoding.Default.GetBytes(message);
             _broadcaster.Send(donnees, donnees.Length);
 
-            Debug.Log("Server : broadcasting on network " + message);
+            //Debug.Log("Server : broadcasting on network " + message);
         }
         catch { }
     }
