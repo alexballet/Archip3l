@@ -83,6 +83,9 @@
     <Compile Include="Assets\Script\Islands\MinorIsland.cs" />
     <Compile Include="Assets\Script\Miscellaneous\CSV_reader.cs" />
     <Compile Include="Assets\Script\Miscellaneous\Tuple.cs" />
+    <Compile Include="Assets\Script\Network\Client.cs" />
+    <Compile Include="Assets\Script\Network\Server.cs" />
+    <Compile Include="Assets\Script\Network\Trigger.cs" />
     <Compile Include="Assets\Script\Popup.cs" />
     <Compile Include="Assets\Script\Resources\ExchangeResource.cs" />
     <Compile Include="Assets\Script\Resources\ListResources.cs" />

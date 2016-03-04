@@ -165,7 +165,7 @@ namespace TouchScript.Examples.Cube
             Vector3 vector3 = GameObject.Find(this.nameMinorIsland).transform.position;
             vector3.z = (-1) * numPopup;
             popupCanvas.transform.position = vector3;
-            //popupCanvas.transform.position = GameObject.Find(this.nameMinorIsland).transform.position;
+
             //rotation of image according to the place of the island
             char id = this.nameMinorIsland[this.nameMinorIsland.Length - 1];
             if (id == '1' || id == '2')

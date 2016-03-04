@@ -162,11 +162,11 @@ public class ChallengeBuild : MonoBehaviour {
             //construction of building
             if(minorIsland.buildingManager.createBuilding(typeBuilding, minorIsland.placeOfBuildingConstruction) == false)
             {
-                StartCoroutine(minorIsland.destroyPopup(minorIsland.createPopup("Le bâtiment " + typeBuilding.ToString() + " a déjà été créé !"), 3));
+                StartCoroutine(minorIsland.destroyPopup(minorIsland.createPopup("Le bâtiment " + Building.translateBuildingName(typeBuilding.ToString()) + " a déjà été créé !"), 3));
             }
             else if (goodAnswer)
             {
-                StartCoroutine(minorIsland.destroyPopup(minorIsland.createPopup("Grâce à votre bonne réponse, la production du bâtiment " + typeBuilding.ToString() + " double !"), 3));
+                StartCoroutine(minorIsland.destroyPopup(minorIsland.createPopup("Grâce à votre bonne réponse, la production du bâtiment " + Building.translateBuildingName(typeBuilding.ToString()) + " double !"), 3));
                 //TODO : increase production building
                 Building buildingConstructed = minorIsland.buildingManager.getBuilding(typeBuilding);
                 buildingConstructed.changeProduction(buildingConstructed.resourceProduced.Production);
