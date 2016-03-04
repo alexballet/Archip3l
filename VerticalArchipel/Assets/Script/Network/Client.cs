@@ -13,7 +13,14 @@ public class Client : MonoBehaviour
     private Thread _thListener;
 
     //All events raised
-    public event EventHandler<MessageConstructionBuildingEventArgs> MessageConstructionBuilding;
+    //private delegate void DelegateEvent(object send, EventArgs e);
+    //public event EventHandler<MessageEventArgs> MessageConstructionBuilding;
+
+    public delegate void DelegateEvent(string message);
+    public event DelegateEvent MessageEvent;
+
+    DelegateEvent NewBuildinEventEvent;
+    DelegateEvent BuildingUpgradeEvent;
 
     void Awake()
     {
@@ -160,15 +167,44 @@ public class Client : MonoBehaviour
         }
 
         //Raise event
+        //MessageEvent eventToRaise = null;
         switch(code)
         {
+            case 11111:
+                //eventToRaise = MessageConstructionBuilding;
+                MessageEvent += BuildingUpgradeEvent;
+                break; 
 
+        }
+        if(MessageEvent != null)
+        {
+            MessageEvent(message);
         }
     }
 }
-
-public class MessageConstructionBuildingEventArgs: EventArgs
+public class MessageEventArgs : EventArgs
 {
-    string island;
-    string buildingType;
+    public string message { get; set; }
 }
+//public class MessageConstructionBuildingEventArgs: EventArgs
+//{
+//    public string island { get; set; }
+//    public string buildingType { get; set; }
+//}
+
+public class TestClass : MonoBehaviour
+{
+    Client.DelegateEvent delegateEvent;
+
+    void Awake()
+    {
+        Client client = GameObject.Find("Network").GetComponent<Client>();
+        this.delegateEvent = processEvent;
+        client.MessageEvent += delegateEvent;
+    }
+
+    private void processEvent(string message)
+    {
+        Debug.Log("Processing event by test class");
+    }
+} 
