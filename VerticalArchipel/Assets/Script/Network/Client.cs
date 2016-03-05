@@ -12,6 +12,10 @@ public class Client : MonoBehaviour
     private bool _continue;
     private Thread _thListener;
 
+    private int sendingPort = 1523;
+    private int listeningPort = 5054;
+    private string serverIP = "192.168.1.91";
+
     //All events raised
     private delegate void DelegateEvent(object send, EventArgs e);
     private event EventHandler<MessageEventArgs> MessageEvent;
@@ -32,7 +36,7 @@ public class Client : MonoBehaviour
     {
         _client = new UdpClient();
         //_client.Connect("172.18.136.49", 1523);
-        _client.Connect("192.168.1.91", 1523);
+        _client.Connect(this.serverIP, this.sendingPort);
         Debug.Log("Starting client...");
 
         _continue = true;
@@ -61,11 +65,11 @@ public class Client : MonoBehaviour
         //Secure creation of the socket
         try
         {
-            listener = new UdpClient(5053);
+            listener = new UdpClient(this.listeningPort);
         }
         catch
         {
-            Debug.Log("Unable to establish connect to UDP 5053 port. Verify your network configuration.");
+            Debug.Log("Unable to establish connect to UDP " + this.listeningPort + " port. Verify your network configuration.");
             return;
         }
 
@@ -99,6 +103,7 @@ public class Client : MonoBehaviour
         //spcialisation of message
         /*
             MessageResourceStockUpdateEvent : @code@Resourcename@VALUE
+            MessageTrophyWonEvent : @code@Trophyname
 
         */
 
@@ -110,6 +115,9 @@ public class Client : MonoBehaviour
         //Raise event
         switch (code)
         {
+            case 11221:
+                MessageEvent += MessageTrophyWonEvent;
+                break;
             case 21111:
                 MessageEvent += MessageBuildingConstructionEvent;
                 break;

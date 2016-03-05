@@ -153,6 +153,7 @@
     <Compile Include="Assets\Script\TouchScript\Scripts\Utils\TouchUtils.cs" />
     <Compile Include="Assets\Script\TouchScript\Scripts\Utils\TransformUtils.cs" />
     <Compile Include="Assets\Script\Trophy\Trophy.cs" />
+    <Compile Include="Assets\Script\Trophy\TrophyManager.cs" />
     <Compile Include="Assets\Script\Types\TypeChallenge.cs" />
     <Compile Include="Assets\Script\Types\TypeResource.cs" />
     <Compile Include="Assets\Script\main.cs" />

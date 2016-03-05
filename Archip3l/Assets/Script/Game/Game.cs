@@ -7,13 +7,13 @@ public class Game : MonoBehaviour
 
     void Awake()
     {
-        this.Client = GameObject.Find("Network").GetComponent<Client>();
-        this.Client.MessageSystemEndOfGameEvent += Client_MessageSystemEndOfGameEvent;
+        //this.Client = GameObject.Find("Network").GetComponent<Client>();
+        //this.Client.MessageSystemEndOfGameEvent += Client_MessageSystemEndOfGameEvent;
     }
 
     void Start()
     {
-        this.StartGame();
+        //this.StartGame();
     }
     void StartGame()
     {

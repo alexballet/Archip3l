@@ -24,11 +24,14 @@ public class Server : MonoBehaviour
     private bool _continue = true;
     private Thread _thListener;
 
+    private int connectionPort = 5054;
+    private int listeningPort = 1523;
+
     void Awake()
     {
         _broadcaster = new UdpClient();
         _broadcaster.EnableBroadcast = true;
-        _broadcaster.Connect(new IPEndPoint(IPAddress.Broadcast, 5053));
+        _broadcaster.Connect(new IPEndPoint(IPAddress.Broadcast, this.connectionPort));
 
         this.StartServer();
     }
@@ -61,7 +64,7 @@ public class Server : MonoBehaviour
         {
             try
             {
-                server = new UdpClient(1523);
+                server = new UdpClient(this.listeningPort);
             }
             catch
             {
