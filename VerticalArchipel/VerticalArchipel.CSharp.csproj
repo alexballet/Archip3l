@@ -70,6 +70,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Script\ChallengeVertical.cs" />
+    <Compile Include="Assets\Script\Game\Game.cs" />
+    <Compile Include="Assets\Script\Game\Timer.cs" />
+    <Compile Include="Assets\Script\Game\TimerView.cs" />
     <Compile Include="Assets\Script\Island\Island.cs" />
     <Compile Include="Assets\Script\Miscellaneous\CSV_reader.cs" />
     <Compile Include="Assets\Script\Miscellaneous\Tuple.cs" />
