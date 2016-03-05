@@ -13,14 +13,11 @@ public class Client : MonoBehaviour
     private Thread _thListener;
 
     //All events raised
-    //private delegate void DelegateEvent(object send, EventArgs e);
-    //public event EventHandler<MessageEventArgs> MessageConstructionBuilding;
+    private delegate void DelegateEvent(object send, EventArgs e);
+    private event EventHandler<MessageEventArgs> MessageEvent;
 
-    public delegate void DelegateEvent(string message);
-    public event DelegateEvent MessageEvent;
-
-    DelegateEvent NewBuildinEventEvent;
-    DelegateEvent BuildingUpgradeEvent;
+    public event EventHandler<MessageEventArgs> MessageBuildingConstructionEvent;
+    public event EventHandler<MessageEventArgs> MessageBuildingUpgradeEvent;
 
     void Awake()
     {
@@ -82,10 +79,7 @@ public class Client : MonoBehaviour
 
         listener.Close();
     }
-    /// <summary>
-    /// To BE REWORKED
-    /// </summary>
-    /// <param name="message"></param>
+
     private void ProcessMessage(string message)
     {
         Debug.Log("Client processing : " + message);
@@ -94,29 +88,37 @@ public class Client : MonoBehaviour
         //Use NULL if no need
         string[] split = message.Split('@');
 
+        this.MessageEvent = null;
+
         //Message code utilisation
-        /*  10000 board
-            20000 table
+        /*  Support
+            10000 BOARD
+            20000 TABLE 
 
-            1000 island1
-            2000 island2
-            3000 island3
-            4000 island4
+            Island
+            1000 1
+            2000 2
+            3000 3
+            4000 4
 
-            100 building
-            200 trophy
-            300 challenge
-            400 resource
+            Type
+            100 BUILDING
+            200 TROPHY
+            300 CHALLENGE
+            400 RESSOURCE
             
-            10 construction
-            20 upgrade
-            30 transfert
+            Action
+            10 CONSTRUCTION
+            20 UPGRADE
+            30 TRANSFERT
 
-            1 success
-            2 failure
-            3 data
+            Status
+            1 SUCCESS
+            2 FAILURE
+            3 DATA
+
+            Add data fields
        */
-
         int code = 0;
         if(split[1]=="BOARD")
         {
@@ -166,24 +168,25 @@ public class Client : MonoBehaviour
                 code += 3;
                 break;
         }
+        //Debug.Log(code);
+
 
         //Raise event
-        //MessageEvent eventToRaise = null;
-        switch(code)
+        switch (code)
         {
-            case 11111:
-                //eventToRaise = MessageConstructionBuilding;
-                MessageEvent += BuildingUpgradeEvent;
-                break; 
-
+            case 21111:
+                MessageEvent += MessageBuildingConstructionEvent;
+                break;
+            case 21121:
+                MessageEvent += MessageBuildingUpgradeEvent;
+                break;
         }
 
-        //TEST
-        MessageEvent += BuildingUpgradeEvent;
-
-        if (MessageEvent != null)
+        //Debug.Log(MessageEvent.ToString());
+        if (this.MessageEvent != null)
         {
-            MessageEvent(message);
+            //Debug.Log("Client processing : raising event");
+            this.MessageEvent(this, new MessageEventArgs { message = message });
         }
     }
 }
@@ -191,8 +194,3 @@ public class MessageEventArgs : EventArgs
 {
     public string message { get; set; }
 }
-//public class MessageConstructionBuildingEventArgs: EventArgs
-//{
-//    public string island { get; set; }
-//    public string buildingType { get; set; }
-//}

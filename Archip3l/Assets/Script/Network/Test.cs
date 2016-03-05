@@ -3,18 +3,14 @@ using System.Collections;
 
 public class Test : MonoBehaviour {
 
-    private Client.DelegateEvent delegateEvent;
-
-    void Start()
+    void Awake()
     {
-        Debug.Log("New test class");
         Client client = GameObject.Find("Network").GetComponent<Client>();
-        this.delegateEvent = processEvent;
-        client.MessageEvent += delegateEvent;
+        client.MessageBuildingConstructionEvent += Client_MessageConstructionBuildingEvent;
     }
 
-    private void processEvent(string message)
+    private void Client_MessageConstructionBuildingEvent(object sender, MessageEventArgs e)
     {
-        Debug.Log("Processing event by test class");
+        Debug.Log("Processing event by test class : " + e.message);
     }
 }

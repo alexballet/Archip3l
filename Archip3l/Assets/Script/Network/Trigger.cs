@@ -5,8 +5,7 @@ public class Trigger : MonoBehaviour {
 
     void OnMouseDown()
     {
-        //Debug.Log("Down");
-        GameObject.Find("Network").GetComponent<Client>().sendData("@Part1@Part2@Part3");
+        GameObject.Find("Network").GetComponent<Client>().sendData("@TABLE@1@BUILDING@CONSTRUCTION@SUCCESS");
         //GameObject.Find("Server").GetComponent<Server>().SendTest();
     }
 }
