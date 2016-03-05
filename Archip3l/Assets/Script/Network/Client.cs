@@ -24,6 +24,7 @@ public class Client : MonoBehaviour
     public event EventHandler<MessageEventArgs> MessageResourceTransfertEvent;
     public event EventHandler<MessageEventArgs> MessageChallengeCompleteEvent;
     public event EventHandler<MessageEventArgs> MessageScoreUpdateEvent;
+    public event EventHandler<MessageEventArgs> MessageSystemStartOfGame;
     public event EventHandler<MessageEventArgs> MessageSystemEndOfGameEvent;
 
 
@@ -41,7 +42,6 @@ public class Client : MonoBehaviour
 
     public void sendData(string dataToSend)
     {
-        //Debug.Log("Sending : " + dataToSend);
         byte[] data = Encoding.Default.GetBytes(dataToSend);
         _client.Send(data, data.Length);
     }
@@ -95,6 +95,12 @@ public class Client : MonoBehaviour
         //See the GDrive to get code signification
         //Message Format : @code
 
+        //spcialisation of message
+        /*
+            MessageResourceStockUpdateEvent : @code@Resourcename@VALUE
+
+        */
+
         string[] split = message.Split('@');
         this.MessageEvent = null;
 
@@ -109,7 +115,13 @@ public class Client : MonoBehaviour
             case 21121:
                 MessageEvent += MessageBuildingUpgradeEvent;
                 break;
-            case 30000:
+            case 21354:
+                MessageEvent += MessageResourceStockUpdateEvent;
+                break;
+            case 30001:
+                MessageEvent += MessageSystemStartOfGame;
+                break;
+            case 30002:
                 MessageEvent += MessageSystemEndOfGameEvent;
                 break;
         }

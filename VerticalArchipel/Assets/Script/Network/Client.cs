@@ -24,6 +24,7 @@ public class Client : MonoBehaviour
     public event EventHandler<MessageEventArgs> MessageResourceTransfertEvent;
     public event EventHandler<MessageEventArgs> MessageChallengeCompleteEvent;
     public event EventHandler<MessageEventArgs> MessageScoreUpdateEvent;
+    public event EventHandler<MessageEventArgs> MessageSystemStartOfGame;
     public event EventHandler<MessageEventArgs> MessageSystemEndOfGameEvent;
 
 
@@ -118,7 +119,10 @@ public class Client : MonoBehaviour
             case 21354:
                 MessageEvent += MessageResourceStockUpdateEvent;
                 break;
-            case 30000:
+            case 30001:
+                MessageEvent += MessageSystemStartOfGame;
+                break;
+            case 30002:
                 MessageEvent += MessageSystemEndOfGameEvent;
                 break;
         }

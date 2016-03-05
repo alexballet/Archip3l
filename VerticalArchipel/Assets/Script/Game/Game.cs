@@ -9,13 +9,16 @@ public class Game : MonoBehaviour
     void Awake()
     {
         this.Client = GameObject.Find("Network").GetComponent<Client>();
+        this.Client.MessageSystemStartOfGame += Client_MessageSystemStartOfGame;
 
         this.Timer = gameObject.GetComponent<Timer>();
         this.Timer.Init(0.1f * 60f);
         this.Timer.FinalTick += Timer_FinalTick;
     }
-    void Start()
+
+    private void Client_MessageSystemStartOfGame(object sender, MessageEventArgs e)
     {
+        Debug.Log("Starting game");
         this.StartGame();
     }
     void StartGame()
@@ -24,6 +27,6 @@ public class Game : MonoBehaviour
     }
     private void Timer_FinalTick(object sender, System.EventArgs e)
     {
-        this.Client.sendData("@30000");
+        this.Client.sendData("@30002");
     }
 }
