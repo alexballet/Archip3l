@@ -18,6 +18,14 @@ public class Client : MonoBehaviour
 
     public event EventHandler<MessageEventArgs> MessageBuildingConstructionEvent;
     public event EventHandler<MessageEventArgs> MessageBuildingUpgradeEvent;
+    public event EventHandler<MessageEventArgs> MessageTrophyWonEvent;
+    public event EventHandler<MessageEventArgs> MessageResourceProductionUpdateEvent;
+    public event EventHandler<MessageEventArgs> MessageResourceStockUpdateEvent;
+    public event EventHandler<MessageEventArgs> MessageResourceTransfertEvent;
+    public event EventHandler<MessageEventArgs> MessageChallengeCompleteEvent;
+    public event EventHandler<MessageEventArgs> MessageScoreUpdateEvent;
+    public event EventHandler<MessageEventArgs> MessageSystemEndOfGameEvent;
+
 
     void Awake()
     {
@@ -84,92 +92,13 @@ public class Client : MonoBehaviour
     {
         Debug.Log("Client processing : " + message);
         //The message must start with @ because ip sender automaticaly added
-        //Message Format : @SUPPORT@ISLANDNUMBER@TYPE@ACTION@STATUS
-        //Use NULL if no need
-        string[] split = message.Split('@');
+        //See the GDrive to get code signification
+        //Message Format : @code
 
+        string[] split = message.Split('@');
         this.MessageEvent = null;
 
-        //Message code utilisation
-        /*  Support
-            10000 BOARD
-            20000 TABLE 
-
-            Island
-            1000 1
-            2000 2
-            3000 3
-            4000 4
-
-            Type
-            100 BUILDING
-            200 TROPHY
-            300 CHALLENGE
-            400 RESSOURCE
-            
-            Action
-            10 CONSTRUCTION
-            20 UPGRADE
-            30 TRANSFERT
-
-            Status
-            1 SUCCESS
-            2 FAILURE
-            3 DATA
-
-            Add data fields
-       */
-        int code = 0;
-        if(split[1]=="BOARD")
-        {
-            code += 10000;
-        }
-        else
-        {
-            code += 20000;
-        }
-        code += Int32.Parse(split[2]) * 1000;
-        switch (split[3])
-        {
-            case "BUILDING":
-                code += 100;
-                break;
-            case "TROPHY":
-                code += 200;
-                break;
-            case "CHALLENGE":
-                code += 300;
-                break;
-            case "RESOURCE":
-                code += 400;
-                break;
-        }
-        switch (split[4])
-        {
-            case "CONSTRUCTION":
-                code += 10;
-                break;
-            case "UPGRADE":
-                code += 20;
-                break;
-            case "TRANSFERT":
-                code += 30;
-                break;
-        }
-        switch(split[5])
-        {
-            case "SUCCESS":
-                code += 1;
-                break;
-            case "FAILURE":
-                code += 2;
-                break;
-            case "DATA":
-                code += 3;
-                break;
-        }
-        //Debug.Log(code);
-
+        int code = Int32.Parse(split[1]);
 
         //Raise event
         switch (code)
@@ -180,9 +109,11 @@ public class Client : MonoBehaviour
             case 21121:
                 MessageEvent += MessageBuildingUpgradeEvent;
                 break;
+            case 30000:
+                MessageEvent += MessageSystemEndOfGameEvent;
+                break;
         }
 
-        //Debug.Log(MessageEvent.ToString());
         if (this.MessageEvent != null)
         {
             //Debug.Log("Client processing : raising event");
