@@ -57,12 +57,6 @@
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Networking">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
@@ -78,6 +72,7 @@
     <Compile Include="Assets\Script\ChallengeVertical.cs" />
     <Compile Include="Assets\Script\Island.cs" />
     <Compile Include="Assets\Script\Network\Client.cs" />
+    <Compile Include="Assets\Script\Network\trigger.cs" />
     <Compile Include="Assets\Script\Notification.cs" />
     <Compile Include="Assets\Script\Resource.cs" />
     <Compile Include="Assets\Script\TouchScript\Examples\Cube\Scripts\RedirectInput.cs" />

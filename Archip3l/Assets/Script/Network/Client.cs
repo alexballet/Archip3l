@@ -12,6 +12,16 @@ public class Client : MonoBehaviour
     private bool _continue;
     private Thread _thListener;
 
+    //All events raised
+    //private delegate void DelegateEvent(object send, EventArgs e);
+    //public event EventHandler<MessageEventArgs> MessageConstructionBuilding;
+
+    public delegate void DelegateEvent(string message);
+    public event DelegateEvent MessageEvent;
+
+    DelegateEvent NewBuildinEventEvent;
+    DelegateEvent BuildingUpgradeEvent;
+
     void Awake()
     {
         _client = new UdpClient();
@@ -72,16 +82,117 @@ public class Client : MonoBehaviour
 
         listener.Close();
     }
-
+    /// <summary>
+    /// To BE REWORKED
+    /// </summary>
+    /// <param name="message"></param>
     private void ProcessMessage(string message)
     {
+        Debug.Log("Client processing : " + message);
         //The message must start with @ because ip sender automaticaly added
+        //Message Format : @SUPPORT@ISLANDNUMBER@TYPE@ACTION@STATUS
+        //Use NULL if no need
         string[] split = message.Split('@');
-        
-        if(split[1]=="TABLE")
+
+        //Message code utilisation
+        /*  10000 board
+            20000 table
+
+            1000 island1
+            2000 island2
+            3000 island3
+            4000 island4
+
+            100 building
+            200 trophy
+            300 challenge
+            400 resource
+            
+            10 construction
+            20 upgrade
+            30 transfert
+
+            1 success
+            2 failure
+            3 data
+       */
+
+        int code = 0;
+        if(split[1]=="BOARD")
         {
+            code += 10000;
+        }
+        else
+        {
+            code += 20000;
+        }
+        code += Int32.Parse(split[2]) * 1000;
+        switch (split[3])
+        {
+            case "BUILDING":
+                code += 100;
+                break;
+            case "TROPHY":
+                code += 200;
+                break;
+            case "CHALLENGE":
+                code += 300;
+                break;
+            case "RESOURCE":
+                code += 400;
+                break;
+        }
+        switch (split[4])
+        {
+            case "CONSTRUCTION":
+                code += 10;
+                break;
+            case "UPGRADE":
+                code += 20;
+                break;
+            case "TRANSFERT":
+                code += 30;
+                break;
+        }
+        switch(split[5])
+        {
+            case "SUCCESS":
+                code += 1;
+                break;
+            case "FAILURE":
+                code += 2;
+                break;
+            case "DATA":
+                code += 3;
+                break;
+        }
+
+        //Raise event
+        //MessageEvent eventToRaise = null;
+        switch(code)
+        {
+            case 11111:
+                //eventToRaise = MessageConstructionBuilding;
+                MessageEvent += BuildingUpgradeEvent;
+                break; 
 
         }
-        Debug.Log("Client proccessing " + message);
+
+        //TEST
+        MessageEvent += BuildingUpgradeEvent;
+
+        if (MessageEvent != null)
+        {
+            MessageEvent(message);
+        }
     }
 }
+public class MessageEventArgs : EventArgs
+{
+    public string message { get; set; }
+}
+//public class MessageConstructionBuildingEventArgs: EventArgs
+//{
+//    public string island { get; set; }
+//    public string buildingType { get; set; }
+//}
