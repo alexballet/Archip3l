@@ -13,14 +13,19 @@ public class Client : MonoBehaviour
     private Thread _thListener;
 
     //All events raised
-    //private delegate void DelegateEvent(object send, EventArgs e);
-    //public event EventHandler<MessageEventArgs> MessageConstructionBuilding;
+    private delegate void DelegateEvent(object send, EventArgs e);
+    private event EventHandler<MessageEventArgs> MessageEvent;
 
-    public delegate void DelegateEvent(string message);
-    public event DelegateEvent MessageEvent;
+    public event EventHandler<MessageEventArgs> MessageBuildingConstructionEvent;
+    public event EventHandler<MessageEventArgs> MessageBuildingUpgradeEvent;
+    public event EventHandler<MessageEventArgs> MessageTrophyWonEvent;
+    public event EventHandler<MessageEventArgs> MessageResourceProductionUpdateEvent;
+    public event EventHandler<MessageEventArgs> MessageResourceStockUpdateEvent;
+    public event EventHandler<MessageEventArgs> MessageResourceTransfertEvent;
+    public event EventHandler<MessageEventArgs> MessageChallengeCompleteEvent;
+    public event EventHandler<MessageEventArgs> MessageScoreUpdateEvent;
+    public event EventHandler<MessageEventArgs> MessageSystemEndOfGameEvent;
 
-    DelegateEvent NewBuildinEventEvent;
-    DelegateEvent BuildingUpgradeEvent;
 
     void Awake()
     {
@@ -82,103 +87,46 @@ public class Client : MonoBehaviour
 
         listener.Close();
     }
-    /// <summary>
-    /// To BE REWORKED
-    /// </summary>
-    /// <param name="message"></param>
+
     private void ProcessMessage(string message)
     {
+        Debug.Log("Client processing : " + message);
         //The message must start with @ because ip sender automaticaly added
-        //Message Format : @SUPPORT@ISLANDNUMBER@TYPE@ACTION@STATUS
-        //Use NULL if no need
+        //See the GDrive to get code signification
+        //Message Format : @code
+
+        //spcialisation of message
+        /*
+            MessageResourceStockUpdateEvent : @code@Resourcename@VALUE
+
+        */
+
         string[] split = message.Split('@');
+        this.MessageEvent = null;
 
-        //Message code utilisation
-        /*  10000 board
-            20000 table
-
-            1000 island1
-            2000 island2
-            3000 island3
-            4000 island4
-
-            100 building
-            200 trophy
-            300 challenge
-            400 resource
-            
-            10 construction
-            20 upgrade
-            30 transfert
-
-            1 success
-            2 failure
-            3 data
-       */
-
-        int code = 0;
-        if(split[1]=="BOARD")
-        {
-            code += 10000;
-        }
-        else
-        {
-            code += 20000;
-        }
-        code += Int32.Parse(split[2]) * 1000;
-        switch (split[3])
-        {
-            case "BUILDING":
-                code += 100;
-                break;
-            case "TROPHY":
-                code += 200;
-                break;
-            case "CHALLENGE":
-                code += 300;
-                break;
-            case "RESOURCE":
-                code += 400;
-                break;
-        }
-        switch (split[4])
-        {
-            case "CONSTRUCTION":
-                code += 10;
-                break;
-            case "UPGRADE":
-                code += 20;
-                break;
-            case "TRANSFERT":
-                code += 30;
-                break;
-        }
-        switch(split[5])
-        {
-            case "SUCCESS":
-                code += 1;
-                break;
-            case "FAILURE":
-                code += 2;
-                break;
-            case "DATA":
-                code += 3;
-                break;
-        }
+        int code = Int32.Parse(split[1]);
 
         //Raise event
-        //MessageEvent eventToRaise = null;
-        switch(code)
+        switch (code)
         {
-            case 11111:
-                //eventToRaise = MessageConstructionBuilding;
-                MessageEvent += BuildingUpgradeEvent;
-                break; 
-
+            case 21111:
+                MessageEvent += MessageBuildingConstructionEvent;
+                break;
+            case 21121:
+                MessageEvent += MessageBuildingUpgradeEvent;
+                break;
+            case 21354:
+                MessageEvent += MessageResourceStockUpdateEvent;
+                break;
+            case 30000:
+                MessageEvent += MessageSystemEndOfGameEvent;
+                break;
         }
-        if(MessageEvent != null)
+
+        if (this.MessageEvent != null)
         {
-            MessageEvent(message);
+            //Debug.Log("Client processing : raising event");
+            this.MessageEvent(this, new MessageEventArgs { message = message });
         }
     }
 }
@@ -186,25 +134,3 @@ public class MessageEventArgs : EventArgs
 {
     public string message { get; set; }
 }
-//public class MessageConstructionBuildingEventArgs: EventArgs
-//{
-//    public string island { get; set; }
-//    public string buildingType { get; set; }
-//}
-
-public class TestClass : MonoBehaviour
-{
-    Client.DelegateEvent delegateEvent;
-
-    void Awake()
-    {
-        Client client = GameObject.Find("Network").GetComponent<Client>();
-        this.delegateEvent = processEvent;
-        client.MessageEvent += delegateEvent;
-    }
-
-    private void processEvent(string message)
-    {
-        Debug.Log("Processing event by test class");
-    }
-} 

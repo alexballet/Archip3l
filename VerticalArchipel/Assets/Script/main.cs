@@ -14,12 +14,14 @@ public class main : MonoBehaviour {
         for (int i = 1; i <= nbChallengesMax; i++)
         {
             GameObject.Find("Challenge" + i.ToString()).GetComponent<SpriteRenderer>().enabled = false;
-            GameObject.Find("Challenge" + i.ToString()).GetComponent<PolygonCollider2D>().enabled = false;
+            //GameObject.Find("Challenge" + i.ToString()).GetComponent<PolygonCollider2D>().enabled = false;
+            GameObject.Find("Challenge" + i.ToString()).GetComponent<BoxCollider>().enabled = false;
         }
         for (int i = 1; i <= nbNotificationsMax; i++)
         {
             GameObject.Find("Notif" + i.ToString()).GetComponent<Text>().text = string.Empty;
-            GameObject.Find("Notif" + i.ToString()).GetComponent<BoxCollider2D>().enabled = false;
+            //GameObject.Find("Notif" + i.ToString()).GetComponent<BoxCollider2D>().enabled = false;
+            GameObject.Find("Notif" + i.ToString()).GetComponent<BoxCollider>().enabled = false;
         }
 
     }
@@ -50,7 +52,8 @@ public class main : MonoBehaviour {
             if (GameObject.Find("Notif" + i.ToString()).GetComponent<Text>().text == string.Empty)
             {
                 GameObject.Find("Notif" + i.ToString()).GetComponent<Text>().text = text;
-                GameObject.Find("Notif" + i.ToString()).GetComponent<BoxCollider2D>().enabled = true;
+                //GameObject.Find("Notif" + i.ToString()).GetComponent<BoxCollider2D>().enabled = true;
+                GameObject.Find("Notif" + i.ToString()).GetComponent<BoxCollider>().enabled = true;
                 return true;
             }
         return false;
@@ -85,11 +88,11 @@ public class main : MonoBehaviour {
 
 
     void Start () {
-        for (int i = 0; i <= 5; i++)
-        {
-            if (!main.addNotification("gaga " + i.ToString()))
-                Debug.Log(i.ToString());
-        }
+        //for (int i = 0; i <= 5; i++)
+        //{
+        //    if (!main.addNotification("gaga " + i.ToString()))
+        //        //Debug.Log(i.ToString());
+        //}
 
 
     }
