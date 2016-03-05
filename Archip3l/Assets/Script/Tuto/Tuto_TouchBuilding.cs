@@ -80,7 +80,7 @@ namespace TouchScript.Examples.Cube
                     }
                     break;
                 case "Remove":
-                    if (island.harborUpgraded)
+                    if (island.exchangeResourceOpened)
                     {
                         StartCoroutine(building.tuto_minorIsland.tuto_buildingManager.destroyBuilding());
                         Destroy(GameObject.Find("touchBuilding_" + this.island.nameTuto_MinorIsland + "_Harbor"));
@@ -103,7 +103,7 @@ namespace TouchScript.Examples.Cube
                     else
                     {
                         if (island.harborUpgraded)
-                            StartCoroutine(island.destroyPopup(island.createPopup("Pour finir le tutoriel, supprimez le port."), 5));
+                            StartCoroutine(island.destroyPopup(island.createPopup("Affichez ensuite la fenêtre d'échange de ressources (appui long sur la table)."), 5));
                         else
                             StartCoroutine(island.destroyPopup(island.createPopup("Maintenant, améliorez le port."), 5));
                     }
