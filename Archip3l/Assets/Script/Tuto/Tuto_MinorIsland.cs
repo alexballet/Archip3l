@@ -25,6 +25,7 @@ namespace TouchScript.Examples.Cube
         public bool wheelPresent = false;                   //wheel present on the island
         public bool buildingInfoPresent = false;            //buildingInfo present on the island
         public bool moveBuilding = false;                   //moving a building
+        public bool exchangeWindowPresent = false;          //exchangeWindow present on the island
         public string nameBuildingTouchCanvas;
         public string buildingClicked;
         public int numPopup = 0;
@@ -33,6 +34,7 @@ namespace TouchScript.Examples.Cube
         public bool harborBuilt = false;
         public bool harborMoved = false;
         public bool harborUpgraded = false;
+        public bool exchangeResourceOpened = false;
         public bool harborRemoved = false;
 
         public Canvas endCanvas;
@@ -192,6 +194,23 @@ namespace TouchScript.Examples.Cube
             if (id == '1' || id == '2')
                 touchBuildingCanvas.transform.Rotate(Vector3.forward * 180);
 
+        }
+
+
+        void createExchangeWindowTuto()
+        {
+            if (!exchangeWindowPresent && !wheelPresent)
+            {
+                Canvas exchangeWindowCanvasPrefab = Resources.Load<Canvas>("Prefab/Tuto/exchangeWindowCanvasTuto");
+                Canvas exchangeWindowCanvas = Instantiate(exchangeWindowCanvasPrefab);
+                exchangeWindowCanvas.transform.parent = GameObject.Find(this.nameTuto_MinorIsland).transform;
+                exchangeWindowCanvas.name = "ExchangeWindowCanvas_" + this.nameTuto_MinorIsland;
+                Vector3 vector3 = GameObject.Find(this.nameTuto_MinorIsland).transform.position;
+                vector3.z = -2;
+                exchangeWindowCanvas.transform.position = vector3;
+
+                this.exchangeWindowPresent = true;
+            }
         }
 
 
@@ -384,6 +403,11 @@ namespace TouchScript.Examples.Cube
             else if (Time.time - TouchTime < 1.5)
             {
                 TouchTime = 0;
+                if (this.harborUpgraded && !this.exchangeResourceOpened)
+                {
+                    StartCoroutine(destroyPopup(createPopup("Voici la fenêtre d'échange de ressources. Vous pouvez y accéder à n'importe quel moment grâce à un appui long."), 5));
+                    this.createExchangeWindowTuto();
+                }
             }
         }
 

@@ -52,7 +52,8 @@ namespace TouchScript.Examples.Cube
             yield return new WaitForSeconds(this.constructionTime);
             this.buildState = 1;
             tuto_minorIsland.harborUpgraded = true;
-            StartCoroutine(tuto_minorIsland.destroyPopup(tuto_minorIsland.createPopup("Pour finir le tutoriel, supprimez le port."), 5));
+            StartCoroutine(tuto_minorIsland.destroyPopup(tuto_minorIsland.createPopup("Affichez ensuite la fenêtre d'échange de ressources (appui long sur la table)."), 5));
+            this.GetComponent<BoxCollider>().enabled = false;
             Destroy(buildingUpgradeTransform.gameObject);
         }
 

@@ -59,6 +59,7 @@ public class main : MonoBehaviour {
     static public IEnumerator removeNotification(GameObject go)  //id : last character of the notification's name
     {
         Text notif = go.GetComponent<Text>();
+        Debug.Log(notif.transform.parent.name);
         Color color;
         for (int i = 0; i < 100; i++)
         {
