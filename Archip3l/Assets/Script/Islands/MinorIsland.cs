@@ -114,7 +114,7 @@ namespace TouchScript.Examples.Cube
         public void createChallengeBuild(string buildingClicked)
         {
 
-            GameObject.Find(nameMinorIsland).GetComponent<BoxCollider>().enabled = false;
+            GameObject.Find(nameMinorIsland).GetComponent<MeshCollider>().enabled = false;
             ChallengeBuild challengeBuild = GameObject.Find("Virtual_" + nameMinorIsland).AddComponent<ChallengeBuild>();
 
             //random type of ChallengeBuild
@@ -128,13 +128,13 @@ namespace TouchScript.Examples.Cube
 
             challengeBuild.init(type, this, (TypeBuilding)System.Enum.Parse(typeof(TypeBuilding), buildingClicked));
 
-            GameObject.Find(nameMinorIsland).GetComponent<BoxCollider>().enabled = true;
+            GameObject.Find(nameMinorIsland).GetComponent<MeshCollider>().enabled = true;
         }
 
         public void createChallengeUpgrade(Building building)
         {
 
-            GameObject.Find(nameMinorIsland).GetComponent<BoxCollider>().enabled = false;
+            GameObject.Find(nameMinorIsland).GetComponent<MeshCollider>().enabled = false;
             ChallengeUpgrade challengeUpgrade = GameObject.Find("Virtual_" + nameMinorIsland).AddComponent<ChallengeUpgrade>();
 
             //random type of ChallengeUpgrade
@@ -148,7 +148,7 @@ namespace TouchScript.Examples.Cube
 
             challengeUpgrade.init(type, this, building);             //TODO : adapt challenge to TypeBuilding
 
-            GameObject.Find(nameMinorIsland).GetComponent<BoxCollider>().enabled = true;
+            GameObject.Find(nameMinorIsland).GetComponent<MeshCollider>().enabled = true;
         }
 
 
@@ -162,7 +162,7 @@ namespace TouchScript.Examples.Cube
             this.numPopup++;
             popupCanvas.name = "PopupCanvas" + numPopup.ToString() + "_" + this.nameMinorIsland;
             popupCanvas.transform.SetParent(GameObject.Find(this.nameMinorIsland).transform);
-            Vector3 vector3 = GameObject.Find(this.nameMinorIsland).transform.position;
+            Vector3 vector3 = GameObject.Find("sprite-" + this.nameMinorIsland).transform.position;
             vector3.z = (-1) * numPopup;
             popupCanvas.transform.position = vector3;
 
@@ -295,24 +295,6 @@ namespace TouchScript.Examples.Cube
         void OnMouseDownSimulation()
         {
 
-            //TESTS for exchangeResource
-            /*this.wheelPresent = true;
-            if (!exchangeWindowPresent)
-            {
-                Canvas exchangeWindowCanvasPrefab = Resources.Load<Canvas>("Prefab/exchangeWindowCanvas");
-                Canvas exchangeWindowCanvas = Instantiate(exchangeWindowCanvasPrefab);
-                exchangeWindowCanvas.transform.parent = GameObject.Find(this.nameMinorIsland).transform;
-                exchangeWindowCanvas.name = "ExchangeWindowCanvas_" + this.nameMinorIsland;
-                Vector3 vector3 = GameObject.Find(this.nameMinorIsland).transform.position;
-                vector3.z = -2;
-                exchangeWindowCanvas.transform.position = vector3;
-
-                this.exchangeWindowPresent = true;
-            }*/
-
-            //--------------
-
-
             //moving a building
             if (moveBuilding)
             {
@@ -409,7 +391,6 @@ namespace TouchScript.Examples.Cube
             }
             foreach (Building building in this.buildingManager.buildingList)
             {
-                Debug.Log(building.TypeBuilding.ToString());
                 list.Add("wheelIcon_" + building.TypeBuilding.ToString());
             }
             return list;

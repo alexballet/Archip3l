@@ -160,16 +160,28 @@ public class ChallengeBuild : MonoBehaviour {
             TypeBuilding typeBuilding = (TypeBuilding)Enum.Parse(typeof(TypeBuilding), minorIsland.buildingClickedWheel, true);
 
             //construction of building
-            if(minorIsland.buildingManager.createBuilding(typeBuilding, minorIsland.placeOfBuildingConstruction) == false)
+            bool newBuilding = minorIsland.buildingManager.createBuilding(typeBuilding, minorIsland.placeOfBuildingConstruction);
+
+            if (newBuilding == false)
             {
                 StartCoroutine(minorIsland.destroyPopup(minorIsland.createPopup("Le bâtiment " + Building.translateBuildingName(typeBuilding.ToString()) + " a déjà été créé !"), 3));
             }
-            else if (goodAnswer)
+            else
             {
-                StartCoroutine(minorIsland.destroyPopup(minorIsland.createPopup("Grâce à votre bonne réponse, la production du bâtiment " + Building.translateBuildingName(typeBuilding.ToString()) + " double !"), 3));
-                //TODO : increase production building
                 Building buildingConstructed = minorIsland.buildingManager.getBuilding(typeBuilding);
-                buildingConstructed.changeProduction(buildingConstructed.resourceProduced.Production);
+
+                if (goodAnswer)
+                {
+                    StartCoroutine(minorIsland.destroyPopup(minorIsland.createPopup("Grâce à votre bonne réponse, la production du bâtiment " + Building.translateBuildingName(typeBuilding.ToString()) + " double !"), 3));
+                    buildingConstructed.quantityProduced = Building.getQuantityResourceOrStatProduced(typeBuilding.ToString()) * 2;
+                }
+                else
+                {
+                    buildingConstructed.quantityProduced = Building.getQuantityResourceOrStatProduced(typeBuilding.ToString());
+                }
+
+                buildingConstructed.changeProduction(buildingConstructed.quantityProduced);
+
             }
         }
 

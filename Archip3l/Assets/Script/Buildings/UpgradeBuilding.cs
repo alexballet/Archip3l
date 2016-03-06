@@ -25,7 +25,29 @@ namespace TouchScript.Examples.Cube
             {
                 if (building.level < 3)
                 {
-
+                    //withdrawal of resources needed for the upgrading
+                    switch (building.level)
+                    {
+                        case 0:
+                            foreach (Tuple<TypeResource, int> tuple in building.upgrade1ResourceNeeded)
+                            {
+                                island.resourceManager.changeResourceStock(tuple.First, -tuple.Second);
+                            }
+                            break;
+                        case 1:
+                            foreach (Tuple<TypeResource, int> tuple in building.upgrade2ResourceNeeded)
+                            {
+                                island.resourceManager.changeResourceStock(tuple.First, -tuple.Second);
+                            }
+                            break;
+                        case 2:
+                            foreach (Tuple<TypeResource, int> tuple in building.upgrade3ResourceNeeded)
+                            {
+                                island.resourceManager.changeResourceStock(tuple.First, -tuple.Second);
+                            }
+                            break;
+                    }
+                    
                     island.buildingInfoPresent = false;
                     island.createChallengeUpgrade(building);
                     island.challengePresent = true;

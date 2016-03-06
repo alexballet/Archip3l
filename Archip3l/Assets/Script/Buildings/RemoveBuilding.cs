@@ -23,7 +23,6 @@ namespace TouchScript.Examples.Cube
 
             if (this.name == "Remove")
             {
-
                 TypeBuilding typeBuilding = building.TypeBuilding;
                 StartCoroutine(building.minorIsland.buildingManager.destroyBuilding(building.TypeBuilding));
             }

@@ -14,6 +14,7 @@ namespace TouchScript.Examples.Cube
 
         public TypeBuilding TypeBuilding { get; private set; }
         public Resource resourceProduced { get; private set; }
+        public int quantityProduced { get; set; }
         public int buildState { get; set; }
         public int constructionTime { get; private set; }
         public MinorIsland minorIsland { get; private set; }
@@ -33,6 +34,7 @@ namespace TouchScript.Examples.Cube
             this.TypeBuilding = TypeBuilding;
             this.buildState = 0;
             this.minorIsland = island;
+            this.quantityProduced = 0;
             this.constructionResourceNeeded = new List<Tuple<TypeResource, int>>();
             this.upgrade1ResourceNeeded = new List<Tuple<TypeResource, int>>();
             this.upgrade2ResourceNeeded = new List<Tuple<TypeResource, int>>();
@@ -214,6 +216,7 @@ namespace TouchScript.Examples.Cube
 
         public IEnumerator launchUpgradeAnimation()
         {
+            this.buildState = 0;
             //Animation
             var buildingUpgradeTransform = Instantiate(buildingUpgradePrefab) as Transform;
             buildingUpgradeTransform.name = "BuildingUpgradeAnimation_" + minorIsland.nameMinorIsland;
@@ -252,6 +255,7 @@ namespace TouchScript.Examples.Cube
                 //again, Harbor already created on islands
                 if (this.TypeBuilding != TypeBuilding.Harbor)
                 {
+                    //withdrawal of resources needed for the construction
                     foreach (Tuple<TypeResource, int> item in this.constructionResourceNeeded)
                     {
                         this.minorIsland.resourceManager.changeResourceStock(item.First, -item.Second);
@@ -286,7 +290,7 @@ namespace TouchScript.Examples.Cube
         public bool changeProduction(int value)
         {
             this.minorIsland.resourceManager.changeResourceProduction(this.resourceProduced.TypeResource, value);
-            return this.resourceProduced.changeProduction(value); // resourceManager.changeResourceProduction(resourceType, value);
+            return this.resourceProduced.changeProduction(value);
 
         }
         public bool changeStock(int value)

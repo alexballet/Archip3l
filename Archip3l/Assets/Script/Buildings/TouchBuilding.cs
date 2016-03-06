@@ -33,7 +33,7 @@ namespace TouchScript.Examples.Cube
                     Canvas upgradeBuildingWindowCanvas = Instantiate(upgradeBuildingWindowCanvasPrefab);
                     upgradeBuildingWindowCanvas.name = "UpgradeBuildingWindowCanvas_" + building.name;
                     upgradeBuildingWindowCanvas.transform.SetParent(this.transform.parent.parent.parent);  //parent : sous_ile
-                    pos = island.transform.position;
+                    pos = GameObject.Find("sprite-" + island.nameMinorIsland).transform.position;
                     pos.z = -2;
                     upgradeBuildingWindowCanvas.transform.position = pos;
                     //rotation of image according to the place of the island

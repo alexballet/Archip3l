@@ -69,7 +69,8 @@ public class BuildingManager : MonoBehaviour {
         Building buildingToDestroy = this.getBuilding(buildingType);
         GameObject objectToDestroy = GameObject.Find(this.minorIsland.nameMinorIsland + "_" + buildingType.ToString());
         //update resource production in island resource manager
-        this.minorIsland.resourceManager.changeResourceProduction(buildingToDestroy.resourceProduced.TypeResource, buildingToDestroy.resourceProduced.Production);
+        this.minorIsland.resourceManager.changeResourceProduction(buildingToDestroy.resourceProduced.TypeResource, -buildingToDestroy.quantityProduced);
+        buildingToDestroy.quantityProduced = 0;
         //remove the building in the list of this manager
         this.buildingList.Remove(this.getBuilding(buildingType));
         //Delete game object

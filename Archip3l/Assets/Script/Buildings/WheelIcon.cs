@@ -39,9 +39,10 @@ namespace TouchScript.Examples.Cube
 
                 buildingInfo.name = "BuildingInfo_" + this.name;
                 buildingInfo.transform.SetParent(this.transform.parent.parent.parent);  //parent : minorIsland
-                Vector3 pos = island.transform.position;
+                Vector3 pos = GameObject.Find("sprite-" + island.nameMinorIsland).transform.position;
                 pos.z = -2;
                 buildingInfo.transform.position = pos;
+
                 //modification of the content of the different Text Children of the Canvas
 
                 List<Tuple<TypeResource, int>> constructionResourceNeeded = Building.getConstructionResourcesNeeded(island.buildingClickedWheel);
@@ -97,14 +98,14 @@ namespace TouchScript.Examples.Cube
                             if (island.resourceManager.getResource(constructionResourceNeeded[0].First).Stock < constructionResourceNeeded[0].Second)
                             {
                                 imageInCanvas.sprite = Resources.Load<Sprite>("infoBatiments/boutonConstruireGrise");
-                                imageInCanvas.GetComponent<BoxCollider2D>().enabled = false;
+                                imageInCanvas.GetComponent<BoxCollider>().enabled = false;
                             }
                             else if (constructionResourceNeeded.Count == 2)
                             {
                                 if (island.resourceManager.getResource(constructionResourceNeeded[1].First).Stock < constructionResourceNeeded[1].Second)
                                 {
                                     imageInCanvas.sprite = Resources.Load<Sprite>("infoBatiments/boutonConstruireGrise");
-                                    imageInCanvas.GetComponent<BoxCollider2D>().enabled = false;
+                                    imageInCanvas.GetComponent<BoxCollider>().enabled = false;
                                 }
                             }
                             break;

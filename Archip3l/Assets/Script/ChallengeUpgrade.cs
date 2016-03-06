@@ -166,26 +166,8 @@ public class ChallengeUpgrade : MonoBehaviour {
             if (goodAnswer)
             {
                 building.level += 1;
-                Debug.Log(typeResourceProduced);
-                building.changeProduction(building.resourceProduced.Production);
-                switch (building.level)
-                {
-                    case 1:
-                        minorIsland.resourceManager.changeResourceStock(building.upgrade1ResourceNeeded[0].First, -building.upgrade1ResourceNeeded[0].Second);
-                        if (building.upgrade1ResourceNeeded.Count == 2)
-                            minorIsland.resourceManager.changeResourceStock(building.upgrade1ResourceNeeded[1].First, -building.upgrade1ResourceNeeded[1].Second);
-                        break;
-                    case 2:
-                        minorIsland.resourceManager.changeResourceStock(building.upgrade2ResourceNeeded[0].First, -building.upgrade2ResourceNeeded[0].Second);
-                        if (building.upgrade2ResourceNeeded.Count == 2)
-                            minorIsland.resourceManager.changeResourceStock(building.upgrade2ResourceNeeded[1].First, -building.upgrade2ResourceNeeded[1].Second);
-                        break;
-                    case 3:
-                        minorIsland.resourceManager.changeResourceStock(building.upgrade3ResourceNeeded[0].First, -building.upgrade3ResourceNeeded[0].Second);
-                        if (building.upgrade3ResourceNeeded.Count == 2)
-                            minorIsland.resourceManager.changeResourceStock(building.upgrade3ResourceNeeded[1].First, -building.upgrade3ResourceNeeded[1].Second);
-                        break;
-                }
+                building.changeProduction(building.quantityProduced);
+                building.quantityProduced *= 2;
                 StartCoroutine(minorIsland.destroyPopup(minorIsland.createPopup("Bonne réponse ! Votre bâtiment passe au niveau " + building.level.ToString() + " !"), 3));
             }
             else
@@ -193,7 +175,8 @@ public class ChallengeUpgrade : MonoBehaviour {
                 if (building.level > 0)
                 {
                     building.level -= 1;
-                    building.changeProduction(-(building.resourceProduced.Production / 2));
+                    building.changeProduction(-building.quantityProduced/2);
+                    building.quantityProduced /= 2;
                     StartCoroutine(minorIsland.destroyPopup(minorIsland.createPopup("Mauvaise réponse ! Votre bâtiment redescend au niveau " + building.level.ToString() + " ..."), 3));
                 }
                 else
@@ -201,11 +184,9 @@ public class ChallengeUpgrade : MonoBehaviour {
             }
 
             //upgrading animation
-            building.buildState = 0;
-            StartCoroutine(building.launchUpgradeAnimation());
+            if (building.level != 0)
+                StartCoroutine(building.launchUpgradeAnimation());
         }
-        else
-            Debug.Log("pb");
 
 
     }
