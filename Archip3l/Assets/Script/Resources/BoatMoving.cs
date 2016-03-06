@@ -16,6 +16,7 @@ namespace TouchScript.Examples.Cube
 
         void OnCollisionEnter(Collision col)
         {
+            Debug.Log("go");
             if (col.gameObject.name == islandToSend + "_Harbor")
             {
                 Debug.Log("collision");
@@ -142,4 +143,4 @@ namespace TouchScript.Examples.Cube
             cancelTouch(id);
         }
     }
-    }
+}

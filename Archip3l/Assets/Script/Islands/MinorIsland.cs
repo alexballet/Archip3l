@@ -316,7 +316,7 @@ namespace TouchScript.Examples.Cube
                 }
                 else
                 {
-                    if (!challengePresent)      //if any challenge is open on the island
+                    if (!challengePresent && !exchangeWindowPresent)      //if any challenge or exchangeWindow is open on the island
                     {
                         if (!wheelPresent)  //if the wheel is not on the island
                         {

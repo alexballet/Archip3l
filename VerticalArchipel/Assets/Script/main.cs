@@ -3,101 +3,110 @@ using System.Collections;
 using System;
 using UnityEngine.UI;
 
-public class main : MonoBehaviour {
+namespace TouchScript.Examples.Cube
+{
 
-    public const int nbChallengesMax = 3;
-    public const int nbNotificationsMax = 5;
 
-    void Awake()
+
+    public class main : MonoBehaviour
     {
-        //hidding of challenges and notifications at the beginning
-        for (int i = 1; i <= nbChallengesMax; i++)
+
+        public const int nbChallengesMax = 3;
+        public const int nbNotificationsMax = 5;
+
+        void Awake()
         {
-            GameObject.Find("Challenge" + i.ToString()).GetComponent<SpriteRenderer>().enabled = false;
-            //GameObject.Find("Challenge" + i.ToString()).GetComponent<PolygonCollider2D>().enabled = false;
-            GameObject.Find("Challenge" + i.ToString()).GetComponent<BoxCollider>().enabled = false;
-        }
-        for (int i = 1; i <= nbNotificationsMax; i++)
-        {
-            GameObject.Find("Notif" + i.ToString()).GetComponent<Text>().text = string.Empty;
-            //GameObject.Find("Notif" + i.ToString()).GetComponent<BoxCollider2D>().enabled = false;
-            GameObject.Find("Notif" + i.ToString()).GetComponent<BoxCollider>().enabled = false;
-        }
-
-    }
-
-    //trophy = trophies + medals + AirportMedal
-    static public void unlockTrophy(string nameTrophyGameObject)
-    {
-        GameObject.Find(nameTrophyGameObject).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Trophies/" + nameTrophyGameObject);
-    }
-
-
-    static public bool addChallenge(string[] row)
-    {
-        for (int i = 1; i <= nbChallengesMax; i++)
-            if (GameObject.Find("Challenge" + i.ToString()).GetComponent<SpriteRenderer>().enabled == false)
+            //hidding of challenges and notifications at the beginning
+            for (int i = 1; i <= nbChallengesMax; i++)
             {
-                GameObject.Find("Challenge" + i.ToString()).GetComponent<SpriteRenderer>().enabled = true;
-                GameObject.Find("Challenge" + i.ToString()).GetComponent<PolygonCollider2D>().enabled = true;
-                GameObject.Find("Challenge" + i.ToString()).GetComponent<ChallengeVertical>().rowSent = row;
-                return true;
+                GameObject.Find("Challenge" + i.ToString()).GetComponent<SpriteRenderer>().enabled = false;
+                //GameObject.Find("Challenge" + i.ToString()).GetComponent<PolygonCollider2D>().enabled = false;
+                GameObject.Find("Challenge" + i.ToString()).GetComponent<BoxCollider>().enabled = false;
             }
-        return false;        
-    }
-
-    static public bool addNotification(string text)
-    {
-        for (int i = 1; i <= nbNotificationsMax; i++)
-            if (GameObject.Find("Notif" + i.ToString()).GetComponent<Text>().text == string.Empty)
+            for (int i = 1; i <= nbNotificationsMax; i++)
             {
-                GameObject.Find("Notif" + i.ToString()).GetComponent<Text>().text = text;
-                //GameObject.Find("Notif" + i.ToString()).GetComponent<BoxCollider2D>().enabled = true;
-                GameObject.Find("Notif" + i.ToString()).GetComponent<BoxCollider>().enabled = true;
-                return true;
+                GameObject.Find("Notif" + i.ToString()).GetComponent<Text>().text = string.Empty;
+                //GameObject.Find("Notif" + i.ToString()).GetComponent<BoxCollider2D>().enabled = false;
+                GameObject.Find("Notif" + i.ToString()).GetComponent<BoxCollider>().enabled = false;
             }
-        return false;
-    }
 
-    static public IEnumerator removeNotification(GameObject go)  //id : last character of the notification's name
-    {
-        Text notif = go.GetComponent<Text>();
-        Debug.Log(notif.transform.parent.name);
-        Color color;
-        for (int i = 0; i < 100; i++)
+        }
+
+        //trophy = trophies + medals + AirportMedal
+        static public void unlockTrophy(string nameTrophyGameObject)
         {
-            yield return new WaitForSeconds(0.01f);
+            GameObject.Find(nameTrophyGameObject).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Trophies/" + nameTrophyGameObject);
+        }
+
+
+        static public bool addChallenge(string[] row)
+        {
+            for (int i = 1; i <= nbChallengesMax; i++)
+                if (GameObject.Find("Challenge" + i.ToString()).GetComponent<SpriteRenderer>().enabled == false)
+                {
+                    GameObject.Find("Challenge" + i.ToString()).GetComponent<SpriteRenderer>().enabled = true;
+                    GameObject.Find("Challenge" + i.ToString()).GetComponent<PolygonCollider2D>().enabled = true;
+                    GameObject.Find("Challenge" + i.ToString()).GetComponent<ChallengeVertical>().rowSent = row;
+                    return true;
+                }
+            return false;
+        }
+
+        static public bool addNotification(string text)
+        {
+            for (int i = 1; i <= nbNotificationsMax; i++)
+                if (GameObject.Find("Notif" + i.ToString()).GetComponent<Text>().text == string.Empty)
+                {
+                    GameObject.Find("Notif" + i.ToString()).GetComponent<Text>().text = text;
+                    //GameObject.Find("Notif" + i.ToString()).GetComponent<BoxCollider2D>().enabled = true;
+                    GameObject.Find("Notif" + i.ToString()).GetComponent<BoxCollider>().enabled = true;
+                    return true;
+                }
+            return false;
+        }
+
+        static public IEnumerator removeNotification(GameObject go)  //id : last character of the notification's name
+        {
+            Text notif = go.GetComponent<Text>();
+            Debug.Log(notif.transform.parent.name);
+            Color color;
+            for (int i = 0; i < 100; i++)
+            {
+                yield return new WaitForSeconds(0.01f);
+                color = notif.material.color;
+                color.a -= 0.01f;
+                notif.material.color = color;
+            }
+
+            //reset alpha to 1 because bug --> all gameobjects touched          -->   TODO : manage this
             color = notif.material.color;
-            color.a -= 0.01f;
+            color.a = 1;
             notif.material.color = color;
+
+            //each notification below the removed one goes up
+            for (int i = int.Parse(go.name[go.name.Length - 1].ToString()); i < nbNotificationsMax; i++)
+            {
+                GameObject.Find("Notif" + i.ToString()).GetComponent<Text>().text = GameObject.Find("Notif" + (i + 1).ToString()).GetComponent<Text>().text;
+            }
+            GameObject.Find("Notif" + nbNotificationsMax).GetComponent<Text>().text = string.Empty;
         }
 
-        //reset alpha to 1 because bug --> all gameobjects touched          -->   TODO : manage this
-        color = notif.material.color;
-        color.a = 1;
-        notif.material.color = color;
 
-        //each notification below the removed one goes up
-        for (int i = int.Parse(go.name[go.name.Length - 1].ToString()); i < nbNotificationsMax; i++)
+
+        void Start()
         {
-            GameObject.Find("Notif" + i.ToString()).GetComponent<Text>().text = GameObject.Find("Notif" + (i + 1).ToString()).GetComponent<Text>().text;
+            for (int i = 0; i <= 5; i++)
+            {
+                if (!main.addNotification("gaga " + i.ToString()))
+                    Debug.Log(i.ToString());
+            }
+
+
         }
-        GameObject.Find("Notif" + nbNotificationsMax).GetComponent<Text>().text = string.Empty;
+
+        void Update()
+        {
+
+        }
     }
-
-
-
-    void Start () {
-        //for (int i = 0; i <= 5; i++)
-        //{
-        //    if (!main.addNotification("gaga " + i.ToString()))
-        //        //Debug.Log(i.ToString());
-        //}
-
-
-    }
-
-    void Update () {
-	
-	}
 }

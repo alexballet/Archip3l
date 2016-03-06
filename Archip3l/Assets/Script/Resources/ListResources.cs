@@ -134,4 +134,4 @@ namespace TouchScript.Examples.Cube
             cancelTouch(id);
         }
     }
-    }
+}

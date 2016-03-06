@@ -79,6 +79,7 @@
     <Compile Include="Assets\Script\Buildings\WheelIcon.cs" />
     <Compile Include="Assets\Script\ChallengeBuild.cs" />
     <Compile Include="Assets\Script\ChallengeUpgrade.cs" />
+    <Compile Include="Assets\Script\Enigma.cs" />
     <Compile Include="Assets\Script\Game\Game.cs" />
     <Compile Include="Assets\Script\Islands\ListIslands.cs" />
     <Compile Include="Assets\Script\Islands\MinorIsland.cs" />
