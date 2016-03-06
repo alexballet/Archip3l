@@ -18,8 +18,11 @@ namespace TouchScript.Examples.Cube
         SpriteRenderer less = null;
         SpriteRenderer more = null;
         SpriteRenderer resource_sp = null;
+        SpriteRenderer send = null;
         Text quantityValue;
         Text to;
+
+        SpriteRenderer exchangeResourceAnimation;
 
 
 
@@ -38,6 +41,10 @@ namespace TouchScript.Examples.Cube
                 if (sp.name == "ResourceValue")
                 {
                     resource_sp = sp;
+                }
+                if (sp.name == "Send")
+                {
+                    send = sp;
                 }
             }
             foreach (Text text in this.transform.parent.GetComponentsInChildren<Text>())
@@ -72,6 +79,8 @@ namespace TouchScript.Examples.Cube
                     resourceQuantity = this.island.resourceManager.getResource((TypeResource)System.Enum.Parse(typeof(TypeResource), resourceName)).Stock;
                 }
 
+                Vector3 vector3;
+
                 switch (this.name)
                 {
                     case "ResourceValue":
@@ -79,7 +88,7 @@ namespace TouchScript.Examples.Cube
                         Canvas listResourcesCanvas = Instantiate(listResourcesCanvasPrefab);
                         listResourcesCanvas.name = "listResourcesCanvas_" + island.nameMinorIsland;
                         listResourcesCanvas.transform.SetParent(GameObject.Find(island.nameMinorIsland).transform);
-                        Vector3 vector3 = GameObject.Find(island.nameMinorIsland).transform.position;
+                        vector3 = GameObject.Find("sprite-" + island.nameMinorIsland).transform.position;
                         vector3.z = -3;
                         listResourcesCanvas.transform.position = vector3;
                         foreach (SpriteRenderer sr in listResourcesCanvas.GetComponentsInChildren<SpriteRenderer>())
@@ -116,9 +125,15 @@ namespace TouchScript.Examples.Cube
                         Canvas listIslandsCanvas = Instantiate(listIslandsCanvasPrefab);
                         listIslandsCanvas.name = "listIslandsCanvas_" + island.nameMinorIsland;
                         listIslandsCanvas.transform.SetParent(GameObject.Find(island.nameMinorIsland).transform);
-                        Vector3 vect3 = GameObject.Find(island.nameMinorIsland).transform.position;
-                        vect3.z = -3;
-                        listIslandsCanvas.transform.position = vect3;
+                        vector3 = GameObject.Find("sprite-" + island.nameMinorIsland).transform.position;
+                        vector3.z = -3;
+                        listIslandsCanvas.transform.position = vector3;
+                        //disable clic on self island
+                        foreach(SpriteRenderer sp in listIslandsCanvas.GetComponentsInChildren<SpriteRenderer>())
+                        {
+                            if (sp.name == island.nameMinorIsland)
+                                sp.GetComponent<BoxCollider>().enabled = false;
+                        }
                         island.otherWindowOpen = true;
                         break;
                     case "Close":
@@ -136,15 +151,31 @@ namespace TouchScript.Examples.Cube
                             {
                                 StartCoroutine(island.destroyPopup(island.createPopup("Veuillez sélectionner une quantité à envoyer"), 3));
                             }
-                            else if (resource_sp.sprite.name == "Knob") //defaults sprite when not already clicked on
+                            else
+                            {
+                                if (resource_sp.sprite.name == "Knob") //defaults sprite when not already clicked on
                                 {
                                     StartCoroutine(island.destroyPopup(island.createPopup("Veuillez sélectionner une ressource à envoyer"), 3));
                                 }
                                 else
-                            {
-                                //TODO 
-                                Destroy(GameObject.Find(this.transform.parent.parent.name));
-                                Debug.Log("Start of sending resource");
+                                {
+                                    if (MinorIsland.exchangePerforming)
+                                    {
+                                        StartCoroutine(island.destroyPopup(island.createPopup("Veuillez attendre la fin de l'échange en cours"), 3));
+                                    }
+                                    else
+                                    {
+                                        Destroy(GameObject.Find(this.transform.parent.parent.name));
+                                        Debug.Log("Start of sending resource");
+                                        MinorIsland.exchangePerforming = true;
+                                        SpriteRenderer exchangeResourceAnimationPrefab = Resources.Load<SpriteRenderer>("Prefab/exchangeResourceAnimation/exchangeResourceAnimation_" + island.nameMinorIsland[island.nameMinorIsland.Length - 1] + "-" + to.text[to.text.Length - 1].ToString());
+                                        exchangeResourceAnimation = Instantiate(exchangeResourceAnimationPrefab);
+                                        exchangeResourceAnimation.transform.parent = GameObject.Find(island.nameMinorIsland).transform;
+                                        exchangeResourceAnimation.name = "ExchangeResourceAnimation_" + island.nameMinorIsland;
+                                        exchangeResourceAnimation.GetComponent<BoatMoving>().islandToSend = "sous_ile_" + to.text[to.text.Length -1].ToString();
+                                        StartCoroutine(startBoatAppearance());
+                                    }
+                                }
                             }
                         }
                         break;
@@ -152,7 +183,6 @@ namespace TouchScript.Examples.Cube
             }
             else    //closure of other windows (listResources & listIslands)
             {
-                Debug.Log("toto");
                 Destroy(GameObject.Find("listIslandsCanvas_" + island.nameMinorIsland));
                 Destroy(GameObject.Find("listResourcesCanvas_" + island.nameMinorIsland));
 
@@ -161,10 +191,28 @@ namespace TouchScript.Examples.Cube
 
         }
 
+        public IEnumerator startBoatAppearance()
+        {
+            yield return new WaitForSeconds(0.01f);
+            /*Color color;
+            color = exchangeResourceAnimation.color;
+            color.a = 0;
+            exchangeResourceAnimation.color = color;
+            for (int i = 0; i < 100; i++)
+            {
+                yield return new WaitForSeconds(0.01f);
+                color = exchangeResourceAnimation.color;
+                color.a += 0.01f;
+                exchangeResourceAnimation.color = color;
+            }*/
+        }
+
+
         // Use this for initialization
         void Start()
         {
             island = GameObject.Find(this.transform.parent.parent.parent.name).GetComponent<MinorIsland>();
+            refresh();
         }
 
         // Update is called once per frame
@@ -176,14 +224,26 @@ namespace TouchScript.Examples.Cube
                 resource_sp.sprite = Resources.Load<Sprite>("infoBatiments/ResourcesIcons/" + island.resource + "Icon");
                 resource_sp.transform.localScale = new Vector2(0.1f, 0.1f);
                 resource_sp.GetComponent<BoxCollider>().size = new Vector2(5, 5);
-                island.resource = string.Empty;
+                //island.resource = string.Empty;
             }
             if (island.islandToSend != string.Empty)
             {
                 refresh();
                 to.text = "Ile " + island.islandToSend[island.islandToSend.Length - 1].ToString();
-                island.islandToSend = string.Empty;
+                //island.islandToSend = string.Empty;
             }
+            if ((island.resource != string.Empty) && (island.islandToSend != string.Empty) && (this.quantityValue.text != "0"))
+            {
+                if (send.sprite.name != "boutonEnvoyer")
+                    send.sprite = Resources.Load<Sprite>("fenetreEchange/boutonEnvoyer");
+            }
+            else
+            {
+                if (send.sprite.name != "boutonEnvoyerGrise")
+                    send.sprite = Resources.Load<Sprite>("fenetreEchange/boutonEnvoyerGrise");
+            }
+
+
         }
 
 

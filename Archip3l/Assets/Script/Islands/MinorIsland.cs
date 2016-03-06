@@ -38,6 +38,9 @@ namespace TouchScript.Examples.Cube
         public string resource = string.Empty;
         public string islandToSend = string.Empty;
 
+        //impossible to perform 2 resource exchanges at the same time
+        static public bool exchangePerforming = false;
+
         public Canvas startCanvas;
 
         void Awake()
@@ -283,7 +286,7 @@ namespace TouchScript.Examples.Cube
                 Canvas exchangeWindowCanvas = Instantiate(exchangeWindowCanvasPrefab);
                 exchangeWindowCanvas.transform.parent = GameObject.Find(this.nameMinorIsland).transform;
                 exchangeWindowCanvas.name = "ExchangeWindowCanvas_" + this.nameMinorIsland;
-                Vector3 vector3 = GameObject.Find(this.nameMinorIsland).transform.position;
+                Vector3 vector3 = GameObject.Find("sprite-" + this.nameMinorIsland).transform.position;
                 vector3.z = -2;
                 exchangeWindowCanvas.transform.position = vector3;
 
