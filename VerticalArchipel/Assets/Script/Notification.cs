@@ -14,9 +14,10 @@ namespace TouchScript.Examples.Cube
 
         void OnMouseDownSimulation()
         {
-            Debug.Log("Clic on " + this.name);
-            StartCoroutine(main.removeNotification(this.gameObject));
+            main.removeNotification(this.gameObject);
         }
+        
+
 
         // Use this for initialization
         void Start()

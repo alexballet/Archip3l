@@ -210,7 +210,8 @@ namespace TouchScript.Examples.Cube
                 case "Remove":
                     if (this.building.name.Split('_')[3] == TypeBuilding.Harbor.ToString())
                     {
-                        StartCoroutine(this.island.destroyPopup(this.island.createPopup("Impossible de supprimer le port !"), 3));
+                        island.displayPopup("Impossible de supprimer le port !", 3);
+                        //StartCoroutine(this.island.destroyPopup(this.island.createPopup("Impossible de supprimer le port !"), 3));
                     }
                     else {
                         Canvas removeBuildingWindowCanvasPrefab = Resources.Load<Canvas>("Prefab/RemoveBuildingWindowCanvas");
@@ -265,18 +266,21 @@ namespace TouchScript.Examples.Cube
                 case "Move":
                     if (this.building.name.Split('_')[3] == TypeBuilding.Harbor.ToString())
                     {
-                        StartCoroutine(this.island.destroyPopup(this.island.createPopup("Impossible de déplacer le port !"), 3));
+                        island.displayPopup("Impossible de déplacer le port !", 3);
+                        //StartCoroutine(this.island.destroyPopup(this.island.createPopup("Impossible de déplacer le port !"), 3));
                     }
                     else {
                         Destroy(GameObject.Find(this.transform.parent.parent.name));
 
                         if (building.TypeBuilding.ToString() == "Harbor")
                         {
-                            StartCoroutine(island.destroyPopup(island.createPopup("Le port ne peut pas être déplacé !"), 3));
+                            island.displayPopup("Le port ne peut pas être déplacé !", 3);
+                            //StartCoroutine(island.destroyPopup(island.createPopup("Le port ne peut pas être déplacé !"), 3));
                         }
                         else
                         {
-                            StartCoroutine(island.destroyPopup(island.createPopup("Appuyez sur l'endroit où placer le batiment"), 3));
+                            island.displayPopup("Appuyez sur l'endroit où placer le batiment", 3);
+                            //StartCoroutine(island.destroyPopup(island.createPopup("Appuyez sur l'endroit où placer le batiment"), 3));
                             island.moveBuilding = true;
                         }
                     }

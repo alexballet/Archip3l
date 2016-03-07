@@ -53,7 +53,6 @@ namespace TouchScript.Examples.Cube
                 this.tuto_buildingManager = mytuto_buildingManager;
             }
 
-            StartCoroutine(this.destroyPopup(this.createPopup("Bienvenue dans le tutoriel. \nPour commencer, appuyez n'importe où puis créez le port."), 5));
         }
 
         public void Start()
@@ -65,6 +64,7 @@ namespace TouchScript.Examples.Cube
                 startCanvas.name = "StartCanvas";
                 StartCoroutine(this.startFade());
             }
+            StartCoroutine(this.destroyPopup(this.createPopup("Bienvenue dans le tutoriel. \nPour commencer, appuyez n'importe où puis créez le port."), 10));
         }
 
         public IEnumerator startFade()
@@ -75,7 +75,7 @@ namespace TouchScript.Examples.Cube
             yield return new WaitForSeconds(1);
             for (int i = 0; i < 200; i++)
             {
-                yield return new WaitForSeconds(0.01f);
+                yield return new WaitForSeconds(0.02f);
                 colorBlack = sp[1].color;
                 colorBlack.a -= 0.005f;
                 sp[1].color = colorBlack;

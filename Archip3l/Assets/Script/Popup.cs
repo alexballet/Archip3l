@@ -14,6 +14,7 @@ namespace TouchScript.Examples.Cube
 
         public string namePopupCanvas;
         public MinorIsland island;
+        public bool touched = false;
 
         void OnMouseDownSimulation()
         {
@@ -21,7 +22,8 @@ namespace TouchScript.Examples.Cube
             this.namePopupCanvas = name;
             string[] nameSplitted = name.Split('_');
             this.island = GameObject.Find(nameSplitted[1] + "_" + nameSplitted[2] + "_" + nameSplitted[3]).GetComponent<MinorIsland>();
-            StartCoroutine(island.destroyPopup(namePopupCanvas, 0));
+            this.touched = true;
+            StartCoroutine(island.forceDestroyPopup(namePopupCanvas, 0));
             this.gameObject.GetComponent<BoxCollider>().enabled = false;
         }
 

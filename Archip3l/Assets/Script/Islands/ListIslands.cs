@@ -21,8 +21,8 @@ namespace TouchScript.Examples.Cube
                 Debug.Log(this.name);
                 island.islandToSend = this.name;
             }
-            Destroy(GameObject.Find(this.transform.parent.name));
             island.otherWindowOpen = false;
+            Destroy(GameObject.Find(this.transform.parent.name));
         }
 
 

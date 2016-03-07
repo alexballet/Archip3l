@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TouchScript.InputSources;
 using TouchScript.Gestures;
 using TouchScript.Hit;
+using System.Collections;
 
 namespace TouchScript.Examples.Cube
 {
@@ -11,28 +12,70 @@ namespace TouchScript.Examples.Cube
 
         public MinorIsland island;
         public string islandToSend;
+        public int quantityCarried;
+        public string resourceSent;
+        public bool appeared = false;
+        public bool collided = false;
 
 
 
-        void OnCollisionEnter(Collision col)
+        void collision()
         {
-            Debug.Log("go");
-            if (col.gameObject.name == islandToSend + "_Harbor")
-            {
-                Debug.Log("collision");
-            }
+            this.collided = true;
+            StartCoroutine(startBoatDisappearance());
+            MinorIsland.exchangePerforming = false;
         }
 
 
         void Start()
         {
-            Debug.Log(islandToSend);
+            StartCoroutine(startBoatAppearance());
+        }
+
+        public IEnumerator startBoatAppearance()
+        {
+            Color color;
+            color = this.GetComponent<SpriteRenderer>().color;
+            color.a = 0;
+            this.GetComponent<SpriteRenderer>().color = color;
+            for (int i = 0; i < 100; i++)
+            {
+                yield return new WaitForSeconds(0.03f);
+                color = this.GetComponent<SpriteRenderer>().color;
+                color.a += 0.01f;
+                this.GetComponent<SpriteRenderer>().color = color;
+            }
+
+            this.appeared = true;
+        }
+
+        public IEnumerator startBoatDisappearance()
+        {
+            Color color;
+            for (int i = 0; i < 100; i++)
+            {
+                yield return new WaitForSeconds(0.03f);
+                color = this.GetComponent<SpriteRenderer>().color;
+                color.a -= 0.01f;
+                this.GetComponent<SpriteRenderer>().color = color;
+            }
+            Destroy(this.gameObject);
         }
 
 
         void Update()
         {
-
+            if (this.GetComponent<BoxCollider>().bounds.Intersects(GameObject.Find("sous_ile_2").GetComponent<MeshCollider>().bounds))
+            {
+                Debug.Log("collided island");
+            }
+            if (!this.collided && this.GetComponent<BoxCollider>().bounds.Intersects(GameObject.Find(islandToSend + "_Harbor").GetComponent<BoxCollider>().bounds))
+                collision();
+            for (int i = 1; i <= 4; i++) 
+                if (this.GetComponent<BoxCollider>().bounds.Intersects(GameObject.Find("sous_ile_" + i.ToString()).GetComponent<MeshCollider>().bounds))
+                    {
+                        Debug.Log("collided island");
+                    }
         }
 
         //-------------- TUIO -----------------------------------------------------------------------
@@ -111,9 +154,12 @@ namespace TouchScript.Examples.Cube
             if (!map.TryGetValue(touch.Id, out id)) return;
             if (!gesture.GetTargetHitResult(touch.Position, out hit)) return;
             moveTouch(id, processCoords(hit.RaycastHit.textureCoord));
-            Vector3 positionTouched = Camera.main.ScreenToWorldPoint(touch.Position);
-            positionTouched.z = -1;
-            this.transform.position = positionTouched;
+            if (this.appeared && !this.collided)
+            {
+                Vector3 positionTouched = Camera.main.ScreenToWorldPoint(touch.Position);
+                positionTouched.z = -1;
+                this.transform.position = positionTouched;
+            }
         }
 
         private void touchEndedHandler(object sender, MetaGestureEventArgs metaGestureEventArgs)

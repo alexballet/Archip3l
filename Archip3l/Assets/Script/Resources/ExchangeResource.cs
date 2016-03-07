@@ -143,37 +143,50 @@ namespace TouchScript.Examples.Cube
                     case "Send":
                         if (to.text == "Ile X")
                         {
-                            StartCoroutine(island.destroyPopup(island.createPopup("Veuillez sélectionner une île, en appuyant sur \"Ile X\"."), 3));
+                            island.displayPopup("Veuillez sélectionner une île, en appuyant sur \"Ile X\".", 3);
+                            //StartCoroutine(island.destroyPopup(island.createPopup("Veuillez sélectionner une île, en appuyant sur \"Ile X\"."), 3));
                         }
                         else
                         {
                             if (quantityValue.text == "0")
                             {
-                                StartCoroutine(island.destroyPopup(island.createPopup("Veuillez sélectionner une quantité à envoyer"), 3));
+                                island.displayPopup("Veuillez sélectionner une quantité à envoyer", 3);
+                                //StartCoroutine(island.destroyPopup(island.createPopup("Veuillez sélectionner une quantité à envoyer"), 3));
                             }
                             else
                             {
                                 if (resource_sp.sprite.name == "Knob") //defaults sprite when not already clicked on
-                                {
-                                    StartCoroutine(island.destroyPopup(island.createPopup("Veuillez sélectionner une ressource à envoyer"), 3));
+                                { 
+                                    island.displayPopup("Veuillez sélectionner une ressource à envoyer", 3);
+                                    //StartCoroutine(island.destroyPopup(island.createPopup("Veuillez sélectionner une ressource à envoyer"), 3));
                                 }
                                 else
                                 {
                                     if (MinorIsland.exchangePerforming)
                                     {
-                                        StartCoroutine(island.destroyPopup(island.createPopup("Veuillez attendre la fin de l'échange en cours"), 3));
+                                        island.displayPopup("Veuillez attendre la fin de l'échange en cours", 3);
+                                        //StartCoroutine(island.destroyPopup(island.createPopup("Veuillez attendre la fin de l'échange en cours"), 3));
                                     }
                                     else
                                     {
-                                        Destroy(GameObject.Find(this.transform.parent.parent.name));
                                         Debug.Log("Start of sending resource");
+
+                                        //withdrawal of resources
+                                        TypeResource tr = (TypeResource)System.Enum.Parse(typeof(TypeResource), Resource.getResourceFromIconName(this.resource_sp.sprite.name));
+                                        int quantitySent = int.Parse(quantityValue.text);
+                                        island.resourceManager.getResource(tr).changeStock(-quantitySent);
+
                                         MinorIsland.exchangePerforming = true;
                                         SpriteRenderer exchangeResourceAnimationPrefab = Resources.Load<SpriteRenderer>("Prefab/exchangeResourceAnimation/exchangeResourceAnimation_" + island.nameMinorIsland[island.nameMinorIsland.Length - 1] + "-" + to.text[to.text.Length - 1].ToString());
                                         exchangeResourceAnimation = Instantiate(exchangeResourceAnimationPrefab);
                                         exchangeResourceAnimation.transform.parent = GameObject.Find(island.nameMinorIsland).transform;
                                         exchangeResourceAnimation.name = "ExchangeResourceAnimation_" + island.nameMinorIsland;
                                         exchangeResourceAnimation.GetComponent<BoatMoving>().islandToSend = "sous_ile_" + to.text[to.text.Length -1].ToString();
-                                        StartCoroutine(startBoatAppearance());
+                                        exchangeResourceAnimation.GetComponent<BoatMoving>().quantityCarried = quantitySent;
+                                        exchangeResourceAnimation.GetComponent<BoatMoving>().resourceSent = tr.ToString();
+                                        island.exchangeWindowPresent = false;
+                                        island.displayPopup("Emmenez le bateau jusqu'au port de l'île sélectionnée pour lui apporter les ressources", 5);
+                                        Destroy(GameObject.Find(this.transform.parent.parent.name));
                                     }
                                 }
                             }
@@ -190,22 +203,8 @@ namespace TouchScript.Examples.Cube
             }
 
         }
-
-        public IEnumerator startBoatAppearance()
-        {
-            yield return new WaitForSeconds(0.01f);
-            /*Color color;
-            color = exchangeResourceAnimation.color;
-            color.a = 0;
-            exchangeResourceAnimation.color = color;
-            for (int i = 0; i < 100; i++)
-            {
-                yield return new WaitForSeconds(0.01f);
-                color = exchangeResourceAnimation.color;
-                color.a += 0.01f;
-                exchangeResourceAnimation.color = color;
-            }*/
-        }
+        
+        
 
 
         // Use this for initialization

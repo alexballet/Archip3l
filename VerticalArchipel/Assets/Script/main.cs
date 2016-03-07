@@ -5,9 +5,7 @@ using UnityEngine.UI;
 
 namespace TouchScript.Examples.Cube
 {
-
-
-
+    
     public class main : MonoBehaviour
     {
 
@@ -58,31 +56,15 @@ namespace TouchScript.Examples.Cube
                 if (GameObject.Find("Notif" + i.ToString()).GetComponent<Text>().text == string.Empty)
                 {
                     GameObject.Find("Notif" + i.ToString()).GetComponent<Text>().text = text;
-                    //GameObject.Find("Notif" + i.ToString()).GetComponent<BoxCollider2D>().enabled = true;
                     GameObject.Find("Notif" + i.ToString()).GetComponent<BoxCollider>().enabled = true;
                     return true;
                 }
             return false;
         }
 
-        static public IEnumerator removeNotification(GameObject go)  //id : last character of the notification's name
+        static public void removeNotification(GameObject go)  //id : last character of the notification's name
         {
-            Text notif = go.GetComponent<Text>();
-            Debug.Log(notif.transform.parent.name);
-            Color color;
-            for (int i = 0; i < 100; i++)
-            {
-                yield return new WaitForSeconds(0.01f);
-                color = notif.material.color;
-                color.a -= 0.01f;
-                notif.material.color = color;
-            }
-
-            //reset alpha to 1 because bug --> all gameobjects touched          -->   TODO : manage this
-            color = notif.material.color;
-            color.a = 1;
-            notif.material.color = color;
-
+            
             //each notification below the removed one goes up
             for (int i = int.Parse(go.name[go.name.Length - 1].ToString()); i < nbNotificationsMax; i++)
             {
@@ -95,13 +77,13 @@ namespace TouchScript.Examples.Cube
 
         void Start()
         {
+            //tests
             for (int i = 0; i <= 5; i++)
             {
+                //way of adding notifications
                 if (!main.addNotification("gaga " + i.ToString()))
                     Debug.Log(i.ToString());
             }
-
-
         }
 
         void Update()

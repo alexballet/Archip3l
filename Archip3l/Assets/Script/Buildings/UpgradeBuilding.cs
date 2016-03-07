@@ -54,7 +54,8 @@ namespace TouchScript.Examples.Cube
                 }
                 else
                 {
-                    StartCoroutine(island.destroyPopup(island.createPopup("Ce bâtiment est déjà au niveau maximal !"), 3));
+                    island.displayPopup("Ce bâtiment est déjà au niveau maximal !", 3);
+                    //StartCoroutine(island.destroyPopup(island.createPopup("Ce bâtiment est déjà au niveau maximal !"), 3));
                 }
             }
 

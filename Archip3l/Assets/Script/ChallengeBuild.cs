@@ -147,10 +147,9 @@ public class ChallengeBuild : MonoBehaviour {
             color.a -= 0.01f;
             background.material.color = color;
         }
-        
-        Destroy(GameObject.Find("Challenge_" + typeChallenge + "_" + minorIsland.nameMinorIsland));
 
-        StartCoroutine(minorIsland.destroyPopup(minorIsland.createPopup(explainations), 8));
+        minorIsland.displayPopup(explainations, 8);
+        //StartCoroutine(minorIsland.destroyPopup(minorIsland.createPopup(explainations), 8));
 
         minorIsland.challengePresent = false;
         
@@ -164,7 +163,8 @@ public class ChallengeBuild : MonoBehaviour {
 
             if (newBuilding == false)
             {
-                StartCoroutine(minorIsland.destroyPopup(minorIsland.createPopup("Le bâtiment " + Building.translateBuildingName(typeBuilding.ToString()) + " a déjà été créé !"), 3));
+                minorIsland.displayPopup("Le bâtiment " + Building.translateBuildingName(typeBuilding.ToString()) + " a déjà été créé !", 3);
+                //StartCoroutine(minorIsland.destroyPopup(minorIsland.createPopup("Le bâtiment " + Building.translateBuildingName(typeBuilding.ToString()) + " a déjà été créé !"), 3));
             }
             else
             {
@@ -172,7 +172,8 @@ public class ChallengeBuild : MonoBehaviour {
 
                 if (goodAnswer)
                 {
-                    StartCoroutine(minorIsland.destroyPopup(minorIsland.createPopup("Grâce à votre bonne réponse, la production du bâtiment " + Building.translateBuildingName(typeBuilding.ToString()) + " double !"), 3));
+                    minorIsland.displayPopup("Grâce à votre bonne réponse, la production du bâtiment " + Building.translateBuildingName(typeBuilding.ToString()) + " double !", 3);
+                    //StartCoroutine(minorIsland.destroyPopup(minorIsland.createPopup("Grâce à votre bonne réponse, la production du bâtiment " + Building.translateBuildingName(typeBuilding.ToString()) + " double !"), 3));
                     buildingConstructed.quantityProduced = Building.getQuantityResourceOrStatProduced(typeBuilding.ToString()) * 2;
                 }
                 else
@@ -184,6 +185,8 @@ public class ChallengeBuild : MonoBehaviour {
 
             }
         }
+
+        Destroy(GameObject.Find("Challenge_" + typeChallenge + "_" + minorIsland.nameMinorIsland));
 
 
     }

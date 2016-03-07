@@ -209,7 +209,6 @@ namespace TouchScript.Examples.Cube
             }
 
             GetComponent<Transform>().localScale = new Vector3(9f, 9f, 1f);
-            GetComponent<BoxCollider>().size = new Vector2(6f, 6f);
 
             StartCoroutine("build");
         }

@@ -149,10 +149,7 @@ public class ChallengeUpgrade : MonoBehaviour {
             background.material.color = color;
         }
 
-
-        Destroy(GameObject.Find("Challenge_" + typeChallenge + "_" + minorIsland.nameMinorIsland));
-
-        //StartCoroutine(minorIsland.destroyPopup(minorIsland.createPopup(explainations), 8));
+        StartCoroutine(minorIsland.destroyPopup(minorIsland.createPopup(explainations), 8));
 
         minorIsland.challengePresent = false;
 
@@ -168,19 +165,22 @@ public class ChallengeUpgrade : MonoBehaviour {
                 building.level += 1;
                 building.changeProduction(building.quantityProduced);
                 building.quantityProduced *= 2;
-                StartCoroutine(minorIsland.destroyPopup(minorIsland.createPopup("Bonne réponse ! Votre bâtiment passe au niveau " + building.level.ToString() + " !"), 3));
+                minorIsland.displayPopup("Bonne réponse ! Votre bâtiment passe au niveau " + building.level.ToString() + " !", 3);
+                //StartCoroutine(minorIsland.destroyPopup(minorIsland.createPopup("Bonne réponse ! Votre bâtiment passe au niveau " + building.level.ToString() + " !"), 3));
             }
             else
             {
                 if (building.level > 0)
                 {
                     building.level -= 1;
-                    building.changeProduction(-building.quantityProduced/2);
+                    building.changeProduction(-building.quantityProduced / 2);
                     building.quantityProduced /= 2;
-                    StartCoroutine(minorIsland.destroyPopup(minorIsland.createPopup("Mauvaise réponse ! Votre bâtiment redescend au niveau " + building.level.ToString() + " ..."), 3));
+                    minorIsland.displayPopup("Mauvaise réponse ! Votre bâtiment redescend au niveau " + building.level.ToString() + " ...", 3);
+                    //StartCoroutine(minorIsland.destroyPopup(minorIsland.createPopup("Mauvaise réponse ! Votre bâtiment redescend au niveau " + building.level.ToString() + " ..."), 3));
                 }
                 else
-                    StartCoroutine(minorIsland.destroyPopup(minorIsland.createPopup("Mauvaise réponse ! L'amélioration n'a donc pas pu se faire ..."), 3));
+                    minorIsland.displayPopup("Mauvaise réponse ! L'amélioration n'a donc pas pu se faire ...", 3);
+                    //StartCoroutine(minorIsland.destroyPopup(minorIsland.createPopup("Mauvaise réponse ! L'amélioration n'a donc pas pu se faire ..."), 3));
             }
 
             //upgrading animation
@@ -188,6 +188,7 @@ public class ChallengeUpgrade : MonoBehaviour {
                 StartCoroutine(building.launchUpgradeAnimation());
         }
 
+        Destroy(GameObject.Find("Challenge_" + typeChallenge + "_" + minorIsland.nameMinorIsland));
 
     }
 

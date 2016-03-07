@@ -81,8 +81,8 @@ namespace TouchScript.Examples.Cube
                     break;
             }
             buildingManager.createBuilding(TypeBuilding.Harbor, harborPosition);
-
-            StartCoroutine(destroyPopup(createPopup("C'est parti !"), 3));
+            displayPopup("C'est parti !", 3);
+            //StartCoroutine(destroyPopup(createPopup("C'est parti !"), 3));
 
         }
 
@@ -154,6 +154,10 @@ namespace TouchScript.Examples.Cube
             GameObject.Find(nameMinorIsland).GetComponent<MeshCollider>().enabled = true;
         }
 
+        public void displayPopup(string popupText, int time)
+        {
+            StartCoroutine(destroyPopup(createPopup(popupText), time));
+        }
 
         //returns the name of the Popup (GameObject) created
         public string createPopup(string popupText)
@@ -183,22 +187,46 @@ namespace TouchScript.Examples.Cube
             return popupCanvas.name;
         }
 
+        //destroy popup after a certain time
         public IEnumerator destroyPopup(string namePopup, int timer)
         {
+            Popup popup = GameObject.Find(namePopup).GetComponentInChildren<Popup>();
             SpriteRenderer popupImage = GameObject.Find(namePopup).GetComponentInChildren<SpriteRenderer>();
 
             yield return new WaitForSeconds(timer);
+
             Color color;
             for (int i = 0; i < 100; i++)
             {
                 yield return new WaitForSeconds(0.01f);
-
-                color = popupImage.color;
-                color.a -= 0.01f;
-                popupImage.color = color;
+                if (!popup.touched)
+                {
+                    color = popupImage.color;
+                    color.a -= 0.01f;
+                    popupImage.color = color;
+                }
+                else
+                    break;
 
             }
-            Destroy(GameObject.Find(namePopup));
+            if (!popup.touched)
+                Destroy(GameObject.Find(namePopup));
+        }
+
+        //destroy popup by touch
+        public IEnumerator forceDestroyPopup(string namePopup, int timer)
+        {
+            SpriteRenderer popupImage = GameObject.Find(namePopup).GetComponentInChildren<SpriteRenderer>();
+            Color color;
+            for (int i = 0; i < 100; i++)
+            {
+                yield return new WaitForSeconds(0.01f);
+                    color = popupImage.color;
+                    color.a -= 0.01f;
+                    popupImage.color = color;
+
+            }
+                Destroy(GameObject.Find(namePopup));
         }
 
         public void removeAllPopups()
@@ -316,7 +344,7 @@ namespace TouchScript.Examples.Cube
                 }
                 else
                 {
-                    if (!challengePresent && !exchangeWindowPresent)      //if any challenge or exchangeWindow is open on the island
+                    if (!challengePresent && !exchangeWindowPresent)
                     {
                         if (!wheelPresent)  //if the wheel is not on the island
                         {
@@ -459,7 +487,7 @@ namespace TouchScript.Examples.Cube
             var touch = metaGestureEventArgs.Touch;
             if (touch.InputSource == this) return;
             map.Add(touch.Id, beginTouch(processCoords(touch.Hit.RaycastHit.textureCoord), touch.Tags).Id);
-            if (TouchTime == 0)
+            if (TouchTime == 0 && !MinorIsland.exchangePerforming)
             {
                 TouchTime = Time.time;
                 this.positionTouched = touch.Position;
