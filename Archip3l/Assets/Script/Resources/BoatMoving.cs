@@ -18,6 +18,10 @@ namespace TouchScript.Examples.Cube
         public bool collided = false;
         public Vector3 startPosition;
 
+        private GameObject harbor;
+
+        private float x1, y1;
+
         void OnTriggerEnter(Collider col)
         {
             Debug.Log(col.name);
@@ -77,6 +81,7 @@ namespace TouchScript.Examples.Cube
         {
             this.island = this.transform.parent.GetComponent<MinorIsland>();
             this.startPosition = this.transform.position;
+            this.harbor = GameObject.Find(this.islandToSend + "_Harbor");
             StartCoroutine(startBoatAppearance());
             SpriteRenderer cyclonePrefab = Resources.Load<SpriteRenderer>("Prefab/cyclone");
             SpriteRenderer cyclone = Instantiate(cyclonePrefab);
@@ -125,9 +130,15 @@ namespace TouchScript.Examples.Cube
         }
 
 
-        void Update()
+        void FixedUpdate()
         {
-            
+            x1 = harbor.GetComponent<BoxCollider>().bounds.center.x;
+            y1 = harbor.GetComponent<BoxCollider>().bounds.center.y;
+
+            //Debug.Log (point.transform.position);
+            float alpha = 90 - (Mathf.Rad2Deg * Mathf.Atan2(y1 - transform.position.y, x1 - transform.position.x));
+            transform.rotation = Quaternion.Euler(0f, 0f, -alpha);
+
         }
 
 

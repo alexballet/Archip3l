@@ -177,7 +177,7 @@ namespace TouchScript.Examples.Cube
                                         island.resourceManager.getResource(tr).changeStock(-quantitySent);
 
                                         MinorIsland.exchangePerforming = true;
-                                        SpriteRenderer exchangeResourceAnimationPrefab = Resources.Load<SpriteRenderer>("Prefab/exchangeResourceAnimation/exchangeResourceAnimation_" + island.nameMinorIsland[island.nameMinorIsland.Length - 1] + "-" + to.text[to.text.Length - 1].ToString());
+                                        SpriteRenderer exchangeResourceAnimationPrefab = Resources.Load<SpriteRenderer>("Prefab/exchangeResourceAnimation/exchangeResourceAnimation_" + island.nameMinorIsland[island.nameMinorIsland.Length - 1].ToString()); // + "-" + to.text[to.text.Length - 1].ToString());
                                         exchangeResourceAnimation = Instantiate(exchangeResourceAnimationPrefab);
                                         exchangeResourceAnimation.transform.parent = GameObject.Find(island.nameMinorIsland).transform;
                                         exchangeResourceAnimation.name = "ExchangeResourceAnimation_" + island.nameMinorIsland;
