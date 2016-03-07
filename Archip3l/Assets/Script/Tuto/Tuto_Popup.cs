@@ -5,7 +5,7 @@ using TouchScript.Gestures;
 using TouchScript.Hit;
 using System.Collections.Generic;
 
-namespace TouchScript.Examples.Cube
+namespace TouchScript.InputSources
 {
     public class Tuto_Popup : InputSource
     {

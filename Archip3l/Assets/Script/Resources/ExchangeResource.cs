@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
-using TouchScript.Examples.Cube;
+
 using TouchScript.InputSources;
 using TouchScript.Gestures;
 using TouchScript.Hit;
 using System.Collections.Generic;
 
-namespace TouchScript.Examples.Cube
+namespace TouchScript.InputSources
 {
 
     public class ExchangeResource : InputSource
@@ -169,8 +169,6 @@ namespace TouchScript.Examples.Cube
                                     }
                                     else
                                     {
-                                        Debug.Log("Start of sending resource");
-
                                         //withdrawal of resources
                                         TypeResource tr = (TypeResource)System.Enum.Parse(typeof(TypeResource), Resource.getResourceFromIconName(this.resource_sp.sprite.name));
                                         int quantitySent = int.Parse(quantityValue.text);

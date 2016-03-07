@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
-using TouchScript.Examples.Cube;
+
 using TouchScript.InputSources;
 using TouchScript.Gestures;
 using TouchScript.Hit;
 using System.Collections.Generic;
 
-namespace TouchScript.Examples.Cube
+namespace TouchScript.InputSources
 {
 
 

@@ -4,7 +4,7 @@ using TouchScript.Gestures;
 using TouchScript.Hit;
 using TouchScript.InputSources;
 
-namespace TouchScript.Examples.Cube
+namespace TouchScript.InputSources
 {
     public class RedirectInput : InputSource
     {
@@ -87,7 +87,6 @@ namespace TouchScript.Examples.Cube
             if (touch.InputSource == this) return;
             if (!map.TryGetValue(touch.Id, out id)) return;
             endTouch(id);
-            Debug.Log("ok");
         }
 
         private void touchCancelledhandler(object sender, MetaGestureEventArgs metaGestureEventArgs)
@@ -97,7 +96,6 @@ namespace TouchScript.Examples.Cube
             if (touch.InputSource == this) return;
             if (!map.TryGetValue(touch.Id, out id)) return;
             cancelTouch(id);
-            Debug.Log("ended");
         }
 
     }

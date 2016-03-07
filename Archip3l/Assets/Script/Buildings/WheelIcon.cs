@@ -2,12 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
-using TouchScript.Examples.Cube;
+
 using TouchScript.Gestures;
 using TouchScript.InputSources;
 using TouchScript.Hit;
 
-namespace TouchScript.Examples.Cube
+namespace TouchScript.InputSources
 {
     public class WheelIcon : InputSource
     {
