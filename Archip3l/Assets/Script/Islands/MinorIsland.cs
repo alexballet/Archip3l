@@ -162,7 +162,6 @@ namespace TouchScript.Examples.Cube
         //returns the name of the Popup (GameObject) created
         public string createPopup(string popupText)
         {
-            //this.removeAllPopups();
 
             Canvas popupCanvasPrefab = Resources.Load<Canvas>("Prefab/PopupCanvas");
             Canvas popupCanvas = Instantiate(popupCanvasPrefab);
@@ -194,7 +193,7 @@ namespace TouchScript.Examples.Cube
             SpriteRenderer popupImage = GameObject.Find(namePopup).GetComponentInChildren<SpriteRenderer>();
 
             yield return new WaitForSeconds(timer);
-
+            this.numPopup--;
             Color color;
             for (int i = 0; i < 100; i++)
             {
@@ -216,6 +215,7 @@ namespace TouchScript.Examples.Cube
         //destroy popup by touch
         public IEnumerator forceDestroyPopup(string namePopup, int timer)
         {
+            this.numPopup--;
             SpriteRenderer popupImage = GameObject.Find(namePopup).GetComponentInChildren<SpriteRenderer>();
             Color color;
             for (int i = 0; i < 100; i++)

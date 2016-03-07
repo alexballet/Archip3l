@@ -16,20 +16,72 @@ namespace TouchScript.Examples.Cube
         public string resourceSent;
         public bool appeared = false;
         public bool collided = false;
+        public Vector3 startPosition;
 
-
-
-        void collision()
+        void OnTriggerEnter(Collider col)
         {
-            this.collided = true;
-            StartCoroutine(startBoatDisappearance());
-            MinorIsland.exchangePerforming = false;
+            Debug.Log(col.name);
+            if (col.name == islandToSend + "_Harbor")
+            {
+                MinorIsland islandReceiver = GameObject.Find(islandToSend).GetComponent<MinorIsland>();
+                this.collided = true;
+                Debug.Log("collided with harbor");
+                islandReceiver.displayPopup("Vous venez de recevoir une cargaison de " + this.quantityCarried.ToString() + " " + Resource.translateResourceName(resourceSent) + " !", 3);
+                StartCoroutine(startBoatDisappearance());
+                MinorIsland.exchangePerforming = false;
+                //add resources to islandToSend
+                TypeResource res = (TypeResource)System.Enum.Parse(typeof(TypeResource), resourceSent);
+                islandReceiver.resourceManager.getResource(res).changeStock(this.quantityCarried);
+            }
+            else
+            {
+                if (this.quantityCarried / 2 == 0)
+                {
+                    island.displayPopup("Suite aux dommages subis, vous bâteau coule, ainsi que toutes les ressources transportées ...", 3);
+                    StartCoroutine(startBoatDisappearance());
+                }
+                else {
+                    StartCoroutine(resetPosition());
+                    island.displayPopup("Attention ! Vous venez de subir une collision, vous perdez donc la moitié des ressources à transmettre", 3);
+                    this.quantityCarried /= 2;
+                }
+            }
+        }
+
+        public IEnumerator resetPosition()
+        {
+            this.GetComponent<BoxCollider>().enabled = false;
+            Color color;
+            color = this.GetComponent<SpriteRenderer>().color;
+            this.GetComponent<SpriteRenderer>().color = color;
+            for (int i = 0; i < 100; i++)
+            {
+                yield return new WaitForSeconds(0.01f);
+                color = this.GetComponent<SpriteRenderer>().color;
+                color.a -= 0.01f;
+                this.GetComponent<SpriteRenderer>().color = color;
+            }
+            this.transform.position = startPosition;
+            for (int i = 0; i < 100; i++)
+            {
+                yield return new WaitForSeconds(0.01f);
+                color = this.GetComponent<SpriteRenderer>().color;
+                color.a += 0.01f;
+                this.GetComponent<SpriteRenderer>().color = color;
+            }
+            this.GetComponent<BoxCollider>().enabled = true;
         }
 
 
         void Start()
         {
+            this.island = this.transform.parent.GetComponent<MinorIsland>();
+            this.startPosition = this.transform.position;
             StartCoroutine(startBoatAppearance());
+            SpriteRenderer cyclonePrefab = Resources.Load<SpriteRenderer>("Prefab/cyclone");
+            SpriteRenderer cyclone = Instantiate(cyclonePrefab);
+            cyclone.name = "cyclone";
+            StartCoroutine(spine(cyclone));
         }
 
         public IEnumerator startBoatAppearance()
@@ -62,21 +114,22 @@ namespace TouchScript.Examples.Cube
             Destroy(this.gameObject);
         }
 
+        public IEnumerator spine(SpriteRenderer cyclone)
+        {
+            while(!this.collided)
+            {
+                yield return new WaitForSeconds(0.001f);
+                cyclone.transform.Rotate(Vector3.back, 2);
+            }
+            Destroy(GameObject.Find("cyclone"));
+        }
+
 
         void Update()
         {
-            if (this.GetComponent<BoxCollider>().bounds.Intersects(GameObject.Find("sous_ile_2").GetComponent<MeshCollider>().bounds))
-            {
-                Debug.Log("collided island");
-            }
-            if (!this.collided && this.GetComponent<BoxCollider>().bounds.Intersects(GameObject.Find(islandToSend + "_Harbor").GetComponent<BoxCollider>().bounds))
-                collision();
-            for (int i = 1; i <= 4; i++) 
-                if (this.GetComponent<BoxCollider>().bounds.Intersects(GameObject.Find("sous_ile_" + i.ToString()).GetComponent<MeshCollider>().bounds))
-                    {
-                        Debug.Log("collided island");
-                    }
+            
         }
+
 
         //-------------- TUIO -----------------------------------------------------------------------
 
@@ -157,7 +210,7 @@ namespace TouchScript.Examples.Cube
             if (this.appeared && !this.collided)
             {
                 Vector3 positionTouched = Camera.main.ScreenToWorldPoint(touch.Position);
-                positionTouched.z = -1;
+                positionTouched.z = 0;
                 this.transform.position = positionTouched;
             }
         }
