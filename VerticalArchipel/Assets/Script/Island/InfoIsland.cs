@@ -1,82 +1,58 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Text.RegularExpressions;
 using TouchScript.InputSources;
 using TouchScript.Gestures;
 using TouchScript.Hit;
 using System.Collections.Generic;
+using UnityEngine.UI;
+using System;
 
 namespace TouchScript.Examples.Cube
 {
 
-    //this class concerns the thophies + the medals + AirportMedal
-    public class Trophy : InputSource
+
+
+    public class InfoIsland : InputSource
     {
 
-        static public bool infoWindowPresent = false;
+        public string nameIsland;
 
-        public bool active = false;     //true if trophy unlocked
-        public bool toBeActivated = false;
-        public string trophyName;
-        public string description;
-
-        public Sprite wonSprite;
-
-        void Awake()
+        void OnMouseDownSimulation()    //close button
         {
-            this.trophyName = name;
+            Island.infoIslandPresent = false;
+            Destroy(GameObject.Find(this.transform.parent.parent.name));
         }
 
-        void OnMouseDownSimulation()
+
+        // Use this for initialization
+        void Start()
         {
-            if (!Island.infoIslandPresent)
+            GameObject canvasParent = this.transform.parent.parent.gameObject;
+            string[] nameSplitted = canvasParent.name.Split('_');
+            this.nameIsland = nameSplitted[1] + "_" + nameSplitted[2] + "_" + nameSplitted[3];
+            GameObject.Find("nameIsland").GetComponent<Text>().text = Island.getSpecialityNameIsland(this.nameIsland);
+
+            string resource;
+            foreach (TypeResource typeResource in Enum.GetValues(typeof(TypeResource)))
             {
-
-                if (!Trophy.infoWindowPresent)
-                {
-                    Trophy.infoWindowPresent = true;
-                    Debug.Log("Clic on " + this.name);
-                    switch (this.name)
-                    {
-                        case "AirportMedal":
-                            Canvas infoAirportCanvasPrefab = Resources.Load<Canvas>("Prefab/infoAirportCanvas");
-                            Canvas infoAirportCanvas = Instantiate(infoAirportCanvasPrefab);
-                            infoAirportCanvas.name = "infoAirportCanvas";
-                            break;
-                        case "MedalsCollider":
-                            Canvas infoMedalsCanvasPrefab = Resources.Load<Canvas>("Prefab/infoMedalsCanvas");
-                            Canvas infoMedalsCanvas = Instantiate(infoMedalsCanvasPrefab);
-                            infoMedalsCanvas.name = "infoMedalsCanvas";
-                            break;
-                        case "TrophiesCollider":
-                            Canvas infoTrophiesCanvasPrefab = Resources.Load<Canvas>("Prefab/infoTrophiesCanvas");
-                            Canvas infoTrophiesCanvas = Instantiate(infoTrophiesCanvasPrefab);
-                            infoTrophiesCanvas.name = "infoTrophiesCanvas";
-                            break;
-                    }
-                }
-                else if (this.name == "close")
-                {
-                    Trophy.infoWindowPresent = false;
-                    Destroy(GameObject.Find(this.transform.parent.parent.name));
-                }
+                resource = typeResource.ToString();
+                //TODO
+                GameObject.Find(resource + "_Total").GetComponent<Text>().text = "tot";
+                GameObject.Find(resource + "_PerCycle").GetComponent<Text>().text = "pc";
+                
             }
+
+
         }
 
+        // Update is called once per frame
         void Update()
         {
-            if(this.toBeActivated)
-            {
-                
-                gameObject.GetComponent<SpriteRenderer>().sprite = wonSprite;
-            }
+
         }
 
-        public bool changeToObtained()
-        {
-            this.toBeActivated = true;
-            return true;
-        }
+        
+
         //-------------- TUIO -----------------------------------------------------------------------
 
         public int Width = 512;
