@@ -116,7 +116,6 @@ namespace TouchScript.InputSources
         {
 
             GameObject.Find(nameMinorIsland).GetComponent<MeshCollider>().enabled = false;
-            ChallengeBuild challengeBuild = GameObject.Find("Virtual_" + nameMinorIsland).AddComponent<ChallengeBuild>();
 
             //random type of ChallengeBuild
             TypeChallenge type;
@@ -126,8 +125,27 @@ namespace TouchScript.InputSources
                 type = TypeChallenge.VraiFaux;
             else
                 type = TypeChallenge.QCM;
+            
 
-            challengeBuild.init(type, this, (TypeBuilding)System.Enum.Parse(typeof(TypeBuilding), buildingClicked));
+            Canvas challengePrefab = Resources.Load<Canvas>("Prefab/Challenges/Build_Challenge_" + type.ToString());
+            Canvas canvasChallenge = Instantiate(challengePrefab);
+
+            canvasChallenge.name = "Challenge_" + type.ToString() + "_" + this.nameMinorIsland;
+            canvasChallenge.transform.SetParent(GameObject.Find(this.nameMinorIsland).transform);
+            Vector3 vec = GameObject.Find("Virtual_" + this.nameMinorIsland).transform.position;
+            vec.z = -2;
+            canvasChallenge.transform.position = vec;
+
+            //rotation if other side of the table
+            char id = this.nameMinorIsland[this.nameMinorIsland.Length - 1];
+            if (id == '1' || id == '2')
+                canvasChallenge.transform.Rotate(Vector3.forward * 180);
+
+            foreach (ChallengeBuild cb in canvasChallenge.GetComponentsInChildren<ChallengeBuild>())
+            {
+                cb.init(type, this, (TypeBuilding)System.Enum.Parse(typeof(TypeBuilding), buildingClicked));
+            }
+            
 
             GameObject.Find(nameMinorIsland).GetComponent<MeshCollider>().enabled = true;
         }
@@ -136,7 +154,6 @@ namespace TouchScript.InputSources
         {
 
             GameObject.Find(nameMinorIsland).GetComponent<MeshCollider>().enabled = false;
-            ChallengeUpgrade challengeUpgrade = GameObject.Find("Virtual_" + nameMinorIsland).AddComponent<ChallengeUpgrade>();
 
             //random type of ChallengeUpgrade
             TypeChallenge type;
@@ -147,20 +164,40 @@ namespace TouchScript.InputSources
             else
                 type = TypeChallenge.QCM;
 
-            challengeUpgrade.init(type, this, building);             //TODO : adapt challenge to TypeBuilding
+
+            Canvas challengePrefab = Resources.Load<Canvas>("Prefab/Challenges/Upgrade_Challenge_" + type.ToString());
+            Canvas challengeUpgrade = Instantiate(challengePrefab);
+
+            challengeUpgrade.name = "Challenge_" + type.ToString() + "_" + this.nameMinorIsland;
+            challengeUpgrade.transform.SetParent(GameObject.Find(this.nameMinorIsland).transform);
+            Vector3 vec = GameObject.Find("Virtual_" + this.nameMinorIsland).transform.position;
+            vec.z = -2;
+            challengeUpgrade.transform.position = vec;
+
+            //rotation if other side of the table
+            char id = this.nameMinorIsland[this.nameMinorIsland.Length - 1];
+            if (id == '1' || id == '2')
+                challengeUpgrade.transform.Rotate(Vector3.forward * 180);
+
+            foreach (ChallengeUpgrade cu in challengeUpgrade.GetComponentsInChildren<ChallengeUpgrade>())
+            {
+                cu.init(type, this, building);             //TODO : adapt challenge to TypeBuilding
+            }
 
             GameObject.Find(nameMinorIsland).GetComponent<MeshCollider>().enabled = true;
         }
 
         public void displayPopup(string popupText, int time)
         {
-            StartCoroutine(destroyPopup(createPopup(popupText), time));
+            if (popupText != string.Empty)
+                StartCoroutine(destroyPopup(createPopup(popupText), time));
         }
 
         //surcharge: for building (explaination displayed at the end of previous popup)
         public void displayPopup(string popupText, int time, string explaination)
         {
-            StartCoroutine(destroyPopup(createPopup(popupText), time, explaination));
+            if (popupText != string.Empty)
+                StartCoroutine(destroyPopup(createPopup(popupText), time, explaination));
         }
 
         //returns the name of the Popup (GameObject) created

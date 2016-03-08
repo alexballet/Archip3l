@@ -18,13 +18,11 @@ namespace TouchScript.Examples.Cube
             for (int i = 1; i <= nbChallengesMax; i++)
             {
                 GameObject.Find("Challenge" + i.ToString()).GetComponent<SpriteRenderer>().enabled = false;
-                //GameObject.Find("Challenge" + i.ToString()).GetComponent<PolygonCollider2D>().enabled = false;
                 GameObject.Find("Challenge" + i.ToString()).GetComponent<BoxCollider>().enabled = false;
             }
             for (int i = 1; i <= nbNotificationsMax; i++)
             {
                 GameObject.Find("Notif" + i.ToString()).GetComponent<Text>().text = string.Empty;
-                //GameObject.Find("Notif" + i.ToString()).GetComponent<BoxCollider2D>().enabled = false;
                 GameObject.Find("Notif" + i.ToString()).GetComponent<BoxCollider>().enabled = false;
             }
 
@@ -37,17 +35,24 @@ namespace TouchScript.Examples.Cube
         }
 
 
-        static public bool addChallenge(string[] row)
+        static public bool addChallenge(string[] row, TypeChallenge tc)
         {
             for (int i = 1; i <= nbChallengesMax; i++)
                 if (GameObject.Find("Challenge" + i.ToString()).GetComponent<SpriteRenderer>().enabled == false)
                 {
                     GameObject.Find("Challenge" + i.ToString()).GetComponent<SpriteRenderer>().enabled = true;
-                    GameObject.Find("Challenge" + i.ToString()).GetComponent<PolygonCollider2D>().enabled = true;
+                    GameObject.Find("Challenge" + i.ToString()).GetComponent<BoxCollider>().enabled = true;
                     GameObject.Find("Challenge" + i.ToString()).GetComponent<ChallengeVertical>().rowSent = row;
+                    GameObject.Find("Challenge" + i.ToString()).GetComponent<ChallengeVertical>().typeChallenge = tc;
                     return true;
                 }
             return false;
+        }
+
+        static public void removeChallenge(GameObject go)
+        {
+            go.GetComponent<SpriteRenderer>().enabled = false;
+            go.GetComponent<BoxCollider>().enabled = false;
         }
 
         static public bool addNotification(string text)
@@ -77,18 +82,25 @@ namespace TouchScript.Examples.Cube
 
         void Start()
         {
-            //tests
-            for (int i = 0; i <= 5; i++)
+            //tests ---------------------------------
+
+            /*for (int i = 0; i <= 5; i++)
             {
                 //way of adding notifications
                 if (!main.addNotification("gaga " + i.ToString()))
                     Debug.Log(i.ToString());
-            }
+            }*/
+
+            string toto = "Répondre VRAI;Proposition0;;VRAI;FAUX";
+            string[] r = toto.Split(';');
+            addChallenge(r, TypeChallenge.VraiFaux);
+
+            //--------------------------------------------------
         }
 
         void Update()
         {
-
+            //when receive a challenge : addChallenge
         }
     }
 }

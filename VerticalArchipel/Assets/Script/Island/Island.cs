@@ -16,7 +16,7 @@ namespace TouchScript.Examples.Cube
 
         void OnMouseDownSimulation()
         {
-            if (!Trophy.infoWindowPresent && !Island.infoIslandPresent)
+            if (!Trophy.infoWindowPresent && !Island.infoIslandPresent && !ChallengeVertical.challengeWindowPresent)
             {
                 infoIslandPresent = true;
                 Debug.Log("Clic on " + this.name);

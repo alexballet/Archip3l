@@ -13,39 +13,34 @@ namespace TouchScript.Examples.Cube
 
     public class ChallengeVertical : InputSource
     {
+        static public bool challengeWindowPresent = false;
 
-        public string[] rowSent;    //initialized at the reception
-        public string question;
-        public string answer;
-        public string explainations;
-        public string[] propositions;
-        public int nbPropositions;
-        public TypeChallenge typeChallenge;
-        public Canvas canvasChallenge;
-        public SpriteRenderer background;
-        public Button[] propositionsButtons;
-        public Text resultText;
-        //public MinorIsland minorIsland;
-        public bool goodAnswer;
+        public string[] rowSent { get; set; }    //initialized at the reception
+        public string question { get; private set; }
+        public string answer { get; private set; }
+        public string explainations { get; private set; }
+        public string[] propositions { get; private set; }
+        public int nbPropositions { get; private set; }
+        public TypeChallenge typeChallenge { get; set; }
+        public SpriteRenderer background { get; private set; }
+        public Text resultText { get; private set; }
+        public bool goodAnswer { get; private set; }
+        public Canvas canvasChallenge { get; private set; }
 
-        public TextAsset csv;
+        public TextAsset csv { get; private set; }
 
-        void OnMouseDownSimulation()
-        {
-            Debug.Log("Clic on " + this.name);
-        }
-
-        public void init(TypeChallenge tc/*, MinorIsland island*/)
+        public void init(TypeChallenge tc, string[] row)
         {
 
-            //this.minorIsland = island;
+            canvasChallenge = this.transform.parent.GetComponent<Canvas>();
+
+            this.rowSent = row;
             this.typeChallenge = tc;
             if (typeChallenge == TypeChallenge.QCM)
                 this.nbPropositions = 3;
             else
                 this.nbPropositions = 2;
-
-            string[] row = this.rowSent;
+            
 
             this.question = row[0];
             this.answer = row[1];
@@ -57,81 +52,94 @@ namespace TouchScript.Examples.Cube
                 this.propositions[2] = row[5];
 
 
-            //graphic part
-
-            Canvas challengePrefab = Resources.Load<Canvas>("Prefab/Challenge_" + this.typeChallenge);
-            canvasChallenge = Instantiate(challengePrefab);
-            canvasChallenge.name = "Challenge_" + this.typeChallenge;
-            canvasChallenge.transform.SetParent(GameObject.Find("Challenges").transform);
-            Text questionText = null;
             foreach (Text text in canvasChallenge.GetComponentsInChildren<Text>())
             {
-                if (text.name == "Question")
-                    questionText = text;
-                else if (text.name == "Result")
-                    resultText = text;
+                switch (text.name)
+                {
+                    case "Question":
+                        text.text = this.question.Replace('*', '\n');        //in CSV: '*' replace a line break ('\n')
+                        break;
+                    case "Result":
+                        resultText = text;
+                        break;
+                    case "Proposition0":
+                        text.text = this.propositions[0];
+                        break;
+                    case "Proposition1":
+                        text.text = this.propositions[1];
+                        break;
+                    case "Proposition2":
+                        text.text = this.propositions[2];
+                        break;
+                }
             }
 
-            propositionsButtons = canvasChallenge.GetComponentsInChildren<Button>();
-            background = canvasChallenge.GetComponentInChildren<SpriteRenderer>();
-
-            questionText.text = question.Replace('*', '\n');        //in CSV: '*' replace a line break ('\n')
-            for (int i = 0; i < this.nbPropositions; i++)
+            foreach (SpriteRenderer sp in canvasChallenge.GetComponentsInChildren<SpriteRenderer>())
             {
-                propositionsButtons[i].GetComponent<Text>().text = this.propositions[i];
-                propositionsButtons[i].onClick.AddListener(() => { propositionClick(); });
+                if (sp.name == "background")
+                    this.background = sp;
             }
-
-
-            //canvasChallenge.transform.position = GameObject.Find("Virtual_" + minorIsland.nameMinorIsland).transform.position;
-
-
-
-            background.transform.localPosition = new Vector3(0, 0, -1);
-
 
         }
 
 
-        public void propositionClick()
+        public void OnMouseDownSimulation()
         {
-            string clickedText = EventSystem.current.currentSelectedGameObject.GetComponent<Text>().name;
-
-            //modify Result.text     
-            if (clickedText == answer)
+            if ((this.name == "Challenge1") || (this.name == "Challenge2") || (this.name == "Challenge3"))
             {
-                resultText.text = "Réponse correcte !";
-                goodAnswer = true;
-            }
-            else {
-                resultText.text = "Réponse incorrecte !";
-                goodAnswer = false;
-            }
-
-            //modify Propositions background
-            if (typeChallenge == TypeChallenge.VraiFaux)
-            {
-                foreach (Image background in canvasChallenge.GetComponentsInChildren<Image>())
+                if (!ChallengeVertical.challengeWindowPresent)
                 {
-                    if (background.name == answer + "_background")
-                        background.sprite = Resources.Load<Sprite>("Challenges/VraiFaux/case" + answer + "Clic");
-                    else if (background.name.Contains("_background"))
-                        background.sprite = Resources.Load<Sprite>("Challenges/VraiFaux/case" + background.name.Split('_')[0] + "Grise");
+                    ChallengeVertical.challengeWindowPresent = true;
+                    Canvas challengePrefab = Resources.Load<Canvas>("Prefab/Challenge_" + this.typeChallenge.ToString());
+                    Canvas canvasChallenge = Instantiate(challengePrefab);
+                    canvasChallenge.name = "Challenge_" + this.typeChallenge.ToString();
+                    foreach (ChallengeVertical cb in canvasChallenge.GetComponentsInChildren<ChallengeVertical>())
+                    {
+                        cb.init(this.typeChallenge, this.rowSent);
+                    }
+                    main.removeChallenge(GameObject.Find(this.name));
                 }
             }
             else
             {
-                foreach (Image background in canvasChallenge.GetComponentsInChildren<Image>())
+                string clickedText = this.name.Split('_')[0];
+
+                //modify Result.text     
+                if (clickedText == answer)
                 {
-                    if (background.name == answer + "_background")
-                        background.sprite = Resources.Load<Sprite>("Challenges/QCM/case" + answer + "Clic");
-                    else if (background.name.Contains("_background"))
-                        background.sprite = Resources.Load<Sprite>("Challenges/QCM/case" + background.name.Split('_')[0] + "Grise");
+                    resultText.text = "Réponse correcte !";
+                    goodAnswer = true;
                 }
+                else {
+                    resultText.text = "Réponse incorrecte !";
+                    goodAnswer = false;
+                }
+
+                //modify Propositions background
+                if (typeChallenge == TypeChallenge.VraiFaux)
+                {
+                    foreach (Image background in canvasChallenge.GetComponentsInChildren<Image>())
+                    {
+                        if (background.name == answer + "_background")
+                            background.sprite = Resources.Load<Sprite>("Challenges/VraiFaux/case" + answer + "Clic");
+                        else if (background.name.Contains("_background"))
+                            background.sprite = Resources.Load<Sprite>("Challenges/VraiFaux/case" + background.name.Split('_')[0] + "Grise");
+                    }
+                }
+                else
+                {
+                    foreach (Image background in canvasChallenge.GetComponentsInChildren<Image>())
+                    {
+                        if (background.name == answer + "_background")
+                            background.sprite = Resources.Load<Sprite>("Challenges/QCM/case" + answer + "Clic");
+                        else if (background.name.Contains("_background"))
+                            background.sprite = Resources.Load<Sprite>("Challenges/QCM/case" + background.name.Split('_')[0] + "Grise");
+                    }
+                }
+
+                StartCoroutine(wait());
             }
-
-            StartCoroutine(wait());
-
+            
         }
 
         IEnumerator wait()
@@ -147,13 +155,13 @@ namespace TouchScript.Examples.Cube
                 background.material.color = color;
             }
 
-            Destroy(GameObject.Find("Challenge_" + typeChallenge + "_"));
+            //TODO: actions
 
-            //StartCoroutine(minorIsland.destroyPopup(minorIsland.createPopup(explainations), 8));
+            Debug.Log("do sth");
 
+            ChallengeVertical.challengeWindowPresent = false;
 
-            //TODO
-
+            Destroy(GameObject.Find("Challenge_" + typeChallenge));
 
         }
 
@@ -251,8 +259,15 @@ namespace TouchScript.Examples.Cube
             if (touch.InputSource == this) return;
             if (!map.TryGetValue(touch.Id, out id)) return;
             endTouch(id);
-            if (Time.time - TouchTime < 1)
+            if (Time.time - TouchTime < 0.5)
+            {
+                TouchTime = 0;
                 this.OnMouseDownSimulation();
+            }
+            else if (Time.time - TouchTime < 1.5)
+            {
+                TouchTime = 0;
+            }
         }
 
         private void touchCancelledhandler(object sender, MetaGestureEventArgs metaGestureEventArgs)

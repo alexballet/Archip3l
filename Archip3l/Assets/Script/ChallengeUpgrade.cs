@@ -1,33 +1,39 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
+using TouchScript.Gestures;
+using TouchScript.Hit;
 
 namespace TouchScript.InputSources
 {
 
-    public class ChallengeUpgrade : MonoBehaviour
+    public class ChallengeUpgrade : InputSource
     {
 
-        public string question;
-        public string answer;
-        public string explainations;
-        public string[] propositions;
-        public int nbPropositions;
+
+        public string question { get; private set; }
+        public string answer { get; private set; }
+        public string explainations { get; private set; }
+        public string[] propositions { get; private set; }
+        public int nbPropositions { get; private set; }
+        public bool goodAnswer { get; private set; }
         public TypeChallenge typeChallenge { get; private set; }
-        public Canvas canvasChallenge { get; private set; }
         public SpriteRenderer background { get; private set; }
-        public Button[] propositionsButtons { get; private set; }
         public Text resultText { get; private set; }
         public MinorIsland minorIsland { get; private set; }
         public Building building { get; private set; }
-        public bool goodAnswer;
+        public Canvas canvasChallenge { get; private set; }
 
         public TextAsset csv { get; private set; }
 
         public void init(TypeChallenge tc, MinorIsland island, Building myBuilding)
         {
+
+            canvasChallenge = this.transform.parent.GetComponent<Canvas>();
+
             this.building = myBuilding;
             this.minorIsland = island;
             this.typeChallenge = tc;
@@ -39,7 +45,7 @@ namespace TouchScript.InputSources
 
             //CSV part
             //row[0] : question ; row[1] : answer ; row[2] : explainations ; after : propositions
-            //VraiFaux : answer = VRAI ou answer = FAUX
+            //VraiFaux : answer = Proposition0 ou answer = Proposition1
             //QCM : answer = Proposition0 ou answer = Proposition1 ou answer = Proposition2
 
             //csv = Resources.Load<TextAsset>("Challenges/" + typeChallenge.ToString() + "/" + typeChallenge.ToString() + "_" + this.building.TypeBuilding.ToString());
@@ -59,48 +65,39 @@ namespace TouchScript.InputSources
                 this.propositions[2] = row[5];
 
 
-            //graphic part
-
-            Canvas challengePrefab = Resources.Load<Canvas>("Prefab/Challenge_" + this.typeChallenge);
-            canvasChallenge = Instantiate(challengePrefab);
-            canvasChallenge.name = "Challenge_" + this.typeChallenge + "_" + minorIsland.name;
-            canvasChallenge.transform.SetParent(GameObject.Find(minorIsland.nameMinorIsland).transform);
-            Text questionText = null;
             foreach (Text text in canvasChallenge.GetComponentsInChildren<Text>())
             {
-                if (text.name == "Question")
-                    questionText = text;
-                else if (text.name == "Result")
-                    resultText = text;
+                switch (text.name)
+                {
+                    case "Question":
+                        text.text = this.question.Replace('*', '\n');        //in CSV: '*' replace a line break ('\n')
+                        break;
+                    case "Result":
+                        resultText = text;
+                        break;
+                    case "Proposition0":
+                        text.text = this.propositions[0];
+                        break;
+                    case "Proposition1":
+                        text.text = this.propositions[1];
+                        break;
+                    case "Proposition2":
+                        text.text = this.propositions[2];
+                        break;
+                }
             }
 
-            propositionsButtons = canvasChallenge.GetComponentsInChildren<Button>();
-            background = canvasChallenge.GetComponentInChildren<SpriteRenderer>();
-
-            questionText.text = question.Replace('*', '\n');        //in CSV: '*' replace a line break ('\n')
-            for (int i = 0; i < this.nbPropositions; i++)
+            foreach (SpriteRenderer sp in canvasChallenge.GetComponentsInChildren<SpriteRenderer>())
             {
-                propositionsButtons[i].GetComponent<Text>().text = this.propositions[i];
-                propositionsButtons[i].onClick.AddListener(() => { propositionClick(); });
+                if (sp.name == "background")
+                    this.background = sp;
             }
-
-
-            canvasChallenge.transform.position = GameObject.Find("Virtual_" + minorIsland.nameMinorIsland).transform.position;
-
-            //rotation if other side of the table
-            char id = minorIsland.nameMinorIsland[minorIsland.nameMinorIsland.Length - 1];
-            if (id == '1' || id == '2')
-                canvasChallenge.transform.Rotate(Vector3.forward * 180);
-
-            background.transform.localPosition = new Vector3(0, 0, -1);
-
-
         }
 
 
-        public void propositionClick()
+        void OnMouseDownSimulation()
         {
-            string clickedText = EventSystem.current.currentSelectedGameObject.GetComponent<Text>().name;
+            string clickedText = this.name.Split('_')[0];
 
             //modify Result.text     
             if (clickedText == answer)
@@ -202,5 +199,110 @@ namespace TouchScript.InputSources
 
         }
 
+
+        //-------------- TUIO -----------------------------------------------------------------------
+
+        public int Width = 512;
+        public int Height = 512;
+        float TouchTime;
+
+        private MetaGesture gesture;
+        private Dictionary<int, int> map = new Dictionary<int, int>();
+
+        public override void CancelTouch(TouchPoint touch, bool @return)
+        {
+            base.CancelTouch(touch, @return);
+
+            map.Remove(touch.Id);
+            if (@return)
+            {
+                TouchHit hit;
+                if (!gesture.GetTargetHitResult(touch.Position, out hit)) return;
+                map.Add(touch.Id, beginTouch(processCoords(hit.RaycastHit.textureCoord), touch.Tags).Id);
+            }
+        }
+
+
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            gesture = GetComponent<MetaGesture>();
+            if (gesture)
+            {
+                gesture.TouchBegan += touchBeganHandler;
+                gesture.TouchMoved += touchMovedhandler;
+                gesture.TouchCancelled += touchCancelledhandler;
+                gesture.TouchEnded += touchEndedHandler;
+            }
+        }
+
+
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+
+            if (gesture)
+            {
+                gesture.TouchBegan -= touchBeganHandler;
+                gesture.TouchMoved -= touchMovedhandler;
+                gesture.TouchCancelled -= touchCancelledhandler;
+                gesture.TouchEnded -= touchEndedHandler;
+            }
+        }
+
+        private Vector2 processCoords(Vector2 value)
+        {
+            return new Vector2(value.x * Width, value.y * Height);
+        }
+
+        private void touchBeganHandler(object sender, MetaGestureEventArgs metaGestureEventArgs)
+        {
+            var touch = metaGestureEventArgs.Touch;
+            if (touch.InputSource == this) return;
+            map.Add(touch.Id, beginTouch(processCoords(touch.Hit.RaycastHit.textureCoord), touch.Tags).Id);
+            if (TouchTime == 0 && !MinorIsland.exchangePerforming)
+            {
+                TouchTime = Time.time;
+            }
+
+        }
+
+        private void touchMovedhandler(object sender, MetaGestureEventArgs metaGestureEventArgs)
+        {
+            int id;
+            TouchHit hit;
+            var touch = metaGestureEventArgs.Touch;
+            if (touch.InputSource == this) return;
+            if (!map.TryGetValue(touch.Id, out id)) return;
+            if (!gesture.GetTargetHitResult(touch.Position, out hit)) return;
+            moveTouch(id, processCoords(hit.RaycastHit.textureCoord));
+        }
+
+        private void touchEndedHandler(object sender, MetaGestureEventArgs metaGestureEventArgs)
+        {
+            int id;
+            var touch = metaGestureEventArgs.Touch;
+            if (touch.InputSource == this) return;
+            if (!map.TryGetValue(touch.Id, out id)) return;
+            endTouch(id);
+            if (Time.time - TouchTime < 0.5)
+            {
+                TouchTime = 0;
+                this.OnMouseDownSimulation();
+            }
+            else if (Time.time - TouchTime < 1.5)
+            {
+                TouchTime = 0;
+            }
+        }
+
+        private void touchCancelledhandler(object sender, MetaGestureEventArgs metaGestureEventArgs)
+        {
+            int id;
+            var touch = metaGestureEventArgs.Touch;
+            if (touch.InputSource == this) return;
+            if (!map.TryGetValue(touch.Id, out id)) return;
+            cancelTouch(id);
+        }
     }
 }
