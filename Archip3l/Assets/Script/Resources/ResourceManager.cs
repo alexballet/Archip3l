@@ -71,12 +71,6 @@ public class ResourceManager : MonoBehaviour {
         }
         else
         {
-            //To be deleted
-            //Resource object is unneeded
-
-            //GameObject myGameObject = new GameObject();
-            //myGameObject.name = name + "_" + minorIsland.nameMinorIsland;
-            //myGameObject.transform.SetParent(GameObject.Find("Virtual_" + minorIsland.nameMinorIsland).transform);
             Resource res = ScriptableObject.CreateInstance<Resource>();
             res.init(resourceType, quantity, production);
             this.Resources.Add(res);
