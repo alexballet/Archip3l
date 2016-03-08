@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using TouchScript.InputSources;
 
 public class PirateBoatManager : MonoBehaviour
 {
@@ -10,10 +11,10 @@ public class PirateBoatManager : MonoBehaviour
 
     public Transform pirateBoatPrefab;
 
-    private TouchScript.Examples.Cube.MinorIsland island1;
-    private TouchScript.Examples.Cube.MinorIsland island2;
-    private TouchScript.Examples.Cube.MinorIsland island3;
-    private TouchScript.Examples.Cube.MinorIsland island4;
+    private MinorIsland island1;
+    private MinorIsland island2;
+    private MinorIsland island3;
+    private MinorIsland island4;
 
     private Vector3 targetPosition;
     private Vector3 initPosition;
@@ -27,10 +28,10 @@ public class PirateBoatManager : MonoBehaviour
     void Awake()
     {
         rnd = new System.Random();
-        this.island1 = GameObject.Find("sous_ile_1").GetComponent<TouchScript.Examples.Cube.MinorIsland>();
-        this.island2 = GameObject.Find("sous_ile_2").GetComponent<TouchScript.Examples.Cube.MinorIsland>();
-        this.island3 = GameObject.Find("sous_ile_3").GetComponent<TouchScript.Examples.Cube.MinorIsland>();
-        this.island4 = GameObject.Find("sous_ile_4").GetComponent<TouchScript.Examples.Cube.MinorIsland>();
+        this.island1 = GameObject.Find("sous_ile_1").GetComponent<MinorIsland>();
+        this.island2 = GameObject.Find("sous_ile_2").GetComponent<MinorIsland>();
+        this.island3 = GameObject.Find("sous_ile_3").GetComponent<MinorIsland>();
+        this.island4 = GameObject.Find("sous_ile_4").GetComponent<MinorIsland>();
     }
     void Start()
     {

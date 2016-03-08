@@ -60,12 +60,6 @@ namespace TouchScript.InputSources
 
         public bool addResource(TypeResource resourceType, int quantity, int production)
         {
-<<<<<<< HEAD
-            Resource res = ScriptableObject.CreateInstance<Resource>();
-            res.init(resourceType, quantity, production);
-            this.Resources.Add(res);
-            return true;
-=======
             bool flag = false;
             foreach (Resource item in this.Resources)
             {
@@ -91,7 +85,6 @@ namespace TouchScript.InputSources
                 this.Resources.Add(res);
                 return true;
             }
->>>>>>> 057e38d8c0b708f8f030d0718a63eba59d5128c1
         }
         public bool changeResourceProduction(TypeResource resourceType, int value)
         {
