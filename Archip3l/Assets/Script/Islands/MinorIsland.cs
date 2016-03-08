@@ -360,16 +360,6 @@ namespace TouchScript.InputSources
                 touchBuildingCanvas.transform.Rotate(Vector3.forward * 180);
 
         }
-
-
-
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
-
-
         
         void createExchangeWindow()
         {
@@ -386,7 +376,6 @@ namespace TouchScript.InputSources
                 this.exchangeWindowPresent = true;
             }
         }
-
 
         void OnMouseDownSimulation()
         {
@@ -490,6 +479,24 @@ namespace TouchScript.InputSources
                 list.Add("wheelIcon_" + building.TypeBuilding.ToString());
             }
             return list;
+        }
+
+        void OnTriggerEnter(Collider collider)
+        {
+            //Debug.Log(collider.name);
+            int resourceCount = this.resourceManager.Resources.Count;
+            if (resourceCount > 0)
+            {
+                System.Random rnd = new System.Random();
+                int index = rnd.Next(0, resourceCount);
+                int quantity = rnd.Next(10, 50);
+                if (this.resourceManager.changeResourceStock(this.resourceManager.Resources[index].TypeResource, -quantity))
+                {
+                    //Notice someone? network?
+                    //Debug.Log("Les pirates vous ont volé : " + quantity + " de " + this.resourceManager.Resources[index].TypeResource.ToString());
+                }
+            }
+            Destroy(collider.gameObject);
         }
 
         //-------------- TUIO -----------------------------------------------------------------------
@@ -598,8 +605,5 @@ namespace TouchScript.InputSources
             if (!map.TryGetValue(touch.Id, out id)) return;
             cancelTouch(id);
         }
-
-
-
     }
 }

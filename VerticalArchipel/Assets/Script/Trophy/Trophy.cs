@@ -12,7 +12,6 @@ namespace TouchScript.Examples.Cube
     //this class concerns the thophies + the medals + AirportMedal
     public class Trophy : InputSource
     {
-
         static public bool infoWindowPresent = false;
 
         public bool active = false;     //true if trophy unlocked
@@ -20,11 +19,39 @@ namespace TouchScript.Examples.Cube
         public string trophyName;
         public string description;
 
+        //Requirement resource
+        public Resource resourceRequired { get; private set; }
+        public int resourceRequiredQuantity { get; private set; }
+        //Requirement challenge
+
         public Sprite wonSprite;
 
         void Awake()
         {
             this.trophyName = name;
+        }
+
+        public bool requirementVerified(ResourceManager resourceManager)
+        {
+            switch (this.trophyName)
+            {
+                case "Medal1":
+                    return resourceManager.getResource(TypeResource.Gold).Stock > 10000;
+                case "Medal2":
+                    return resourceManager.getResource(TypeResource.Food).Stock > 5000;
+                case "Medal3":
+                    return resourceManager.getResource(TypeResource.Wood).Stock > 2000;
+                case "Trophy1":
+                    break;
+                case "Trophy2":
+                    break;
+                case "Trophy3":
+                    break;
+                // Airport requirement managed in the trophy manager
+                //case "AirportMedal":
+                //    break;
+            }
+            return false;
         }
 
         void OnMouseDownSimulation()
@@ -66,7 +93,26 @@ namespace TouchScript.Examples.Cube
         {
             if(this.toBeActivated)
             {
-                
+                if (!this.active)
+                {
+                    this.active = true;
+                    switch (this.trophyName)
+                    {
+                        case "Medal1":
+                        case "Medal2":
+                        case "Medal3":
+                            transform.localScale = new Vector3(5.6f, 5f, 1);
+                            break;
+                        case "Trophy1":
+                        case "Trophy2":
+                        case "Trophy3":
+                            transform.localScale = new Vector3(3.2f, 3.8f, 1);
+                            break;
+                        case "AirportMedal":
+                            transform.localScale = new Vector3(7f, 8f, 1);
+                            break;
+                    }
+                }
                 gameObject.GetComponent<SpriteRenderer>().sprite = wonSprite;
             }
         }
