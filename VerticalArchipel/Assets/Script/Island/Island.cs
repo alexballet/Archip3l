@@ -15,6 +15,8 @@ namespace TouchScript.Examples.Cube
         void OnMouseDownSimulation()
         {
             Debug.Log("Clic on " + this.name);
+            Canvas infoInslandCanvasPrefab = Resources.Load<Canvas>("Prefab/infoIslandCanvas");
+            Canvas infoInslandCanvas = Instantiate(infoInslandCanvasPrefab);
         }
 
         // Use this for initialization
