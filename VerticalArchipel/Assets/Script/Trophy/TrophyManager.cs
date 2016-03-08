@@ -5,19 +5,22 @@ using System;
 
 namespace TouchScript.Examples.Cube
 {
-
-
-
     public class TrophyManager : MonoBehaviour
     {
         public List<Trophy> Trophies { get; private set; }
         private Client Client;
+        private ResourceManager ResourceManager;
         public event EventHandler<TrophyObtainedEventArgs> TrophyObtained;
+
+        public int airportsBuilt { get; private set; }
 
         void Awake()
         {
+            this.airportsBuilt = 0;
             this.Client = GameObject.Find("Network").GetComponent<Client>();
             this.Client.MessageTrophyWonEvent += Client_MessageTrophyWonEvent;
+            this.Client.MessageBuildingConstructionEvent += Client_MessageBuildingConstructionEvent;
+            this.ResourceManager = GameObject.Find("Resources").GetComponent<ResourceManager>();
             this.Trophies = new List<Trophy>();
 
             //Trophy trophy1 = GameObject.Find("Medal1").GetComponent<Trophy>();  //new Trophy(1, "Trophée ressources", "Gain de ressources", 50, 50, null);
@@ -43,10 +46,22 @@ namespace TouchScript.Examples.Cube
             this.Trophies.Add(GameObject.Find("AirportMedal").GetComponent<Trophy>());
         }
 
+        private void Client_MessageBuildingConstructionEvent(object sender, MessageEventArgs e)
+        {
+            if((string)e.message.Split('@').GetValue(2) == "Airport")
+            {
+                this.airportsBuilt += 1;
+                if(this.airportsBuilt == 4)
+                {
+                    changeTrophyToObtained(this.Trophies[6]);
+                }
+            }
+        }
         private void Client_MessageTrophyWonEvent(object sender, MessageEventArgs e)
         {
             string trophyName = (string)e.message.Split('@').GetValue(2);
-            changeTrophyToObtained(this.getTrophy(trophyName));
+            //inifite loop if change to obtain because the network message is send by this instance
+            //changeTrophyToObtained(this.getTrophy(trophyName));
         }
         public List<Trophy> getTrophies(bool status)
         {
@@ -83,12 +98,24 @@ namespace TouchScript.Examples.Cube
                 this.TrophyObtained(this, new TrophyObtainedEventArgs { Trophy = trophy });
             }
         }
+        IEnumerator checkNewTrophyAvailable()
+        {
+            for(;;)
+            {
+                foreach (Trophy trophy in this.Trophies)
+                {
+                    if(trophy.requirementVerified(this.ResourceManager))
+                    {
+                        changeTrophyToObtained(trophy);
+                    }
+                }
+                yield return new WaitForSeconds(1f);
+            }
+        }
     }
 }
 namespace TouchScript.Examples.Cube
 {
-
-
     public class TrophyObtainedEventArgs : EventArgs
     {
         public Trophy Trophy;

@@ -102,6 +102,7 @@ public class Client : MonoBehaviour
 
         //spcialisation of message
         /*
+            MessageBuildingConstructionEvent: @code@BuildingName
             MessageResourceStockUpdateEvent : @code@Resourcename@VALUE
             MessageTrophyWonEvent : @code@Trophyname
 
@@ -119,6 +120,9 @@ public class Client : MonoBehaviour
                 MessageEvent += MessageTrophyWonEvent;
                 break;
             case 21111:
+            case 22111:
+            case 23111:
+            case 24111:
                 MessageEvent += MessageBuildingConstructionEvent;
                 break;
             case 21121:
