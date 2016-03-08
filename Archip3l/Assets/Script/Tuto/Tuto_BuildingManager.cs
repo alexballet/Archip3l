@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace TouchScript.Examples.Cube
+namespace TouchScript.InputSources
 {
     public class Tuto_BuildingManager : MonoBehaviour
     {

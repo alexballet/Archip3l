@@ -3,11 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using System;
-using TouchScript.InputSources;
 using TouchScript.Gestures;
 using TouchScript.Hit;
 
-namespace TouchScript.Examples.Cube
+namespace TouchScript.InputSources
 {
     public class MinorIsland : InputSource
     {
@@ -31,7 +30,6 @@ namespace TouchScript.Examples.Cube
         public bool exchangeWindowPresent = false;          //exchangeWindow present on the island
         public string nameBuildingTouchCanvas;
         public string buildingClickedWheel;
-        public int numPopup = 0;
 
         //for exchange resources window
         public bool otherWindowOpen = false;     //choice of Island or Resource
@@ -159,17 +157,22 @@ namespace TouchScript.Examples.Cube
             StartCoroutine(destroyPopup(createPopup(popupText), time));
         }
 
+        //surcharge: for building (explaination displayed at the end of previous popup)
+        public void displayPopup(string popupText, int time, string explaination)
+        {
+            StartCoroutine(destroyPopup(createPopup(popupText), time, explaination));
+        }
+
         //returns the name of the Popup (GameObject) created
         public string createPopup(string popupText)
         {
-
+            removeAllPopups();
             Canvas popupCanvasPrefab = Resources.Load<Canvas>("Prefab/PopupCanvas");
             Canvas popupCanvas = Instantiate(popupCanvasPrefab);
-            this.numPopup++;
-            popupCanvas.name = "PopupCanvas" + numPopup.ToString() + "_" + this.nameMinorIsland;
+            popupCanvas.name = "PopupCanvas" + "_" + this.nameMinorIsland;
             popupCanvas.transform.SetParent(GameObject.Find(this.nameMinorIsland).transform);
             Vector3 vector3 = GameObject.Find("sprite-" + this.nameMinorIsland).transform.position;
-            vector3.z = (-1) * numPopup;
+            vector3.z = -2;
             popupCanvas.transform.position = vector3;
 
             //rotation of image according to the place of the island
@@ -185,6 +188,7 @@ namespace TouchScript.Examples.Cube
 
             return popupCanvas.name;
         }
+        
 
         //destroy popup after a certain time
         public IEnumerator destroyPopup(string namePopup, int timer)
@@ -193,7 +197,6 @@ namespace TouchScript.Examples.Cube
             SpriteRenderer popupImage = GameObject.Find(namePopup).GetComponentInChildren<SpriteRenderer>();
 
             yield return new WaitForSeconds(timer);
-            this.numPopup--;
             Color color;
             for (int i = 0; i < 100; i++)
             {
@@ -212,10 +215,38 @@ namespace TouchScript.Examples.Cube
                 Destroy(GameObject.Find(namePopup));
         }
 
+        //surcharge: for buildings (display explaination after previous popup)
+        //destroy popup after a certain time
+        public IEnumerator destroyPopup(string namePopup, int timer, string explaination)
+        {
+            Popup popup = GameObject.Find(namePopup).GetComponentInChildren<Popup>();
+            SpriteRenderer popupImage = GameObject.Find(namePopup).GetComponentInChildren<SpriteRenderer>();
+
+            yield return new WaitForSeconds(timer);
+            Color color;
+            for (int i = 0; i < 100; i++)
+            {
+                yield return new WaitForSeconds(0.01f);
+                if (!popup.touched)
+                {
+                    color = popupImage.color;
+                    color.a -= 0.01f;
+                    popupImage.color = color;
+                }
+                else
+                    break;
+
+            }
+            if (!popup.touched)
+                Destroy(GameObject.Find(namePopup));
+
+            yield return new WaitForSeconds(0.5f);
+            displayPopup(explaination, timer);
+        }
+
         //destroy popup by touch
         public IEnumerator forceDestroyPopup(string namePopup, int timer)
         {
-            this.numPopup--;
             SpriteRenderer popupImage = GameObject.Find(namePopup).GetComponentInChildren<SpriteRenderer>();
             Color color;
             for (int i = 0; i < 100; i++)
@@ -231,13 +262,10 @@ namespace TouchScript.Examples.Cube
 
         public void removeAllPopups()
         {
-            for (int i = this.numPopup; i > 0; i--)
-            {
-                if (GameObject.Find("PopupCanvas" + i.ToString() + "_" + nameMinorIsland) != null)
+            if (GameObject.Find("PopupCanvas" + "_" + nameMinorIsland) != null)
                 {
-                    Destroy(GameObject.Find("PopupCanvas" + i.ToString() + "_" + nameMinorIsland));
+                    Destroy(GameObject.Find("PopupCanvas" + "_" + nameMinorIsland));
                 }
-            }
         }
 
         public void createBuildingTouch(Building building)

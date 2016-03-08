@@ -9,60 +9,74 @@ using System.Collections.Generic;
 namespace TouchScript.Examples.Cube
 {
 
-
-
     //this class concerns the thophies + the medals + AirportMedal
     public class Trophy : InputSource
     {
-    public bool active = false;     //true if trophy unlocked
-    public bool toBeActivated = false;
-    public string trophyName;
-    public string description;
 
-    public Sprite wonSprite;
+        static public bool infoWindowPresent = false;
 
-    void Awake()
-    {
-        this.trophyName = name;
-    }
-    void OnMouseDownSimulation()
-    {
-        Debug.Log("Clic on " + this.name);
-    }
+        public bool active = false;     //true if trophy unlocked
+        public bool toBeActivated = false;
+        public string trophyName;
+        public string description;
 
-    void Update()
-    {
-        if(this.toBeActivated)
+        public Sprite wonSprite;
+
+        void Awake()
         {
-            if (!this.active)
+            this.trophyName = name;
+        }
+
+        void OnMouseDownSimulation()
+        {
+            if (!Island.infoIslandPresent)
             {
-                this.active = true;
-                switch (this.trophyName)
+
+                if (!Trophy.infoWindowPresent)
                 {
-                    case "Medal1":
-                    case "Medal2":
-                    case "Medal3":
-                        transform.localScale = new Vector3(5.6f, 5f, 1);
-                        break;
-                    case "Trophy1":
-                    case "Trophy2":
-                    case "Trophy3":
-                        transform.localScale = new Vector3(3.2f, 3.8f, 1);
-                        break;
-                    case "AirportMedal":
-                        transform.localScale = new Vector3(7f, 8f, 1);
-                        break;
+                    Trophy.infoWindowPresent = true;
+                    Debug.Log("Clic on " + this.name);
+                    switch (this.name)
+                    {
+                        case "AirportMedal":
+                            Canvas infoAirportCanvasPrefab = Resources.Load<Canvas>("Prefab/infoAirportCanvas");
+                            Canvas infoAirportCanvas = Instantiate(infoAirportCanvasPrefab);
+                            infoAirportCanvas.name = "infoAirportCanvas";
+                            break;
+                        case "MedalsCollider":
+                            Canvas infoMedalsCanvasPrefab = Resources.Load<Canvas>("Prefab/infoMedalsCanvas");
+                            Canvas infoMedalsCanvas = Instantiate(infoMedalsCanvasPrefab);
+                            infoMedalsCanvas.name = "infoMedalsCanvas";
+                            break;
+                        case "TrophiesCollider":
+                            Canvas infoTrophiesCanvasPrefab = Resources.Load<Canvas>("Prefab/infoTrophiesCanvas");
+                            Canvas infoTrophiesCanvas = Instantiate(infoTrophiesCanvasPrefab);
+                            infoTrophiesCanvas.name = "infoTrophiesCanvas";
+                            break;
+                    }
+                }
+                else if (this.name == "close")
+                {
+                    Trophy.infoWindowPresent = false;
+                    Destroy(GameObject.Find(this.transform.parent.parent.name));
                 }
             }
-            gameObject.GetComponent<SpriteRenderer>().sprite = wonSprite;
         }
-    }
 
-    public bool changeToObtained()
-    {
-        this.toBeActivated = true;
-        return true;
-    }
+        void Update()
+        {
+            if(this.toBeActivated)
+            {
+                
+                gameObject.GetComponent<SpriteRenderer>().sprite = wonSprite;
+            }
+        }
+
+        public bool changeToObtained()
+        {
+            this.toBeActivated = true;
+            return true;
+        }
         //-------------- TUIO -----------------------------------------------------------------------
 
         public int Width = 512;

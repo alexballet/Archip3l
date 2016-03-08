@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
-using TouchScript.Examples.Cube;
+
 using TouchScript.InputSources;
 using TouchScript.Gestures;
 using TouchScript.Hit;
 using System.Collections.Generic;
 
-namespace TouchScript.Examples.Cube
+namespace TouchScript.InputSources
 {
 
     public class ExchangeResource : InputSource
@@ -169,15 +169,13 @@ namespace TouchScript.Examples.Cube
                                     }
                                     else
                                     {
-                                        Debug.Log("Start of sending resource");
-
                                         //withdrawal of resources
                                         TypeResource tr = (TypeResource)System.Enum.Parse(typeof(TypeResource), Resource.getResourceFromIconName(this.resource_sp.sprite.name));
                                         int quantitySent = int.Parse(quantityValue.text);
                                         island.resourceManager.getResource(tr).changeStock(-quantitySent);
 
                                         MinorIsland.exchangePerforming = true;
-                                        SpriteRenderer exchangeResourceAnimationPrefab = Resources.Load<SpriteRenderer>("Prefab/exchangeResourceAnimation/exchangeResourceAnimation_" + island.nameMinorIsland[island.nameMinorIsland.Length - 1] + "-" + to.text[to.text.Length - 1].ToString());
+                                        SpriteRenderer exchangeResourceAnimationPrefab = Resources.Load<SpriteRenderer>("Prefab/exchangeResourceAnimation/exchangeResourceAnimation_" + island.nameMinorIsland[island.nameMinorIsland.Length - 1].ToString()); // + "-" + to.text[to.text.Length - 1].ToString());
                                         exchangeResourceAnimation = Instantiate(exchangeResourceAnimationPrefab);
                                         exchangeResourceAnimation.transform.parent = GameObject.Find(island.nameMinorIsland).transform;
                                         exchangeResourceAnimation.name = "ExchangeResourceAnimation_" + island.nameMinorIsland;

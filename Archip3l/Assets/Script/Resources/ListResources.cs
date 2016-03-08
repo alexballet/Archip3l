@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
-using TouchScript.Examples.Cube;
+
 using TouchScript.InputSources;
 using TouchScript.Gestures;
 using TouchScript.Hit;
 using System.Collections.Generic;
 
-namespace TouchScript.Examples.Cube
+namespace TouchScript.InputSources
 {
 
     public class ListResources : InputSource
@@ -18,7 +18,6 @@ namespace TouchScript.Examples.Cube
         {
             if (this.name != "Close")
             {
-                Debug.Log(this.name);
                 island.resource = this.name;
             }
             island.otherWindowOpen = false;

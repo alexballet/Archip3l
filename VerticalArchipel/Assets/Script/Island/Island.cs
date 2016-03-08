@@ -12,9 +12,18 @@ namespace TouchScript.Examples.Cube
     public class Island : InputSource
     {
 
+        static public bool infoIslandPresent = false;
+
         void OnMouseDownSimulation()
         {
-            Debug.Log("Clic on " + this.name);
+            if (!Trophy.infoWindowPresent && !Island.infoIslandPresent)
+            {
+                infoIslandPresent = true;
+                Debug.Log("Clic on " + this.name);
+                Canvas infoInslandCanvasPrefab = Resources.Load<Canvas>("Prefab/infoIslandCanvas");
+                Canvas infoInslandCanvas = Instantiate(infoInslandCanvasPrefab);
+                infoInslandCanvas.name = "infoInslandCanvas_" + this.name;
+            }
         }
 
         // Use this for initialization
@@ -27,6 +36,24 @@ namespace TouchScript.Examples.Cube
         void Update()
         {
 
+        }
+
+        //returns le name of an island's speciality
+        static public string getSpecialityNameIsland(string nameIsland)
+        {
+            switch (nameIsland)
+            {
+                case "sous_ile_1":
+                    return "Ile de l'Or";
+                case "sous_ile_2":
+                    return "Ile du Pétrole";
+                case "sous_ile_3":
+                    return "Ile de la Pierre";
+                case "sous_ile_4":
+                    return "Ile du Bois";
+                default:
+                    return string.Empty;
+            }
         }
 
         //-------------- TUIO -----------------------------------------------------------------------
@@ -124,4 +151,4 @@ namespace TouchScript.Examples.Cube
             cancelTouch(id);
         }
     }
-    }
+}

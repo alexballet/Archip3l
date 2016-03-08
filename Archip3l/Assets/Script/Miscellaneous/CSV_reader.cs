@@ -20,7 +20,7 @@ public class CSV_reader : MonoBehaviour
     public void Start()
     {
         string[,] grid = SplitCsvGrid(csvFile.text);
-        Debug.Log("size = " + (1 + grid.GetUpperBound(0)) + "," + (1 + grid.GetUpperBound(1)));
+        //Debug.Log("size = " + (1 + grid.GetUpperBound(0)) + "," + (1 + grid.GetUpperBound(1)));
 
         DebugOutputGrid(grid);
     }

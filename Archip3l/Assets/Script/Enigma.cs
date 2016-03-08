@@ -4,7 +4,7 @@ using TouchScript.InputSources;
 using TouchScript.Gestures;
 using TouchScript.Hit;
 
-namespace TouchScript.Examples.Cube
+namespace TouchScript.InputSources
 {
 
     public class Enigma : InputSource

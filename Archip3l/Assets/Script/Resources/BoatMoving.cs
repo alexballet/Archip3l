@@ -5,7 +5,7 @@ using TouchScript.Gestures;
 using TouchScript.Hit;
 using System.Collections;
 
-namespace TouchScript.Examples.Cube
+namespace TouchScript.InputSources
 {
     public class BoatMoving : InputSource
     {
@@ -18,14 +18,16 @@ namespace TouchScript.Examples.Cube
         public bool collided = false;
         public Vector3 startPosition;
 
+        private GameObject harbor;
+
+        private float x1, y1;
+
         void OnTriggerEnter(Collider col)
         {
-            Debug.Log(col.name);
             if (col.name == islandToSend + "_Harbor")
             {
                 MinorIsland islandReceiver = GameObject.Find(islandToSend).GetComponent<MinorIsland>();
                 this.collided = true;
-                Debug.Log("collided with harbor");
                 islandReceiver.displayPopup("Vous venez de recevoir une cargaison de " + this.quantityCarried.ToString() + " " + Resource.translateResourceName(resourceSent) + " !", 3);
                 StartCoroutine(startBoatDisappearance());
                 MinorIsland.exchangePerforming = false;
@@ -37,10 +39,13 @@ namespace TouchScript.Examples.Cube
             {
                 if (this.quantityCarried / 2 == 0)
                 {
+                    this.collided = true;
                     island.displayPopup("Suite aux dommages subis, vous bâteau coule, ainsi que toutes les ressources transportées ...", 3);
                     StartCoroutine(startBoatDisappearance());
+                    MinorIsland.exchangePerforming = false;
                 }
-                else {
+                else
+                {
                     StartCoroutine(resetPosition());
                     island.displayPopup("Attention ! Vous venez de subir une collision, vous perdez donc la moitié des ressources à transmettre", 3);
                     this.quantityCarried /= 2;
@@ -77,6 +82,7 @@ namespace TouchScript.Examples.Cube
         {
             this.island = this.transform.parent.GetComponent<MinorIsland>();
             this.startPosition = this.transform.position;
+            this.harbor = GameObject.Find(this.islandToSend + "_Harbor");
             StartCoroutine(startBoatAppearance());
             SpriteRenderer cyclonePrefab = Resources.Load<SpriteRenderer>("Prefab/cyclone");
             SpriteRenderer cyclone = Instantiate(cyclonePrefab);
@@ -111,6 +117,7 @@ namespace TouchScript.Examples.Cube
                 color.a -= 0.01f;
                 this.GetComponent<SpriteRenderer>().color = color;
             }
+            Destroy(GameObject.Find("cyclone"));
             Destroy(this.gameObject);
         }
 
@@ -121,13 +128,17 @@ namespace TouchScript.Examples.Cube
                 yield return new WaitForSeconds(0.001f);
                 cyclone.transform.Rotate(Vector3.back, 2);
             }
-            Destroy(GameObject.Find("cyclone"));
         }
 
 
-        void Update()
+        void FixedUpdate()
         {
-            
+            x1 = harbor.GetComponent<BoxCollider>().bounds.center.x;
+            y1 = harbor.GetComponent<BoxCollider>().bounds.center.y;
+
+            float alpha = 90 - (Mathf.Rad2Deg * Mathf.Atan2(y1 - transform.position.y, x1 - transform.position.x));
+            transform.rotation = Quaternion.Euler(0f, 0f, -alpha);
+
         }
 
 
