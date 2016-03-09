@@ -93,7 +93,7 @@ public class MovePirateBoat : InputSource
         if(touched)
         {
             SoundPlayer.Instance.playBoatSinkSound();
-            Instantiate(sinkEffect, transform.position, Quaternion.identity);
+//            Instantiate(sinkEffect, transform.position, Quaternion.identity);
         }
         else
         {
