@@ -67,7 +67,7 @@ public class PirateBoatManager : MonoBehaviour
         this.initPosition = getNewBoatPosition(); // Camera.main.ScreenToWorldPoint(new Vector3(0, 100, -4));
 
         var pirateBoatTransform = Instantiate(pirateBoatPrefab) as Transform; //, initPosition, initRotation) as Transform;
-        pirateBoatTransform.name = "PrateBoat_" + this.boatId;
+        pirateBoatTransform.name = "PirateBoat_" + this.boatId;
         MovePirateBoat pirateBoat = pirateBoatTransform.GetComponent<MovePirateBoat>();
         if (pirateBoat != null)
         {

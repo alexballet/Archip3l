@@ -23,7 +23,7 @@ namespace TouchScript.InputSources
                 //this.addResource(resourceType, 0, 0);
 
                 //TESTS
-                this.addResource(resourceType, 200, 0);
+                this.addResource(resourceType, 0, 0);
             }
 
 

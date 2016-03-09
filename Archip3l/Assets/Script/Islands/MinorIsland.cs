@@ -81,7 +81,6 @@ namespace TouchScript.InputSources
             }
             buildingManager.createBuilding(TypeBuilding.Harbor, harborPosition);
             displayPopup("C'est parti !", 3);
-            //StartCoroutine(destroyPopup(createPopup("C'est parti !"), 3));
 
         }
 
@@ -368,7 +367,7 @@ namespace TouchScript.InputSources
                 exchangeWindowCanvas.transform.parent = GameObject.Find(this.nameMinorIsland).transform;
                 exchangeWindowCanvas.name = "ExchangeWindowCanvas_" + this.nameMinorIsland;
                 Vector3 vector3 = GameObject.Find("sprite-" + this.nameMinorIsland).transform.position;
-                vector3.z = -2;
+                vector3.z = -5;
                 exchangeWindowCanvas.transform.position = vector3;
 
                 this.exchangeWindowPresent = true;
@@ -481,22 +480,31 @@ namespace TouchScript.InputSources
 
         void OnTriggerEnter(Collider collider)
         {
-            //CHECK IF COLLISION COMES FROM PIRATES OR RESOURCES BOAT !!!!
 
-            //Debug.Log(collider.name);
-            /*int resourceCount = this.resourceManager.Resources.Count;
-            if (resourceCount > 0)
+            if (collider.name.Contains("PirateBoat"))
             {
-                System.Random rnd = new System.Random();
-                int index = rnd.Next(0, resourceCount);
-                int quantity = rnd.Next(10, 50);
-                if (this.resourceManager.changeResourceStock(this.resourceManager.Resources[index].TypeResource, -quantity))
+                int resourceCount = this.resourceManager.Resources.Count;
+                if (resourceCount > 0)
                 {
-                    //Notice someone? network?
-                    //Debug.Log("Les pirates vous ont volé : " + quantity + " de " + this.resourceManager.Resources[index].TypeResource.ToString());
+                    System.Random rnd = new System.Random();
+                    int index = rnd.Next(0, resourceCount);
+                    //pirates can only steal physical resource --> resources which are not in TypeStat
+                    while(Enum.IsDefined(typeof(TypeStat), this.resourceManager.Resources[index].TypeResource.ToString()))
+                        index = rnd.Next(0, resourceCount);
+                    int quantity = rnd.Next(10, 50);
+                    if (this.resourceManager.changeResourceStock(this.resourceManager.Resources[index].TypeResource, -quantity))
+                    {
+                        //Notice someone? network?
+                        Debug.Log("Les pirates vous ont volé : " + quantity + " de " + this.resourceManager.Resources[index].TypeResource.ToString());
+                        Debug.Log("Il vous reste maintenant : " + this.resourceManager.Resources[index].Stock + " de " + this.resourceManager.Resources[index].TypeResource.ToString());
+                    }
+                    else
+                    {
+                        Debug.Log("Il ne vous reste plus assez de " + this.resourceManager.Resources[index].TypeResource.ToString() + " pour être volé ...");
+                    }
                 }
+                Destroy(collider.gameObject);
             }
-            Destroy(collider.gameObject);*/
         }
 
         //-------------- TUIO -----------------------------------------------------------------------
