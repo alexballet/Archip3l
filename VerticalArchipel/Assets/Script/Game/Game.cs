@@ -3,8 +3,9 @@ using System.Collections;
 
 public class Game : MonoBehaviour
 {
-    public Timer Timer;
-    public Client Client;
+    private Timer Timer;
+    private Client Client;
+    private GlobalResourceManager GlobalResourceManager;
 
     void Awake()
     {
@@ -14,6 +15,10 @@ public class Game : MonoBehaviour
         this.Timer = gameObject.GetComponent<Timer>();
         this.Timer.Init(0.1f * 60f);
         this.Timer.FinalTick += Timer_FinalTick;
+
+        this.GlobalResourceManager = GameObject.Find("Resources").GetComponent<GlobalResourceManager>();
+
+        StartGame();
     }
 
     private void Client_MessageSystemStartOfGame(object sender, MessageEventArgs e)
@@ -23,6 +28,7 @@ public class Game : MonoBehaviour
     }
     void StartGame()
     {
+        this.GlobalResourceManager.initResources();
         this.Timer.StartTimer();
     }
     private void Timer_FinalTick(object sender, System.EventArgs e)
