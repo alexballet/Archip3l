@@ -42,6 +42,7 @@ namespace TouchScript.InputSources
                     this.collided = true;
                     island.displayPopup("Suite aux dommages subis, vous bâteau coule, ainsi que toutes les ressources transportées ...", 3);
                     MinorIsland.exchangePerforming = false;
+                    //SINK ANIMATION
                     StartCoroutine(startBoatDisappearance());
                 }
                 else
