@@ -21,8 +21,12 @@ public class MovePirateBoat : InputSource
         this.lifeTime = 20f;
         Destroy(gameObject, this.lifeTime);
         gameObject.SetActive(false);
-		GetComponent<Animator> ().SetInteger ("animBoat", 0);
     }
+
+	void Start()
+	{
+		GetComponent<Animator> ().SetInteger ("animBoat", 0);
+	}
 
     public void init(Vector3 initPosition, Vector3 targetPosition)
     {

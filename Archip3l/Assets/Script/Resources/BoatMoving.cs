@@ -43,6 +43,7 @@ namespace TouchScript.InputSources
                     island.displayPopup("Suite aux dommages subis, vous bâteau coule, ainsi que toutes les ressources transportées ...", 3);
                     MinorIsland.exchangePerforming = false;
                     StartCoroutine(startBoatDisappearance());
+					StartCoroutine(SinkingCargo());
                 }
                 else
                 {
@@ -52,6 +53,13 @@ namespace TouchScript.InputSources
                 }
             }
         }
+
+		IEnumerator SinkingCargo()
+		{
+			GetComponent<Animator> ().SetInteger ("animCargo", 1);
+			yield return new WaitForSeconds (1f);
+			Destroy (gameObject);
+		}
 
         public IEnumerator resetPosition()
         {
@@ -107,6 +115,7 @@ namespace TouchScript.InputSources
 
         public IEnumerator startBoatDisappearance()
         {
+
             Color color;
             for (int i = 0; i < 100; i++)
             {
