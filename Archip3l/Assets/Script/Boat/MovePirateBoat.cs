@@ -45,9 +45,6 @@ using TouchScript.Hit;
         void Update()
         {
             movement = new Vector2(transform.position.x + this.speed.x * direction.x, transform.position.y + this.speed.y * direction.y);
-        //if boat out of screen --> destruction
-        if (System.Math.Abs(this.transform.position.x) > 500)
-            Destroy(gameObject);
         }
 
         void FixedUpdate()
