@@ -88,9 +88,12 @@ public class MovePirateBoat : InputSource
     {
         this.destroyBoat(true);
     }
+
     public void destroyBoat(bool touched)
     {
-        if(touched)
+        //PROBLEM: animation makes island disappear
+
+        /*if(touched)
         {
             SoundPlayer.Instance.playBoatSinkSound();
             Instantiate(sinkEffect, transform.position, Quaternion.identity);
@@ -99,7 +102,7 @@ public class MovePirateBoat : InputSource
         {
             SoundPlayer.Instance.playExplosionOneSound();
             Instantiate(explosionEffect, transform.position, Quaternion.identity);
-        }
+        }*/
             
         Destroy(gameObject);
     }
