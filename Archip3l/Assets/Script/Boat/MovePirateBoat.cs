@@ -21,6 +21,7 @@ public class MovePirateBoat : InputSource
         this.lifeTime = 20f;
         Destroy(gameObject, this.lifeTime);
         gameObject.SetActive(false);
+		GetComponent<Animator> ().SetInteger ("animBoat", 0);
     }
 
     public void init(Vector3 initPosition, Vector3 targetPosition)
@@ -88,13 +89,23 @@ public class MovePirateBoat : InputSource
     {
         this.destroyBoat(true);
     }
+
+	IEnumerator ShipSinking()
+	{
+//		GetComponent<ParticleSystem> ().Stop();
+//		GetComponent<Particle> ().velocity = new Vector3 (0, 0, 0);
+		GetComponent<Animator> ().SetInteger ("animBoat", 1);
+		yield return new WaitForSeconds (1f);
+		Destroy (gameObject);
+	}
+
     public void destroyBoat(bool touched)
     {
         if(touched)
         {
             SoundPlayer.Instance.playBoatSinkSound();
 //            Instantiate(sinkEffect, transform.position, Quaternion.identity);
-
+			StartCoroutine(ShipSinking());
         }
         else
         {
@@ -102,7 +113,7 @@ public class MovePirateBoat : InputSource
             Instantiate(explosionEffect, transform.position, Quaternion.identity);
         }
             
-        Destroy(gameObject);
+//        Destroy(gameObject);
     }
 
     void OnTriggerEnter(Collider collider)
