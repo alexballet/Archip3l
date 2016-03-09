@@ -94,6 +94,7 @@ public class MovePirateBoat : InputSource
         {
             SoundPlayer.Instance.playBoatSinkSound();
 //            Instantiate(sinkEffect, transform.position, Quaternion.identity);
+
         }
         else
         {
