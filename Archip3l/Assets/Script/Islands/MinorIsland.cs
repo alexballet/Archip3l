@@ -495,15 +495,15 @@ namespace TouchScript.InputSources
                     if (this.resourceManager.changeResourceStock(this.resourceManager.Resources[index].TypeResource, -quantity))
                     {
                         //Notice someone? network?
-                        Debug.Log("Les pirates vous ont volé : " + quantity + " de " + this.resourceManager.Resources[index].TypeResource.ToString());
-                        Debug.Log("Il vous reste maintenant : " + this.resourceManager.Resources[index].Stock + " de " + this.resourceManager.Resources[index].TypeResource.ToString());
+                        //Debug.Log("Les pirates vous ont volé : " + quantity + " de " + this.resourceManager.Resources[index].TypeResource.ToString());
+                        //Debug.Log("Il vous reste maintenant : " + this.resourceManager.Resources[index].Stock + " de " + this.resourceManager.Resources[index].TypeResource.ToString());
                     }
                     else
                     {
-                        Debug.Log("Il ne vous reste plus assez de " + this.resourceManager.Resources[index].TypeResource.ToString() + " pour être volé ...");
+                        //Debug.Log("Il ne vous reste plus assez de " + this.resourceManager.Resources[index].TypeResource.ToString() + " pour être volé ...");
                     }
                 }
-                Destroy(collider.gameObject);
+                collider.gameObject.GetComponent<MovePirateBoat>().destroyBoat();
             }
         }
 

@@ -13,8 +13,9 @@ using TouchScript.Hit;
         private Vector2 movement;
 
         private float lifeTime;
+        public ParticleSystem explosionEffect;
 
-        void Awake()
+    void Awake()
         {
             this.lifeTime = 20f;
             Destroy(gameObject, this.lifeTime);
@@ -80,12 +81,11 @@ using TouchScript.Hit;
         }
         void OnMouseDownSimulation()
         {
-            Debug.Log("pirateBoat touched!");
             this.destroyBoat();
         }
-        void destroyBoat()
+        public void destroyBoat()
         {
-            //animation?
+            ParticleSystem newParticleSystem = Instantiate(explosionEffect, transform.position, Quaternion.identity) as ParticleSystem;
             Destroy(gameObject);
         }
 
