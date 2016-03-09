@@ -5,7 +5,7 @@ using TouchScript.InputSources;
 public class PirateBoatManager : MonoBehaviour
 {
     private float secondsBeforeFirstBoat = 10;
-    private float interval = 1;
+    private float interval = 1f;
     private float raisingRate = 0.99f;
     private int boatId = 0;
 
@@ -18,10 +18,6 @@ public class PirateBoatManager : MonoBehaviour
 
     private Vector3 targetPosition;
     private Vector3 initPosition;
-    //private Vector2 initDirection;
-    //private Quaternion initRotation;
-    //private float boatScale;
-    //private float boatSpeed;
 
     private static System.Random rnd;
 
@@ -50,7 +46,6 @@ public class PirateBoatManager : MonoBehaviour
     }
     private void launchPirateBoat()
     {
-        //System.Random ran = new System.Random();
         switch (rnd.Next(1, 5))
         {
             case 1:
@@ -77,17 +72,16 @@ public class PirateBoatManager : MonoBehaviour
     }
     private Vector3 getNewBoatPosition()
     {
-        //System.Random rnd = new System.Random();
         switch (rnd.Next(1, 5))
         {
             case 1:
-                return new Vector3(rnd.Next(-500, -430), rnd.Next(0, 400), 0);
+                return new Vector3(rnd.Next(-500, -430), rnd.Next(0, 400), -7);
             case 2:
-                return new Vector3(rnd.Next(430, 500), rnd.Next(0, 400), 0);
+                return new Vector3(rnd.Next(430, 500), rnd.Next(0, 400), -7);
             case 4:
-                return new Vector3(rnd.Next(-500, -430), rnd.Next(-400, 0), 0);
+                return new Vector3(rnd.Next(-500, -430), rnd.Next(-400, 0), -7);
             case 3:
-                return new Vector3(rnd.Next(430, 500), rnd.Next(-400, 0), 0);
+                return new Vector3(rnd.Next(430, 500), rnd.Next(-400, 0), -7);
         }
         return new Vector3(0, 0);
     }

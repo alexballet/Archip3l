@@ -178,12 +178,9 @@ namespace TouchScript.InputSources
                     }
 
                     buildingConstructed.changeProduction(buildingConstructed.quantityProduced);
-
                 }
             }
-
             Destroy(GameObject.Find("Challenge_" + typeChallenge + "_" + minorIsland.nameMinorIsland));
-            
         }
 
 

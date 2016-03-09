@@ -24,11 +24,17 @@ public class SoundPlayer : MonoBehaviour {
     public AudioClip upgradeSound;
     public AudioClip windTurbineSound;
 
+    public AudioClip explosionOneSound;
+    public AudioClip boatSinkSound;
+
+    public AudioClip startGameSound;
+    public AudioClip endGameSound;
+
     void Awake()
     {
         if (Instance != null)
         {
-            //Debug.LogError("Multiple instances of SoundManager!");
+            Debug.LogError("Multiple instances of SoundManager!");
         }
         Instance = this;
     }
@@ -100,6 +106,14 @@ public class SoundPlayer : MonoBehaviour {
     public void playWindTurbineSound()
     {
         MakeSound(windTurbineSound);
+    }
+    public void playExplosionOneSound()
+    {
+        MakeSound(explosionOneSound);
+    }
+    public void playBoatSinkSound()
+    {
+        MakeSound(boatSinkSound);
     }
 
 }

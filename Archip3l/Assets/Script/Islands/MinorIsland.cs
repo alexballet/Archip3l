@@ -503,7 +503,7 @@ namespace TouchScript.InputSources
                         //Debug.Log("Il ne vous reste plus assez de " + this.resourceManager.Resources[index].TypeResource.ToString() + " pour être volé ...");
                     }
                 }
-                collider.gameObject.GetComponent<MovePirateBoat>().destroyBoat();
+                collider.gameObject.GetComponent<MovePirateBoat>().destroyBoat(false);
             }
         }
 
