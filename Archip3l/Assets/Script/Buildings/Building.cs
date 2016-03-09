@@ -307,7 +307,7 @@ namespace TouchScript.InputSources
 
         void OnMouseDownSimulation()
         {
-            if ((this.buildState == 1) && !minorIsland.wheelPresent && !minorIsland.buildingInfoPresent && !minorIsland.challengePresent && !minorIsland.moveBuilding && minorIsland.nameBuildingTouchCanvas == String.Empty)
+            if ((this.buildState == 1) && !MinorIsland.exchangePerforming && !minorIsland.wheelPresent && !minorIsland.buildingInfoPresent && !minorIsland.challengePresent && !minorIsland.moveBuilding && minorIsland.nameBuildingTouchCanvas == String.Empty)
             {
                 minorIsland.createBuildingTouch(this);
             }

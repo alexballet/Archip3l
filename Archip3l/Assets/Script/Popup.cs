@@ -23,7 +23,7 @@ namespace TouchScript.InputSources
             string[] nameSplitted = name.Split('_');
             this.island = GameObject.Find(nameSplitted[1] + "_" + nameSplitted[2] + "_" + nameSplitted[3]).GetComponent<MinorIsland>();
             this.touched = true;
-            StartCoroutine(island.forceDestroyPopup(namePopupCanvas, 0));
+            Destroy(GameObject.Find(namePopupCanvas));
             this.gameObject.GetComponent<BoxCollider>().enabled = false;
         }
 

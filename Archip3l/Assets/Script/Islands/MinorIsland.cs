@@ -40,6 +40,7 @@ namespace TouchScript.InputSources
         static public bool exchangePerforming = false;
 
         public Canvas startCanvas;
+        public int numPopup = 0;
 
         void Awake()
         {
@@ -203,10 +204,16 @@ namespace TouchScript.InputSources
         //returns the name of the Popup (GameObject) created
         public string createPopup(string popupText)
         {
-            removeAllPopups();
+            if (GameObject.Find("PopupCanvas" + "_" + this.nameMinorIsland) != null)
+            {
+                GameObject.Find("PopupCanvas" + "_" + this.nameMinorIsland).GetComponentInChildren<Popup>().touched = true;
+                Destroy(GameObject.Find("PopupCanvas" + "_" + this.nameMinorIsland));
+            }
+
             Canvas popupCanvasPrefab = Resources.Load<Canvas>("Prefab/PopupCanvas");
             Canvas popupCanvas = Instantiate(popupCanvasPrefab);
             popupCanvas.name = "PopupCanvas" + "_" + this.nameMinorIsland;
+            this.numPopup++;
             popupCanvas.transform.SetParent(GameObject.Find(this.nameMinorIsland).transform);
             Vector3 vector3 = GameObject.Find("sprite-" + this.nameMinorIsland).transform.position;
             vector3.z = -2;
@@ -280,29 +287,20 @@ namespace TouchScript.InputSources
             yield return new WaitForSeconds(0.5f);
             displayPopup(explaination, timer);
         }
-
-        //destroy popup by touch
-        public IEnumerator forceDestroyPopup(string namePopup, int timer)
-        {
-            SpriteRenderer popupImage = GameObject.Find(namePopup).GetComponentInChildren<SpriteRenderer>();
-            Color color;
-            for (int i = 0; i < 100; i++)
-            {
-                yield return new WaitForSeconds(0.01f);
-                    color = popupImage.color;
-                    color.a -= 0.01f;
-                    popupImage.color = color;
-
-            }
-                Destroy(GameObject.Find(namePopup));
-        }
+        
 
         public void removeAllPopups()
         {
-            if (GameObject.Find("PopupCanvas" + "_" + nameMinorIsland) != null)
+            for (int i = 0; i < this.numPopup; i++)
+            {
+
+                if (GameObject.Find("PopupCanvas" + i.ToString() + "_" + nameMinorIsland) != null)
                 {
-                    Destroy(GameObject.Find("PopupCanvas" + "_" + nameMinorIsland));
+                    GameObject.Find("PopupCanvas" + i.ToString() + "_" + nameMinorIsland).GetComponentInChildren<Popup>().touched = true;
+                    //StartCoroutine(forceDestroyPopup("PopupCanvas" + i.ToString() + "_" + nameMinorIsland, 0));
+                    Destroy(GameObject.Find("PopupCanvas" + i.ToString() + "_" + nameMinorIsland));
                 }
+            }
         }
 
         public void createBuildingTouch(Building building)
@@ -483,8 +481,10 @@ namespace TouchScript.InputSources
 
         void OnTriggerEnter(Collider collider)
         {
+            //CHECK IF COLLISION COMES FROM PIRATES OR RESOURCES BOAT !!!!
+
             //Debug.Log(collider.name);
-            int resourceCount = this.resourceManager.Resources.Count;
+            /*int resourceCount = this.resourceManager.Resources.Count;
             if (resourceCount > 0)
             {
                 System.Random rnd = new System.Random();
@@ -496,7 +496,7 @@ namespace TouchScript.InputSources
                     //Debug.Log("Les pirates vous ont volé : " + quantity + " de " + this.resourceManager.Resources[index].TypeResource.ToString());
                 }
             }
-            Destroy(collider.gameObject);
+            Destroy(collider.gameObject);*/
         }
 
         //-------------- TUIO -----------------------------------------------------------------------

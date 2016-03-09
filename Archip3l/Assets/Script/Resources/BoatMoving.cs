@@ -29,11 +29,11 @@ namespace TouchScript.InputSources
                 MinorIsland islandReceiver = GameObject.Find(islandToSend).GetComponent<MinorIsland>();
                 this.collided = true;
                 islandReceiver.displayPopup("Vous venez de recevoir une cargaison de " + this.quantityCarried.ToString() + " " + Resource.translateResourceName(resourceSent) + " !", 3);
-                StartCoroutine(startBoatDisappearance());
                 MinorIsland.exchangePerforming = false;
                 //add resources to islandToSend
                 TypeResource res = (TypeResource)System.Enum.Parse(typeof(TypeResource), resourceSent);
                 islandReceiver.resourceManager.getResource(res).changeStock(this.quantityCarried);
+                StartCoroutine(startBoatDisappearance());
             }
             else
             {
@@ -41,8 +41,8 @@ namespace TouchScript.InputSources
                 {
                     this.collided = true;
                     island.displayPopup("Suite aux dommages subis, vous bâteau coule, ainsi que toutes les ressources transportées ...", 3);
-                    StartCoroutine(startBoatDisappearance());
                     MinorIsland.exchangePerforming = false;
+                    StartCoroutine(startBoatDisappearance());
                 }
                 else
                 {
@@ -57,8 +57,6 @@ namespace TouchScript.InputSources
         {
             this.GetComponent<BoxCollider>().enabled = false;
             Color color;
-            color = this.GetComponent<SpriteRenderer>().color;
-            this.GetComponent<SpriteRenderer>().color = color;
             for (int i = 0; i < 100; i++)
             {
                 yield return new WaitForSeconds(0.01f);
