@@ -12,6 +12,9 @@ public class MovePirateBoat : InputSource
     public Vector2 direction = new Vector2(0, 1);
     private Vector2 movement;
 
+	private bool sinking;
+	private float x, y;
+
     private float lifeTime;
     public ParticleSystem explosionEffect;
     public ParticleSystem sinkEffect;
@@ -21,6 +24,7 @@ public class MovePirateBoat : InputSource
         this.lifeTime = 20f;
         Destroy(gameObject, this.lifeTime);
         gameObject.SetActive(false);
+		sinking = false;
     }
 
 	void Start()
@@ -61,7 +65,16 @@ public class MovePirateBoat : InputSource
     void FixedUpdate()
     {
         //Debug.Log(transform.position.ToString());
-        this.transform.position = movement;
+
+		x = transform.position.x;
+		y = transform.position.y;
+
+		if (sinking) 
+		{
+			this.transform.position = new Vector3(x,y,transform.position.z);
+		}
+		else
+			this.transform.position = movement;
     }
     IEnumerator wait(float seconds)
     {
@@ -96,11 +109,13 @@ public class MovePirateBoat : InputSource
 
 	IEnumerator ShipSinking()
 	{
+		sinking = true;
 //		GetComponent<ParticleSystem> ().Stop();
 //		GetComponent<Particle> ().velocity = new Vector3 (0, 0, 0);
 		GetComponent<Animator> ().SetInteger ("animBoat", 1);
 		yield return new WaitForSeconds (1f);
 		Destroy (gameObject);
+		sinking = false;
 	}
 
     public void destroyBoat(bool touched)

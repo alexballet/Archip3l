@@ -1,9 +1,8 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Script/Resources/BoatMoving.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Script/Boat/MovePirateBoat.cs">
     <Files>
-      <File FileName="Assets/Script/Boat/MovePirateBoat.cs" Line="100" Column="3" />
-      <File FileName="Assets/Script/Resources/BoatMoving.cs" Line="46" Column="22" />
+      <File FileName="Assets/Script/Boat/MovePirateBoat.cs" Line="68" Column="44" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
