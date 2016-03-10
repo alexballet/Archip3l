@@ -33,7 +33,7 @@ public class Client : MonoBehaviour
     public event EventHandler<MessageEventArgs> MessageScoreUpdateEvent;
 
     public event EventHandler<MessageEventArgs> MessageSystemStartInitOfGameEvent;
-    public event EventHandler<MessageEventArgs> MessageSystemStartInitofGameAnswerEvent;
+    public event EventHandler<MessageEventArgs> MessageSystemStartInitOfGameAnswerEvent;
     public event EventHandler<MessageEventArgs> MessageSystemStartOfGameEvent;
     public event EventHandler<MessageEventArgs> MessageSystemEndOfGameEvent;
 
@@ -142,6 +142,14 @@ public class Client : MonoBehaviour
             case 24331:
                 MessageEvent += MessageResourceTransfertEvent;
                 break;
+            case 20345:
+            case 21345:
+            case 22345:
+            case 23345:
+            case 24345:
+                MessageEvent += MessageResourceProductionUpdateEvent;
+                break;
+            case 20355:
             case 21355:
             case 22355:
             case 23355:
@@ -161,10 +169,17 @@ public class Client : MonoBehaviour
                 MessageEvent += MessageSystemStartInitOfGameEvent;
                 break;
             case 30087:
-                MessageEvent += MessageSystemStartInitofGameAnswerEvent;
+                MessageEvent += MessageSystemStartInitOfGameAnswerEvent;
                 break;
             case 30306:
                 MessageEvent += MessageResourceInitEvent;
+                break;
+            case 30505:
+            case 31505:
+            case 32505:
+            case 33505:
+            case 34505:
+                MessageEvent += MessageScoreUpdateEvent;
                 break;
         }
 

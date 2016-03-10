@@ -20,12 +20,15 @@ public class MovePirateBoat : InputSource
     public ParticleSystem sinkEffect;
 	public GameObject sinkingTrail;
 
+    private Client Client;
+
     void Awake()
     {
         this.lifeTime = 20f;
         Destroy(gameObject, this.lifeTime);
         gameObject.SetActive(false);
 		sinking = false;
+        this.Client = GameObject.Find("Network").GetComponent<Client>();
     }
 
 	void Start()
@@ -105,6 +108,8 @@ public class MovePirateBoat : InputSource
     }
     void OnMouseDownSimulation()
     {
+        //Score to add must be checked
+        this.Client.sendData("@30505@" + 10.ToString());
         this.destroyBoat(true);
     }
     

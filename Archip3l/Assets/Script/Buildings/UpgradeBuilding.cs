@@ -16,6 +16,13 @@ namespace TouchScript.InputSources
         public MinorIsland island;
         public Building building;
 
+        private Client Client;
+
+        void Awake()
+        {
+            this.Client = GameObject.Find("Network").GetComponent<Client>();
+        }
+
         void OnMouseDownSimulation()
         {
             island = GameObject.Find(this.transform.parent.parent.parent.name).GetComponent<MinorIsland>();
@@ -51,6 +58,9 @@ namespace TouchScript.InputSources
                     island.buildingInfoPresent = false;
                     island.createChallengeUpgrade(building);
                     island.challengePresent = true;
+
+                    //To be cheked
+                    this.Client.sendData("@30505@" + (100*(building.level + 1)).ToString());
                 }
                 else
                 {
@@ -61,19 +71,6 @@ namespace TouchScript.InputSources
 
             Destroy(GameObject.Find(this.transform.parent.parent.name));
             island.nameBuildingTouchCanvas = string.Empty;
-        }
-
-
-        // Use this for initialization
-        void Start()
-        {
-
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
         }
 
 
