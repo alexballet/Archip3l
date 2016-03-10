@@ -58,7 +58,6 @@
      <Compile Include="Assets\Script\Buildings\WheelIcon.cs" />
      <Compile Include="Assets\Script\ChallengeBuild.cs" />
      <Compile Include="Assets\Script\ChallengeUpgrade.cs" />
-     <Compile Include="Assets\Script\Enigma.cs" />
      <Compile Include="Assets\Script\Game\Game.cs" />
      <Compile Include="Assets\Script\Islands\ListIslands.cs" />
      <Compile Include="Assets\Script\Islands\MinorIsland.cs" />
@@ -167,17 +166,11 @@
      <None Include="Assets\Resources\Challenges\QCM\QCM.txt" />
      <None Include="Assets\Resources\Challenges\QCM\QCM_Tests.txt" />
      <None Include="Assets\Resources\Challenges\VraiFaux\VraiFaux_Farm.txt" />
- <Reference Include="UnityEngine.Advertisements">
- <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Advertisements/UnityEngine.Advertisements.dll</HintPath>
- </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Networking">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Analytics">
- <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
  </Reference>
  <Reference Include="OSCsharp">
  <HintPath>/Users/Alxd/Desktop/ARCHIPEL/Unity/Archip3l/Archip3l/Assets/Script/TouchScript/Modules/TUIO/Libraries/OSCsharp.dll</HintPath>
