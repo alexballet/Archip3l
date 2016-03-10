@@ -22,6 +22,7 @@ public class ResourceManager : MonoBehaviour
         //Add all resources
         foreach (TypeResource resourceType in Enum.GetValues(typeof(TypeResource)))
         {
+            //To be modified to 0;
             this.addResource(resourceType, 10, 5);
         }
     }
@@ -43,7 +44,7 @@ public class ResourceManager : MonoBehaviour
         else
         {
             Resource res = ScriptableObject.CreateInstance<Resource>();
-            res.init(resourceType, quantity);
+            res.init(resourceType, quantity, production);
             this.Resources.Add(res);
             return true;
         }
@@ -124,7 +125,7 @@ public class ResourceManager : MonoBehaviour
     }
     public void initResources()
     {
-        //Sync all resource before the start of the game
+        //Sync all resource from table before the start of the game
     }
 }
 public class ChangeResourceStockEventArgs : EventArgs

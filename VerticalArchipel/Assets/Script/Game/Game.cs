@@ -17,7 +17,9 @@ public class Game : MonoBehaviour
         this.Timer.FinalTick += Timer_FinalTick;
 
         this.GlobalResourceManager = GameObject.Find("Resources").GetComponent<GlobalResourceManager>();
-
+    }
+    void Start()
+    {
         StartGame();
     }
 
