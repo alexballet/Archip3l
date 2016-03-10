@@ -1,8 +1,8 @@
 Question;Answer;Explanation;Proposition0;Proposition1
-L’horticulture est l’art de cultiver les jardins, de pratiquer la culture de légumes, de fruits et de fleurs.;VRAI;Il vient du latin hortus “jardin” et du mot “culture”;VRAI;FAUX
-Le maraîchage correspond à la culture de fruits et fleurs.;FAUX;Cela correspond à la culture de légumes.;VRAI;FAUX
-L’architecture vernaculaire est un type de construction d’habitations propre à la ville de Vernacles.;FAUX;il s’agit d’un type d’architecture “propre à un pays” et c’est dans ce cadre que certaines fermes sont classés pour raisons patrimoniales et paysagères.;VRAI;FAUX
-L’aquaponie est une activité consistant à faire se baigner des poneys.;FAUX;C’est une forme d’agriculture associant culture de végétaux en symbiose avec l’élevage de poissons.;VRAI;FAUX
-"Le ""fermage"" est l'activité consistant à nourrir des animaux dans une ferme.";FAUX;Le fermage est une entente entre un propriétaire et un locataire (le fermier) consistant à laisser au second la possibilité de cultiver une terre, en échange d'un loyer.;VRAI;FAUX
-"Le ""métayage"" est un bail rural dans lequel un propriétaire permet à un agriculteur de cultiver une terre en échange d'une partie de la récolte.";VRAI;_;VRAI;FAUX
-"Le ""vêlage"" des bovins est le nom donné à leur cri.";FAUX;"Le ""vêlage"" est la mise bas chez les bovins.";VRAI;FAUX
+L’horticulture est l’art de cultiver les jardins, de pratiquer la culture de légumes, de fruits et de fleurs.;Proposition0;Il vient du latin hortus “jardin” et du mot “culture”;VRAI;FAUX
+Le maraîchage correspond à la culture de fruits et fleurs.;Proposition1;Cela correspond à la culture de légumes.;VRAI;FAUX
+L’architecture vernaculaire est un type de construction d’habitations propre à la ville de Vernacles.;Proposition1;il s’agit d’un type d’architecture “propre à un pays” et c’est dans ce cadre que certaines fermes sont classés pour raisons patrimoniales et paysagères.;VRAI;FAUX
+L’aquaponie est une activité consistant à faire se baigner des poneys.;Proposition1;C’est une forme d’agriculture associant culture de végétaux en symbiose avec l’élevage de poissons.;VRAI;FAUX
+"Le ""fermage"" est l'activité consistant à nourrir des animaux dans une ferme.";Proposition1;Le fermage est une entente entre un propriétaire et un locataire (le fermier) consistant à laisser au second la possibilité de cultiver une terre, en échange d'un loyer.;VRAI;FAUX
+"Le ""métayage"" est un bail rural dans lequel un propriétaire permet à un agriculteur de cultiver une terre en échange d'une partie de la récolte.";Proposition0;_;VRAI;FAUX
+"Le ""vêlage"" des bovins est le nom donné à leur cri.";Proposition1;"Le ""vêlage"" est la mise bas chez les bovins.";VRAI;FAUX

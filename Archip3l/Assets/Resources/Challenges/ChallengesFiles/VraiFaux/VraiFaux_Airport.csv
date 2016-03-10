@@ -1,10 +1,10 @@
 Question;Answer;Explanation;Proposition0;Proposition1
-Au XVIIIème siècle, le terme “tourisme” désigne le voyage que font les jeunes de l'aristocratie britannique sur le continent européen pour rejoindre la ville de Rome.;VRAI;_;VRAI;FAUX
-En 2014, la France est le pays au monde qui attire le plus de touristes (en nombre d’arrivées).;VRAI;Avec 83,8 millions d’arrivées cette année-là.;VRAI;FAUX
-"Un avion est un ""aéronef"" mais une montgolfière non.";FAUX;"Un ""aéronef"" désigne tout moyen de transport capable d'évoluer au sein de l'atmosphère terrestre. La montgolfière en fait donc aussi partie.";VRAI;FAUX
- Un aérostat utilise une force statique pour se déplacer tandis qu'un aérodyne génère une force dynamique pour équilibrer son poids.;VRAI;;VRAI;FAUX
-Les avions possèdent une vitesse minimale de vol en-dessous de laquelle ils ne peuvent rester en l'air.;VRAI;En-dessous de cette vitesse, l'avion n'est plus suffisamment soutenu par l'air pour maintenir son altitude et risque la perte de contrôle.;VRAI;FAUX
-La construction des premiers aéronefs fut inspirée des oiseaux avec la création d'engins à ailes battantes.;VRAI;Ces engins s'appellaient les ornithoptères et leur modèle fut imaginé par Léonard de Vinci au XVème siècle.;VRAI;FAUX
-Le vol à voile consiste à faire décoller des flots un bateau à voile.;FAUX;"Il s'agit d'une navigation aérienne dans un engin sans moteur (par exemple, un planeur), à l'inverse du ""vol à moteur"".";VRAI;FAUX
-"Une ""hélisurface"" correspond à la surface d'un hélicoptère.";FAUX;Faux, une hélisurface (ou hélipont) est une zone d'atterrissage pour hélicoptères posée sur un bâtiment, un navire, une plateforme de forage, etc.;VRAI;FAUX
-Les compagnies aériennes sont facturées par les aéroports en fonction du temps passé dans la section de parking qui leur est attribuée.;VRAI;C'est pourquoi les compagnies aériennes tentent de réduire au maximum le temps d'immobilisation d'un appareil au sol. ;VRAI;FAUX
+Au XVIIIème siècle, le terme “tourisme” désigne le voyage que font les jeunes de l'aristocratie britannique sur le continent européen pour rejoindre la ville de Rome.;Proposition0;_;VRAI;FAUX
+En 2014, la France est le pays au monde qui attire le plus de touristes (en nombre d’arrivées).;Proposition0;Avec 83,8 millions d’arrivées cette année-là.;VRAI;FAUX
+"Un avion est un ""aéronef"" mais une montgolfière non.";Proposition1;"Un ""aéronef"" désigne tout moyen de transport capable d'évoluer au sein de l'atmosphère terrestre. La montgolfière en fait donc aussi partie.";VRAI;FAUX
+ Un aérostat utilise une force statique pour se déplacer tandis qu'un aérodyne génère une force dynamique pour équilibrer son poids.;Proposition0;;VRAI;FAUX
+Les avions possèdent une vitesse minimale de vol en-dessous de laquelle ils ne peuvent rester en l'air.;Proposition0;En-dessous de cette vitesse, l'avion n'est plus suffisamment soutenu par l'air pour maintenir son altitude et risque la perte de contrôle.;VRAI;FAUX
+La construction des premiers aéronefs fut inspirée des oiseaux avec la création d'engins à ailes battantes.;Proposition0;Ces engins s'appellaient les ornithoptères et leur modèle fut imaginé par Léonard de Vinci au XVème siècle.;VRAI;FAUX
+Le vol à voile consiste à faire décoller des flots un bateau à voile.;Proposition1;"Il s'agit d'une navigation aérienne dans un engin sans moteur (par exemple, un planeur), à l'inverse du ""vol à moteur"".";VRAI;FAUX
+"Une ""hélisurface"" correspond à la surface d'un hélicoptère.";Proposition1;Faux, une hélisurface (ou hélipont) est une zone d'atterrissage pour hélicoptères posée sur un bâtiment, un navire, une plateforme de forage, etc.;VRAI;FAUX
+Les compagnies aériennes sont facturées par les aéroports en fonction du temps passé dans la section de parking qui leur est attribuée.;Proposition0;C'est pourquoi les compagnies aériennes tentent de réduire au maximum le temps d'immobilisation d'un appareil au sol. ;VRAI;FAUX

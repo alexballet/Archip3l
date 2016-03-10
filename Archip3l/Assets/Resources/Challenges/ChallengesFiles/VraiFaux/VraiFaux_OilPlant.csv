@@ -1,10 +1,10 @@
 Question;Answer;Explanation;Proposition0;Proposition1
-Les mots fioul et pétrole sont des synonymes.;FAUX;Le fioul est un combustible dérivé du pétrole.;VRAI;FAUX
-Les mots fioul et mazout sont des synonymes.;VRAI;"Tous deux correspondent au carburant notamment utilisé dans les chaudières.
+Les mots fioul et pétrole sont des synonymes.;Proposition1;Le fioul est un combustible dérivé du pétrole.;VRAI;FAUX
+Les mots fioul et mazout sont des synonymes.;Proposition0;"Tous deux correspondent au carburant notamment utilisé dans les chaudières.
 
 ";VRAI;FAUX
-En 2012, le charbon est une source d’énergie plus utilisée que le pétrole dans le monde.;FAUX;Ils représentent respectivement 29% et 31,4% de l’énergie primaire consommée.;VRAI;FAUX
-Le pétrole peut aussi entrer dans la composition de certains colorants.;VRAI;_;VRAI;FAUX
-La France fait partie des 10 pays plus gros producteurs de pétrole au monde.;FAUX;Elle n'est même pas comptabilisée dans les 20 premiers mais est par contre 13ème dans la liste des plus gros consommateurs mondiaux.;VRAI;FAUX
-En 2014, les Etats-unis sont les plus gros consommateurs de pétrole au monde, en millions de tonnes par an.;VRAI;C'est bien le cas avec 50% de millions de tonnes de plus que le 2ème plus gros consommateur: la Chine.;VRAI;FAUX
-Il serait plus approprié de comparer un gisement de pétrole à une éponge qu'à un lac souterrain.;VRAI;En effet, mélangé à de l'eau et à du gaz dissous, le pétrole occupe, en fait, les interstices microscopiques de roches poreuses.;VRAI;FAUX
+En 2012, le charbon est une source d’énergie plus utilisée que le pétrole dans le monde.;Proposition1;Ils représentent respectivement 29% et 31,4% de l’énergie primaire consommée.;VRAI;FAUX
+Le pétrole peut aussi entrer dans la composition de certains colorants.;Proposition0;_;VRAI;FAUX
+La France fait partie des 10 pays plus gros producteurs de pétrole au monde.;Proposition1;Elle n'est même pas comptabilisée dans les 20 premiers mais est par contre 13ème dans la liste des plus gros consommateurs mondiaux.;VRAI;FAUX
+En 2014, les Etats-unis sont les plus gros consommateurs de pétrole au monde, en millions de tonnes par an.;Proposition0;C'est bien le cas avec 50% de millions de tonnes de plus que le 2ème plus gros consommateur: la Chine.;VRAI;FAUX
+Il serait plus approprié de comparer un gisement de pétrole à une éponge qu'à un lac souterrain.;Proposition0;En effet, mélangé à de l'eau et à du gaz dissous, le pétrole occupe, en fait, les interstices microscopiques de roches poreuses.;VRAI;FAUX

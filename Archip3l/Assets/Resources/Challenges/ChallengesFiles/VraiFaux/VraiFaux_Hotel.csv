@@ -1,8 +1,8 @@
 Question;Answer;Explanation;Proposition0;Proposition1
-Un hôtel particulier est un hôtel réservé par une seule personne.;FAUX;Un hôtel particulier est une somptueuse demeure urbaine, souvent possession d'une grande famille.;VRAI;FAUX
-"Un ""hôtel de ville"" est un hôtel situé dans une ville.";FAUX;Il s'agit de la mairie de la ville.;VRAI;FAUX
-La société Michelin à l'origine du célèbre guide Michelin (hôtellerie et restauration) est tout d'abord un fabricant de pneumatiques français.;VRAI;_;VRAI;FAUX
-"Le terme ""vacances"" provient du latin « vacare » qui signifie « être sans », en relation avec le fait de cesser ses activités habituelles.";VRAI;_;VRAI;FAUX
-En Europe de l'Ouest, les premières vacances furent instaurées durant la période des moissons pour permettre à tout le monde d'aller travailler aux champs.;VRAI;Cette tradition date du Moyen-âge;VRAI;FAUX
-À Hong Kong, Singapour et Taïwan, les vacances sont de quinze jours par an.;FAUX;Dans ces pays, les vacances sont de sept jours par an.;VRAI;FAUX
-"Le ""tourisme sombre"" consiste à visiter des endroits évoquant souffrance, mort et peur tels que le camp d’extermination d’Auschwitz ou encore la centrale de Tchernobyl.";VRAI;_;VRAI;FAUX
+Un hôtel particulier est un hôtel réservé par une seule personne.;Proposition1;Un hôtel particulier est une somptueuse demeure urbaine, souvent possession d'une grande famille.;VRAI;FAUX
+"Un ""hôtel de ville"" est un hôtel situé dans une ville.";Proposition1;Il s'agit de la mairie de la ville.;VRAI;FAUX
+La société Michelin à l'origine du célèbre guide Michelin (hôtellerie et restauration) est tout d'abord un fabricant de pneumatiques français.;Proposition0;_;VRAI;FAUX
+"Le terme ""vacances"" provient du latin « vacare » qui signifie « être sans », en relation avec le fait de cesser ses activités habituelles.";Proposition0;_;VRAI;FAUX
+En Europe de l'Ouest, les premières vacances furent instaurées durant la période des moissons pour permettre à tout le monde d'aller travailler aux champs.;Proposition0;Cette tradition date du Moyen-âge;VRAI;FAUX
+À Hong Kong, Singapour et Taïwan, les vacances sont de quinze jours par an.;Proposition1;Dans ces pays, les vacances sont de sept jours par an.;VRAI;FAUX
+"Le ""tourisme sombre"" consiste à visiter des endroits évoquant souffrance, mort et peur tels que le camp d’extermination d’Auschwitz ou encore la centrale de Tchernobyl.";Proposition0;_;VRAI;FAUX

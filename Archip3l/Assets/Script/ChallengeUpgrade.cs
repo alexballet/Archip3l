@@ -14,33 +14,33 @@ namespace TouchScript.InputSources
     {
 
 
-        public string question { get; private set; }
-        public string answer { get; private set; }
-        public string explainations { get; private set; }
-        public string[] propositions { get; private set; }
-        public int nbPropositions { get; private set; }
-        public bool goodAnswer { get; private set; }
-        public TypeChallenge typeChallenge { get; private set; }
-        public SpriteRenderer background { get; private set; }
-        public Text resultText { get; private set; }
-        public MinorIsland minorIsland { get; private set; }
-        public Building building { get; private set; }
-        public Canvas canvasChallenge { get; private set; }
+        static public string question { get; private set; }
+        static public string answer { get; private set; }
+        static public string explainations { get; private set; }
+        static public string[] propositions { get; private set; }
+        static public int nbPropositions { get; private set; }
+        static public bool goodAnswer { get; private set; }
+        static public TypeChallenge typeChallenge { get; private set; }
+        static public SpriteRenderer background { get; private set; }
+        static public Text resultText { get; private set; }
+        static public MinorIsland minorIsland { get; private set; }
+        static public Building building { get; private set; }
+        static public Canvas canvasChallenge { get; private set; }
 
-        public TextAsset csv { get; private set; }
+        static public TextAsset csv { get; private set; }
 
         public void init(TypeChallenge tc, MinorIsland island, Building myBuilding)
         {
 
             canvasChallenge = this.transform.parent.GetComponent<Canvas>();
 
-            this.building = myBuilding;
-            this.minorIsland = island;
-            this.typeChallenge = tc;
+            ChallengeUpgrade.building = myBuilding;
+            ChallengeUpgrade.minorIsland = island;
+            ChallengeUpgrade.typeChallenge = tc;
             if (typeChallenge == TypeChallenge.QCM)
-                this.nbPropositions = 3;
+                ChallengeUpgrade.nbPropositions = 3;
             else
-                this.nbPropositions = 2;
+                ChallengeUpgrade.nbPropositions = 2;
 
 
             //CSV part
@@ -48,21 +48,21 @@ namespace TouchScript.InputSources
             //VraiFaux : answer = Proposition0 ou answer = Proposition1
             //QCM : answer = Proposition0 ou answer = Proposition1 ou answer = Proposition2
 
-            //csv = Resources.Load<TextAsset>("Challenges/" + typeChallenge.ToString() + "/" + typeChallenge.ToString() + "_" + this.building.TypeBuilding.ToString());
-            //csv = Resources.Load<TextAsset>("Challenges/" + typeChallenge.ToString() + "/" + typeChallenge.ToString());
-            csv = Resources.Load<TextAsset>("Challenges/" + typeChallenge.ToString() + "/" + typeChallenge.ToString() + "_Tests");
+            csv = Resources.Load<TextAsset>("Challenges/ChallengesFiles/" + typeChallenge.ToString() + "/" + typeChallenge.ToString() + "_" + myBuilding.TypeBuilding.ToString());
+            //csv = Resources.Load<TextAsset>("Challenges/" + typeChallenge.ToString() + "/" + typeChallenge.ToString() + "_Tests");
 
 
             string[] row = CSV_reader.GetRandomLine(csv.text);
 
-            this.question = row[0];
-            this.answer = row[1];
-            this.explainations = row[2];
-            this.propositions = new string[nbPropositions];
-            this.propositions[0] = row[3];
-            this.propositions[1] = row[4];
-            if (this.nbPropositions == 3)
-                this.propositions[2] = row[5];
+            ChallengeUpgrade.question = row[0];
+            addLineBreaks();
+            ChallengeUpgrade.answer = row[1];
+            ChallengeUpgrade.explainations = row[2];
+            ChallengeUpgrade.propositions = new string[nbPropositions];
+            ChallengeUpgrade.propositions[0] = row[3];
+            ChallengeUpgrade.propositions[1] = row[4];
+            if (ChallengeUpgrade.nbPropositions == 3)
+                ChallengeUpgrade.propositions[2] = row[5];
 
 
             foreach (Text text in canvasChallenge.GetComponentsInChildren<Text>())
@@ -70,19 +70,19 @@ namespace TouchScript.InputSources
                 switch (text.name)
                 {
                     case "Question":
-                        text.text = this.question.Replace('*', '\n');        //in CSV: '*' replace a line break ('\n')
+                        text.text = ChallengeUpgrade.question;
                         break;
                     case "Result":
                         resultText = text;
                         break;
                     case "Proposition0":
-                        text.text = this.propositions[0];
+                        text.text = ChallengeUpgrade.propositions[0];
                         break;
                     case "Proposition1":
-                        text.text = this.propositions[1];
+                        text.text = ChallengeUpgrade.propositions[1];
                         break;
                     case "Proposition2":
-                        text.text = this.propositions[2];
+                        text.text = ChallengeUpgrade.propositions[2];
                         break;
                 }
             }
@@ -90,7 +90,31 @@ namespace TouchScript.InputSources
             foreach (SpriteRenderer sp in canvasChallenge.GetComponentsInChildren<SpriteRenderer>())
             {
                 if (sp.name == "background")
-                    this.background = sp;
+                    ChallengeUpgrade.background = sp;
+            }
+        }
+
+        void addLineBreaks()
+        {
+            const int maxChar = 30;
+            List<int> spaces = new List<int>();
+            int i = 0;
+            foreach (char c in ChallengeBuild.question)
+            {
+                if (c == ' ')
+                    spaces.Add(i);
+                i++;
+            }
+
+            int j = 0;
+            i = 1;
+            string toto = ChallengeBuild.question;
+            while (maxChar * i <= ChallengeBuild.question.Length && j < spaces.Count)
+            {
+                while (spaces[j] < maxChar * i)
+                    j++;
+                ChallengeUpgrade.question = question.Substring(0, spaces[j - 1]) + "\n" + question.Substring(spaces[j - 1] + 1);
+                i++;
             }
         }
 
@@ -151,8 +175,8 @@ namespace TouchScript.InputSources
 
             minorIsland.challengePresent = false;
 
-            //this.building.name is a string --> conversion necessary + split (name like: "sous_ile_X_nameBuilding")
-            if (Enum.IsDefined(typeof(TypeBuilding), this.building.name.Split('_')[3]))
+            //ChallengeUpgrade.building.name is a string --> conversion necessary + split (name like: "sous_ile_X_nameBuilding")
+            if (Enum.IsDefined(typeof(TypeBuilding), ChallengeUpgrade.building.name.Split('_')[3]))
             {
                 //TypeBuilding typeBuilding = (TypeBuilding)Enum.Parse(typeof(TypeBuilding), minorIsland.buildingClicked, true);
 
@@ -187,7 +211,7 @@ namespace TouchScript.InputSources
 
         }
 
-        // Use this for initialization
+        // Use ChallengeUpgrade for initialization
         void Start()
         {
 

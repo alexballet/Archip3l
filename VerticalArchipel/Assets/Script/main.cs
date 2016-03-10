@@ -2,6 +2,7 @@
 using System.Collections;
 using System;
 using UnityEngine.UI;
+using TouchScript.InputSources;
 
 namespace TouchScript.Examples.Cube
 {
@@ -96,24 +97,34 @@ namespace TouchScript.Examples.Cube
             return false;
         }
 
+        static public void addEnigma()
+        {
+            Canvas enigmaPrefab = Resources.Load<Canvas>("Prefab/Enigma");
+            Canvas enigma = Instantiate(enigmaPrefab);
+            enigma.name = "Enigma";
+            Enigma.enigmaWindowOpen = true;
+        }
+
 
 
         void Start()
         {
             //tests ---------------------------------
 
-            /*for (int i = 0; i <= 5; i++)
+            for (int i = 0; i <= 5; i++)
             {
                 //way of adding notifications
                 if (!main.addNotification("gaga " + i.ToString()))
                     Debug.Log(i.ToString());
-            }*/
+            }
 
-            string toto = "Répondre VRAI;Proposition0;;VRAI;FAUX";
+            /*string toto = "Répondre VRAI;Proposition0;;VRAI;FAUX";
             string[] r = toto.Split(';');
             addChallenge(r, TypeChallenge.VraiFaux);
 
-            addEvent("tempête");
+            addEvent("tempête");*/
+
+            addEnigma();
 
             //--------------------------------------------------
         }

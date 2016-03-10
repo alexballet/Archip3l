@@ -57,12 +57,6 @@
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Networking">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
@@ -190,6 +184,34 @@
     <Compile Include="Assets\Script\Types\TypeStat.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Resources\Challenges\ChallengesFiles\QCM\QCM_Airport.txt" />
+    <None Include="Assets\Resources\Challenges\ChallengesFiles\QCM\QCM_AmusementPark.txt" />
+    <None Include="Assets\Resources\Challenges\ChallengesFiles\QCM\QCM_Church.txt" />
+    <None Include="Assets\Resources\Challenges\ChallengesFiles\QCM\QCM_Cinema.txt" />
+    <None Include="Assets\Resources\Challenges\ChallengesFiles\QCM\QCM_Factory.txt" />
+    <None Include="Assets\Resources\Challenges\ChallengesFiles\QCM\QCM_Farm.txt" />
+    <None Include="Assets\Resources\Challenges\ChallengesFiles\QCM\QCM_GoldMine.txt" />
+    <None Include="Assets\Resources\Challenges\ChallengesFiles\QCM\QCM_Harbor.txt" />
+    <None Include="Assets\Resources\Challenges\ChallengesFiles\QCM\QCM_Hotel.txt" />
+    <None Include="Assets\Resources\Challenges\ChallengesFiles\QCM\QCM_OilPlant.txt" />
+    <None Include="Assets\Resources\Challenges\ChallengesFiles\QCM\QCM_PowerPlant.txt" />
+    <None Include="Assets\Resources\Challenges\ChallengesFiles\QCM\QCM_School.txt" />
+    <None Include="Assets\Resources\Challenges\ChallengesFiles\VraiFaux\VraiFaux_Airport.txt" />
+    <None Include="Assets\Resources\Challenges\ChallengesFiles\VraiFaux\VraiFaux_AmusementPark.txt" />
+    <None Include="Assets\Resources\Challenges\ChallengesFiles\VraiFaux\VraiFaux_Church.txt" />
+    <None Include="Assets\Resources\Challenges\ChallengesFiles\VraiFaux\VraiFaux_Cinema.txt" />
+    <None Include="Assets\Resources\Challenges\ChallengesFiles\VraiFaux\VraiFaux_Factory.txt" />
+    <None Include="Assets\Resources\Challenges\ChallengesFiles\VraiFaux\VraiFaux_Farm.txt" />
+    <None Include="Assets\Resources\Challenges\ChallengesFiles\VraiFaux\VraiFaux_GoldMine.txt" />
+    <None Include="Assets\Resources\Challenges\ChallengesFiles\VraiFaux\VraiFaux_Harbor.txt" />
+    <None Include="Assets\Resources\Challenges\ChallengesFiles\VraiFaux\VraiFaux_Hotel.txt" />
+    <None Include="Assets\Resources\Challenges\ChallengesFiles\VraiFaux\VraiFaux_Lab.txt" />
+    <None Include="Assets\Resources\Challenges\ChallengesFiles\VraiFaux\VraiFaux_OilPlant.txt" />
+    <None Include="Assets\Resources\Challenges\ChallengesFiles\VraiFaux\VraiFaux_PowerPlant.txt" />
+    <None Include="Assets\Resources\Challenges\ChallengesFiles\VraiFaux\VraiFaux_Sawmill.txt" />
+    <None Include="Assets\Resources\Challenges\ChallengesFiles\VraiFaux\VraiFaux_School.txt" />
+    <None Include="Assets\Resources\Challenges\ChallengesFiles\VraiFaux\VraiFaux_StoneMine.txt" />
+    <None Include="Assets\Resources\Challenges\ChallengesFiles\VraiFaux\VraiFaux_WindTurbine.txt" />
     <None Include="Assets\Resources\Challenges\QCM\QCM.txt" />
     <None Include="Assets\Resources\Challenges\QCM\QCM_GoldMine.txt" />
     <None Include="Assets\Resources\Challenges\QCM\QCM_Tests.txt" />

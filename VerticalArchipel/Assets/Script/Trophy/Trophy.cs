@@ -56,7 +56,7 @@ namespace TouchScript.Examples.Cube
 
         void OnMouseDownSimulation()
         {
-            if (!Event.eventWindowOpen && !Island.infoIslandPresent && !ChallengeVertical.challengeWindowPresent)
+            if (!Enigma.enigmaWindowOpen && !Event.eventWindowOpen && !Island.infoIslandPresent && !ChallengeVertical.challengeWindowPresent)
             {
                 if (!Trophy.infoWindowPresent)
                 {

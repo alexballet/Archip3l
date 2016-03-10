@@ -141,10 +141,7 @@ namespace TouchScript.InputSources
             if (id == '1' || id == '2')
                 canvasChallenge.transform.Rotate(Vector3.forward * 180);
 
-            foreach (ChallengeBuild cb in canvasChallenge.GetComponentsInChildren<ChallengeBuild>())
-            {
-                cb.init(type, this, (TypeBuilding)System.Enum.Parse(typeof(TypeBuilding), buildingClicked));
-            }
+            canvasChallenge.GetComponentInChildren<ChallengeBuild>().init(type, this, (TypeBuilding)System.Enum.Parse(typeof(TypeBuilding), buildingClicked));
             
 
             GameObject.Find(nameMinorIsland).GetComponent<MeshCollider>().enabled = true;
@@ -179,10 +176,7 @@ namespace TouchScript.InputSources
             if (id == '1' || id == '2')
                 challengeUpgrade.transform.Rotate(Vector3.forward * 180);
 
-            foreach (ChallengeUpgrade cu in challengeUpgrade.GetComponentsInChildren<ChallengeUpgrade>())
-            {
-                cu.init(type, this, building);             //TODO : adapt challenge to TypeBuilding
-            }
+            challengeUpgrade.GetComponentInChildren<ChallengeUpgrade>().init(type, this, building);
 
             GameObject.Find(nameMinorIsland).GetComponent<MeshCollider>().enabled = true;
         }

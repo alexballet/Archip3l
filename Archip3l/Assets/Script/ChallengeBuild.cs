@@ -13,31 +13,31 @@ namespace TouchScript.InputSources
     public class ChallengeBuild : InputSource
     {
 
-        public string question { get; private set; }
-        public string answer { get; private set; }
-        public string explainations { get; private set; }
-        public string[] propositions { get; private set; }
-        public int nbPropositions { get; private set; }
-        public TypeChallenge typeChallenge { get; private set; }
-        public SpriteRenderer background { get; private set; }
-        public Text resultText { get; private set; }
-        public MinorIsland minorIsland { get; private set; }
-        public bool goodAnswer { get; private set; }
-        public Canvas canvasChallenge { get; private set; }
+        static public string question { get; private set; }
+        static public string answer { get; private set; }
+        static public string explainations { get; private set; }
+        static public string[] propositions { get; private set; }
+        static public int nbPropositions { get; private set; }
+        static public TypeChallenge typeChallenge { get; private set; }
+        static public SpriteRenderer background { get; private set; }
+        static public Text resultText { get; private set; }
+        static public MinorIsland minorIsland { get; private set; }
+        static public bool goodAnswer { get; private set; }
+        static public Canvas canvasChallenge { get; private set; }
 
-        public TextAsset csv { get; private set; }
+        static public TextAsset csv { get; private set; }
 
         public void init(TypeChallenge tc, MinorIsland island, TypeBuilding typeBuilding)
         {
 
             canvasChallenge = this.transform.parent.GetComponent<Canvas>();
 
-            this.minorIsland = island;
-            this.typeChallenge = tc;
+            ChallengeBuild.minorIsland = island;
+            ChallengeBuild.typeChallenge = tc;
             if (typeChallenge == TypeChallenge.QCM)
-                this.nbPropositions = 3;
+                ChallengeBuild.nbPropositions = 3;
             else
-                this.nbPropositions = 2;
+                ChallengeBuild.nbPropositions = 2;
 
 
             //CSV part
@@ -46,22 +46,20 @@ namespace TouchScript.InputSources
             //QCM : answer = Proposition0 ou answer = Proposition1 ou answer = Proposition2
 
             //ENCODAGE : UTF8-16-LE
-            //csv = Resources.Load<TextAsset>("Challenges/" + typeChallenge.ToString() + "/" + typeChallenge.ToString() + "_" + typeBuilding.ToString());
-            //csv = Resources.Load<TextAsset>("Challenges/" + typeChallenge.ToString() + "/" + typeChallenge.ToString());
-            csv = Resources.Load<TextAsset>("Challenges/" + typeChallenge.ToString() + "/" + typeChallenge.ToString() + "_Tests");
+            csv = Resources.Load<TextAsset>("Challenges/ChallengesFiles/" + typeChallenge.ToString() + "/" + typeChallenge.ToString() + "_" + typeBuilding.ToString());
+            //csv = Resources.Load<TextAsset>("Challenges/" + typeChallenge.ToString() + "/" + typeChallenge.ToString() + "_Tests");
 
             string[] row = CSV_reader.GetRandomLine(csv.text);
 
-            this.question = row[0];
-            //addition of '*' for line breaks
+            ChallengeBuild.question = row[0];
             addLineBreaks();
-            this.answer = row[1];
-            this.explainations = row[2];
-            this.propositions = new string[nbPropositions];
-            this.propositions[0] = row[3];
-            this.propositions[1] = row[4];
-            if (this.nbPropositions == 3)
-                this.propositions[2] = row[5];
+            ChallengeBuild.answer = row[1];
+            ChallengeBuild.explainations = row[2];
+            ChallengeBuild.propositions = new string[nbPropositions];
+            ChallengeBuild.propositions[0] = row[3];
+            ChallengeBuild.propositions[1] = row[4];
+            if (ChallengeBuild.nbPropositions == 3)
+                ChallengeBuild.propositions[2] = row[5];
 
             //graphic part
             
@@ -70,19 +68,21 @@ namespace TouchScript.InputSources
                 switch (text.name)
                 {
                     case "Question":
-                        text.text = this.question.Replace('*', '\n');        //in CSV: '*' replace a line break ('\n')
+                        Debug.Log(ChallengeBuild.question);
+
+                        text.text = ChallengeBuild.question;
                         break;
                     case "Result":
                         resultText = text;
                         break;
                     case "Proposition0":
-                        text.text = this.propositions[0];
+                        text.text = ChallengeBuild.propositions[0];
                         break;
                     case "Proposition1":
-                        text.text = this.propositions[1];
+                        text.text = ChallengeBuild.propositions[1];
                         break;
                     case "Proposition2":
-                        text.text = this.propositions[2];
+                        text.text = ChallengeBuild.propositions[2];
                         break;
                 }
             }
@@ -90,15 +90,34 @@ namespace TouchScript.InputSources
             foreach (SpriteRenderer sp in canvasChallenge.GetComponentsInChildren<SpriteRenderer>())
             {
                 if (sp.name == "background")
-                    this.background = sp;
+                    ChallengeBuild.background = sp;
             }
             
         }
 
+
         void addLineBreaks()
         {
-            string[] spaces = new string[50];
+            const int maxChar = 30;
+            List<int> spaces = new List<int>();
+            int i = 0;
+            foreach(char c in ChallengeBuild.question)
+            {
+                if (c == ' ')
+                    spaces.Add(i);
+                i++;
+            }
 
+            int j = 0;
+            i = 1;
+            string toto = ChallengeBuild.question;
+            while (maxChar * i <= ChallengeBuild.question.Length && j < spaces.Count)
+            {
+                while (spaces[j] < maxChar * i)
+                    j++;
+                ChallengeBuild.question = question.Substring(0, spaces[j - 1]) +  "\n" + question.Substring(spaces[j - 1] + 1);
+                i++;
+            }
         }
 
 
