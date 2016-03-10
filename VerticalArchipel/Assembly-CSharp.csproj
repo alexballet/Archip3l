@@ -49,6 +49,7 @@
      <Compile Include="Assets\Script\Enigma.cs" />
      <Compile Include="Assets\Script\Event.cs" />
      <Compile Include="Assets\Script\Game\Game.cs" />
+     <Compile Include="Assets\Script\Game\Score.cs" />
      <Compile Include="Assets\Script\Game\Timer.cs" />
      <Compile Include="Assets\Script\Game\TimerView.cs" />
      <Compile Include="Assets\Script\Island\InfoIsland.cs" />
