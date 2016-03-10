@@ -5,7 +5,8 @@ using System;
 public class Score : MonoBehaviour {
 
     private Client Client;
-    private int ScoreCount;
+    public int ScoreCount;
+
     void Awake()
     {
         this.Client = GameObject.Find("Network").GetComponent<Client>();

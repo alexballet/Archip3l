@@ -19,15 +19,17 @@ namespace TouchScript.Examples.Cube
         public string trophyName;
         public string description;
 
+        private Score Score;
         //Requirement resource
-        public Resource resourceRequired { get; private set; }
-        public int resourceRequiredQuantity { get; private set; }
+        //public Resource resourceRequired { get; private set; }
+        //public int resourceRequiredQuantity { get; private set; }
         //Requirement challenge
 
         public Sprite wonSprite;
 
         void Awake()
         {
+            this.Score = GameObject.Find("Game").GetComponent<Score>();
             this.trophyName = name;
         }
 
@@ -42,11 +44,11 @@ namespace TouchScript.Examples.Cube
                 case "Medal3":
                     return resourceManager.getResource(TypeResource.Wood).Stock > 2000;
                 case "Trophy1":
-                    break;
+                    return this.Score.ScoreCount > 10000;
                 case "Trophy2":
-                    break;
+                    return this.Score.ScoreCount > 7500;
                 case "Trophy3":
-                    break;
+                    return this.Score.ScoreCount > 4000;
                 // Airport requirement managed in the trophy manager
                 //case "AirportMedal":
                 //    break;
