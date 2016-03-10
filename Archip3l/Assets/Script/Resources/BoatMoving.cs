@@ -18,6 +18,8 @@ namespace TouchScript.InputSources
         public bool collided = false;
         public Vector3 startPosition;
 
+		public GameObject sinkingTrail;
+
         private GameObject harbor;
 
         private float x1, y1;
@@ -40,7 +42,7 @@ namespace TouchScript.InputSources
                 if (this.quantityCarried / 2 == 0)
                 {
                     this.collided = true;
-                    island.displayPopup("Suite aux dommages subis, vous bâteau coule, ainsi que toutes les ressources transportées ...", 3);
+                    island.displayPopup("Suite aux dommages subis, votre bateau coule, ainsi que toutes les ressources transportées ...", 3);
                     MinorIsland.exchangePerforming = false;
                     //SINK ANIMATION
                     StartCoroutine(startBoatDisappearance());
@@ -57,9 +59,12 @@ namespace TouchScript.InputSources
 
 		IEnumerator SinkingCargo()
 		{
+			Instantiate (sinkingTrail, transform.position, Quaternion.identity);
 			GetComponent<Animator> ().SetInteger ("animCargo", 1);
 			yield return new WaitForSeconds (1f);
 			Destroy (gameObject);
+			yield return new WaitForSeconds (1f);
+			Destroy (sinkingTrail);
 		}
 
         public IEnumerator resetPosition()
