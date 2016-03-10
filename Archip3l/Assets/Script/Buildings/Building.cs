@@ -42,7 +42,6 @@ namespace TouchScript.InputSources
             this.name = this.minorIsland.nameMinorIsland + "_" + this.TypeBuilding.ToString();
 
             this.resourceProduced = ScriptableObject.CreateInstance<Resource>();
-            //this.texturePath = "Assets/Resources/Building/Icons/wheelIcon_" + TypeBuilding.ToString() + ".png";
             this.texturePath = "Building/Icons/wheelIcon_" + TypeBuilding.ToString();
 
             this.constructionResourceNeeded = getConstructionResourcesNeeded(TypeBuilding.ToString());

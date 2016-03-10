@@ -89,7 +89,7 @@ namespace TouchScript.InputSources
                         listResourcesCanvas.name = "listResourcesCanvas_" + island.nameMinorIsland;
                         listResourcesCanvas.transform.SetParent(GameObject.Find(island.nameMinorIsland).transform);
                         vector3 = GameObject.Find("sprite-" + island.nameMinorIsland).transform.position;
-                        vector3.z = -3;
+                        vector3.z = -6;
                         listResourcesCanvas.transform.position = vector3;
                         foreach (SpriteRenderer sr in listResourcesCanvas.GetComponentsInChildren<SpriteRenderer>())
                         {
@@ -126,7 +126,7 @@ namespace TouchScript.InputSources
                         listIslandsCanvas.name = "listIslandsCanvas_" + island.nameMinorIsland;
                         listIslandsCanvas.transform.SetParent(GameObject.Find(island.nameMinorIsland).transform);
                         vector3 = GameObject.Find("sprite-" + island.nameMinorIsland).transform.position;
-                        vector3.z = -3;
+                        vector3.z = -6;
                         listIslandsCanvas.transform.position = vector3;
                         //disable clic on self island
                         foreach(SpriteRenderer sp in listIslandsCanvas.GetComponentsInChildren<SpriteRenderer>())

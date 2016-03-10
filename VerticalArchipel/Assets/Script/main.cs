@@ -14,7 +14,7 @@ namespace TouchScript.Examples.Cube
 
         void Awake()
         {
-            //hidding of challenges and notifications at the beginning
+            //hiding challenges and notifications at the beginning
             for (int i = 1; i <= nbChallengesMax; i++)
             {
                 GameObject.Find("Challenge" + i.ToString()).GetComponent<SpriteRenderer>().enabled = false;
@@ -79,6 +79,24 @@ namespace TouchScript.Examples.Cube
         }
 
 
+        static public bool addEvent(string eventType)
+        {
+            if (!Event.eventWindowOpen)
+            {
+                Event.eventWindowOpen = true;
+                Canvas eventCanvasPrefab = Resources.Load<Canvas>("Prefab/EventCanvas");
+                Canvas eventCanvas = Instantiate(eventCanvasPrefab);
+                eventCanvas.name = "EventCanvas";
+                foreach (Event e in eventCanvas.GetComponentsInChildren<Event>())
+                {
+                    e.eventType = eventType;
+                }
+               
+            }
+            return false;
+        }
+
+
 
         void Start()
         {
@@ -94,6 +112,8 @@ namespace TouchScript.Examples.Cube
             string toto = "Répondre VRAI;Proposition0;;VRAI;FAUX";
             string[] r = toto.Split(';');
             addChallenge(r, TypeChallenge.VraiFaux);
+
+            addEvent("tempête");
 
             //--------------------------------------------------
         }
