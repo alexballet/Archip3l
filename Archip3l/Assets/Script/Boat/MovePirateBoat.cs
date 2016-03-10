@@ -107,6 +107,7 @@ public class MovePirateBoat : InputSource
         this.destroyBoat(true);
     }
 
+<<<<<<< HEAD
 	IEnumerator ShipSinking()
 	{
 		sinking = true;
@@ -118,9 +119,13 @@ public class MovePirateBoat : InputSource
 		sinking = false;
 	}
 
+=======
+>>>>>>> 27dabba1f847d1594d6eba61010aad627440ad61
     public void destroyBoat(bool touched)
     {
-        if(touched)
+        //PROBLEM: animation makes island disappear
+
+        /*if(touched)
         {
             SoundPlayer.Instance.playBoatSinkSound();
 //            Instantiate(sinkEffect, transform.position, Quaternion.identity);
@@ -130,7 +135,7 @@ public class MovePirateBoat : InputSource
         {
             SoundPlayer.Instance.playExplosionOneSound();
             Instantiate(explosionEffect, transform.position, Quaternion.identity);
-        }
+        }*/
             
 //        Destroy(gameObject);
     }

@@ -29,6 +29,22 @@ namespace TouchScript.Examples.Cube
 
         public TextAsset csv { get; private set; }
 
+        private Client client { get; set; }
+
+        void Awake()
+        {
+            this.client = GameObject.Find("Network").GetComponent<Client>();
+            this.client.MessageChallengeCompleteEvent += Client_MessageChallengeCompleteEvent;
+        }
+
+        private void Client_MessageChallengeCompleteEvent(object sender, MessageEventArgs e)
+        {
+            Debug.Log(e.message);       
+            //split avec '@' ; le premier paramètre n'est pas important
+            //indice 1 : code
+            //indices > 1 : arguments
+        }
+
         public void init(TypeChallenge tc, string[] row)
         {
 
@@ -279,4 +295,4 @@ namespace TouchScript.Examples.Cube
             cancelTouch(id);
         }
     }
-    }
+}

@@ -56,7 +56,7 @@ namespace TouchScript.Examples.Cube
 
         void OnMouseDownSimulation()
         {
-            if (!Island.infoIslandPresent && !ChallengeVertical.challengeWindowPresent)
+            if (!Event.eventWindowOpen && !Island.infoIslandPresent && !ChallengeVertical.challengeWindowPresent)
             {
                 if (!Trophy.infoWindowPresent)
                 {
@@ -122,6 +122,8 @@ namespace TouchScript.Examples.Cube
             this.toBeActivated = true;
             return true;
         }
+
+
         //-------------- TUIO -----------------------------------------------------------------------
 
         public int Width = 512;

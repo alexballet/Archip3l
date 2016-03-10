@@ -96,17 +96,7 @@ public class Client : MonoBehaviour
     private void ProcessMessage(string message)
     {
         Debug.Log("Client processing : " + message);
-        //The message must start with @ because ip sender automaticaly added
-        //See the GDrive to get code signification
-        //Message Format : @code
-
-        //spcialisation of message
-        /*
-            MessageBuildingConstructionEvent: @code@BuildingName
-            MessageResourceStockUpdateEvent : @code@Resourcename@VALUE
-            MessageTrophyWonEvent : @code@Trophyname
-
-        */
+        //Go to see the excell to get message format
 
         string[] split = message.Split('@');
         this.MessageEvent = null;
@@ -117,6 +107,9 @@ public class Client : MonoBehaviour
         switch (code)
         {
             case 11221:
+            case 12221:
+            case 12321:
+            case 12421:
                 MessageEvent += MessageTrophyWonEvent;
                 break;
             case 21111:
@@ -126,9 +119,15 @@ public class Client : MonoBehaviour
                 MessageEvent += MessageBuildingConstructionEvent;
                 break;
             case 21121:
+            case 22121:
+            case 23121:
+            case 24121:
                 MessageEvent += MessageBuildingUpgradeEvent;
                 break;
             case 21354:
+            case 22354:
+            case 23354:
+            case 24354:
                 MessageEvent += MessageResourceStockUpdateEvent;
                 break;
             case 30001:

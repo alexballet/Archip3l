@@ -4,11 +4,11 @@ using UnityEngine.UI;
 
 public class ResourceView : MonoBehaviour {
 
-    private ResourceManager resourceManager;
+    private GlobalResourceManager resourceManager;
 
     void Awake()
     {
-        this.resourceManager = gameObject.GetComponent<ResourceManager>();
+        this.resourceManager = gameObject.GetComponent<GlobalResourceManager>();
         //this.resourceManager.ChangeResourceStockEvent += ResourceManager_ChangeResourceStockEvent;
     }
     //private void ResourceManager_ChangeResourceStockEvent(object sender, ChangeResourceStockEventArgs e)
