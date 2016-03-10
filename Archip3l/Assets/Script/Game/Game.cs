@@ -9,7 +9,7 @@ public class Game : MonoBehaviour
     {
         this.Client = GameObject.Find("Network").GetComponent<Client>();
         this.Client.MessageSystemEndOfGameEvent += Client_MessageSystemEndOfGameEvent;
-        this.Client.MessageSystemStartInitofGameAnswerEvent += Client_MessageSystemStartInitofGameAnswerEvent;
+        this.Client.MessageSystemStartInitOfGameAnswerEvent += Client_MessageSystemStartInitofGameAnswerEvent;
     }
 
     

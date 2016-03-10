@@ -174,6 +174,13 @@ public class Client : MonoBehaviour
             case 30306:
                 MessageEvent += MessageResourceInitEvent;
                 break;
+            case 30505:
+            case 31505:
+            case 32505:
+            case 33505:
+            case 34505:
+                MessageEvent += MessageScoreUpdateEvent;
+                break;
         }
 
         if (this.MessageEvent != null)

@@ -25,11 +25,14 @@ namespace TouchScript.InputSources
         private string texturePath;
         public int level;       //possible levels : 0-1-2-3
 
+        private Client Client;
+
         public Transform buildingConstructionPrefab;
         public Transform buildingUpgradePrefab;
 
         public void init(TypeBuilding TypeBuilding, MinorIsland island)
         {
+            this.Client = GameObject.Find("Network").GetComponent<Client>();
             this.level = 0;
             this.TypeBuilding = TypeBuilding;
             this.buildState = 0;
@@ -278,10 +281,12 @@ namespace TouchScript.InputSources
                 this.buildState = 1;
                 StartCoroutine("updateStocks");
                 Destroy(buildingConstructionTransform.gameObject);
+
+                //Score to add must be checked
+                this.Client.sendData("@30505@" + 100.ToString());
             }
             else
             {
-                //Not enough resources
                 Debug.Log("Not enough resources");
             }
         }
