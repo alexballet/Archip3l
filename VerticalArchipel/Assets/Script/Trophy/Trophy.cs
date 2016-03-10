@@ -93,6 +93,7 @@ namespace TouchScript.Examples.Cube
         {
             if(this.toBeActivated)
             {
+                this.toBeActivated = false;
                 if (!this.active)
                 {
                     this.active = true;

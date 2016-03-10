@@ -94,6 +94,28 @@ namespace TouchScript.Examples.Cube
         public void changeTrophyToObtained(Trophy trophy)
         {
             trophy.changeToObtained();
+            switch(trophy.name)
+            {
+                case "Medal3":
+                case "Trophy3":
+                    //Score to add must be checked
+                    this.Client.sendData("@30505@" + 200.ToString());
+                    break;
+                case "Medal2":
+                case "Trophy2":
+                    //Score to add must be checked
+                    this.Client.sendData("@30505@" + 300.ToString());
+                    break;
+                case "Medal1":
+                case "Trophy1":
+                    //Score to add must be checked
+                    this.Client.sendData("@30505@" + 400.ToString());
+                    break;
+                case "Airport":
+                    //Score to add must be checked
+                    this.Client.sendData("@30505@" + 500.ToString());
+                    break;
+            }
             if (this.TrophyObtained != null)
             {
                 this.TrophyObtained(this, new TrophyObtainedEventArgs { Trophy = trophy });
