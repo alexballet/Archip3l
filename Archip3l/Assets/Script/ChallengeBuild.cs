@@ -53,6 +53,8 @@ namespace TouchScript.InputSources
             string[] row = CSV_reader.GetRandomLine(csv.text);
 
             this.question = row[0];
+            //addition of '*' for line breaks
+            addLineBreaks();
             this.answer = row[1];
             this.explainations = row[2];
             this.propositions = new string[nbPropositions];
@@ -91,6 +93,12 @@ namespace TouchScript.InputSources
                     this.background = sp;
             }
             
+        }
+
+        void addLineBreaks()
+        {
+            string[] spaces = new string[50];
+
         }
 
 

@@ -44,6 +44,7 @@ namespace TouchScript.InputSources
                     MinorIsland.exchangePerforming = false;
                     //SINK ANIMATION
                     StartCoroutine(startBoatDisappearance());
+					StartCoroutine(SinkingCargo());
                 }
                 else
                 {
@@ -53,6 +54,13 @@ namespace TouchScript.InputSources
                 }
             }
         }
+
+		IEnumerator SinkingCargo()
+		{
+			GetComponent<Animator> ().SetInteger ("animCargo", 1);
+			yield return new WaitForSeconds (1f);
+			Destroy (gameObject);
+		}
 
         public IEnumerator resetPosition()
         {
@@ -108,6 +116,7 @@ namespace TouchScript.InputSources
 
         public IEnumerator startBoatDisappearance()
         {
+
             Color color;
             for (int i = 0; i < 100; i++)
             {
