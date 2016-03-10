@@ -126,6 +126,7 @@ public class ResourceManager : MonoBehaviour
     public void initResources()
     {
         //Sync all resource from table before the start of the game
+        this.client.sendData("@30306");
     }
 }
 public class ChangeResourceStockEventArgs : EventArgs
