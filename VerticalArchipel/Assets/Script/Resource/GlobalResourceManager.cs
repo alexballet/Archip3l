@@ -9,8 +9,6 @@ public class GlobalResourceManager : MonoBehaviour
     public List<Resource> Resources;
     public List<ResourceManager> ResourceManagers;
 
-    public event EventHandler<EventArgs> MessageInitialized;
-
     void Awake()
     {
         this.Resources = new List<Resource>();
@@ -96,7 +94,7 @@ public class GlobalResourceManager : MonoBehaviour
         }
         return null;
     }
-    public IEnumerator initResources()
+    public void initResources()
     {
         //Sync all resource before the start of the game
         //sub resource manager
@@ -104,9 +102,6 @@ public class GlobalResourceManager : MonoBehaviour
         {
             rm.initResources();
         }
-
-        //Wait all anwsers from the network to initialize island resource manager
-        yield return new WaitForSeconds(5f);
 
         //Fill this one now
         foreach(ResourceManager rm in this.ResourceManagers)
@@ -126,10 +121,6 @@ public class GlobalResourceManager : MonoBehaviour
                     _ChangeResourceProductionEvent(null, new ChangeResourceProductionEventArgs { resourceType = resourceGlobalManager.TypeResource, production = resource.Production /4 });
                 }
             }
-        }
-        if(this.MessageInitialized != null)
-        {
-            this.MessageInitialized(this, new EventArgs());
         }
     }
 }

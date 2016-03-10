@@ -24,17 +24,13 @@ public class Client : MonoBehaviour
     public event EventHandler<MessageEventArgs> MessageBuildingUpgradeEvent;
     public event EventHandler<MessageEventArgs> MessageBuildingDestructionEvent;
     public event EventHandler<MessageEventArgs> MessageTrophyWonEvent;
-    public event EventHandler<MessageEventArgs> MessageResourceInitEvent;
     public event EventHandler<MessageEventArgs> MessageResourceProductionUpdateEvent;
     public event EventHandler<MessageEventArgs> MessageResourceStockUpdateEvent;
     public event EventHandler<MessageEventArgs> MessageResourceTransfertEvent;
     public event EventHandler<MessageEventArgs> MessageChallengeArrival;
     public event EventHandler<MessageEventArgs> MessageChallengeCompleteEvent;
     public event EventHandler<MessageEventArgs> MessageScoreUpdateEvent;
-
-    public event EventHandler<MessageEventArgs> MessageSystemStartInitOfGameEvent;
-    public event EventHandler<MessageEventArgs> MessageSystemStartInitOfGameAnswerEvent;
-    public event EventHandler<MessageEventArgs> MessageSystemStartOfGameEvent;
+    public event EventHandler<MessageEventArgs> MessageSystemStartOfGame;
     public event EventHandler<MessageEventArgs> MessageSystemEndOfGameEvent;
 
 
@@ -142,14 +138,6 @@ public class Client : MonoBehaviour
             case 24331:
                 MessageEvent += MessageResourceTransfertEvent;
                 break;
-            case 20345:
-            case 21345:
-            case 22345:
-            case 23345:
-            case 24345:
-                MessageEvent += MessageResourceProductionUpdateEvent;
-                break;
-            case 20355:
             case 21355:
             case 22355:
             case 23355:
@@ -160,19 +148,10 @@ public class Client : MonoBehaviour
                 MessageEvent += MessageChallengeArrival;
                 break;
             case 30001:
-                MessageEvent += MessageSystemStartOfGameEvent;
+                MessageEvent += MessageSystemStartOfGame;
                 break;
             case 30002:
                 MessageEvent += MessageSystemEndOfGameEvent;
-                break;
-            case 30006:
-                MessageEvent += MessageSystemStartInitOfGameEvent;
-                break;
-            case 30087:
-                MessageEvent += MessageSystemStartInitOfGameAnswerEvent;
-                break;
-            case 30306:
-                MessageEvent += MessageResourceInitEvent;
                 break;
         }
 

@@ -12,13 +12,8 @@ namespace TouchScript.InputSources
         public MinorIsland minorIsland { get; private set; }
         public List<Resource> Resources;
 
-        private Client Client;
-
         public void init(MinorIsland island)
         {
-            this.Client = GameObject.Find("Network").GetComponent<Client>();
-            this.Client.MessageResourceInitEvent += Client_MessageResourceInitEvent;
-
             this.minorIsland = island;
             this.Resources = new List<Resource>();
 
@@ -55,8 +50,9 @@ namespace TouchScript.InputSources
                     this.changeResourceStock(TypeResource.Wood, 10);
                     break;
             }
-        }
 
+
+        }
         void Start()
         {
             StartCoroutine("updateStocks");
@@ -78,6 +74,12 @@ namespace TouchScript.InputSources
             }
             else
             {
+                //To be deleted
+                //Resource object is unneeded
+
+                //GameObject myGameObject = new GameObject();
+                //myGameObject.name = name + "_" + minorIsland.nameMinorIsland;
+                //myGameObject.transform.SetParent(GameObject.Find("Virtual_" + minorIsland.nameMinorIsland).transform);
                 Resource res = ScriptableObject.CreateInstance<Resource>();
                 res.init(resourceType, quantity, production);
                 this.Resources.Add(res);
@@ -156,14 +158,6 @@ namespace TouchScript.InputSources
                     }
                 }
                 yield return new WaitForSeconds(1f);
-            }
-        }
-        private void Client_MessageResourceInitEvent(object sender, MessageEventArgs e)
-        {
-            foreach(Resource resource in this.Resources)
-            {
-                this.Client.sendData("@20355@" + resource.TypeResource.ToString() + "@" + resource.Stock);
-                this.Client.sendData("@20345@" + resource.TypeResource.ToString() + "@" + resource.Production);
             }
         }
     }
