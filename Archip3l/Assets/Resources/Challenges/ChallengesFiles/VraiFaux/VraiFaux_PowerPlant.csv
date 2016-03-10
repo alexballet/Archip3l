@@ -1,8 +1,8 @@
 Question;Answer;Explanation;Proposition0;Proposition1
 "Une ""maison centrale"" est une maison construite à l'intérieure d'une centrale électrique.";Proposition1;Une maison centrale est un type de prison française accueillant les condamnés difficiles ou purgeant de longues peines.;VRAI;FAUX
 "L'électricité est un mot provenant du grec ????????, êlektron, signifiant ""ambre jaune"".";Proposition0;Les Grecs anciens avaient découvert qu’en frottant de l’ambre jaune, ce matériau produisait une attirance sur d’autres objets légers et parfois des étincelles, premier phénomène observé se rapportant à ce mouvement de particules.;VRAI;FAUX
-Si le courant produit un champ magnétique, l'inverse est aussi vrai. ;Proposition1;En 1831, Michael Faraday découvre qu'on peut également faire du courant électrique en mettant en mouvement un champ magnétique.;VRAI;FAUX
-Les notions d'énergies renouvelables n'apparaissent que dans les années 1990-2000.;Proposition2;_;VRAI;FAUX
-Une particule qui possède autant de charges positives que négatives se comporte comme si elle n'en possédait aucune. ;Proposition3;On dit que la particule est «électriquement neutre».;VRAI;FAUX
-Le corps humain est conducteur d'électricité.;Proposition4; En effet, il permet aux charges électriques de se déplacer en son sein.;VRAI;FAUX
-Dans un circuit électrique, on dit que le courant électrique circule entre les électrodes depuis le pôle positif vers le pôle négatif du générateur.;Proposition5;_;VRAI;FAUX
+Si le courant produit un champ magnétique, l'inverse est aussi vrai. ;Proposition0;En 1831, Michael Faraday découvre qu'on peut également faire du courant électrique en mettant en mouvement un champ magnétique.;VRAI;FAUX
+Les notions d'énergies renouvelables n'apparaissent que dans les années 1990-2000.;Proposition0;_;VRAI;FAUX
+Une particule qui possède autant de charges positives que négatives se comporte comme si elle n'en possédait aucune. ;Proposition0;On dit que la particule est «électriquement neutre».;VRAI;FAUX
+Le corps humain est conducteur d'électricité.;Proposition0; En effet, il permet aux charges électriques de se déplacer en son sein.;VRAI;FAUX
+Dans un circuit électrique, on dit que le courant électrique circule entre les électrodes depuis le pôle positif vers le pôle négatif du générateur.;Proposition0;_;VRAI;FAUX
