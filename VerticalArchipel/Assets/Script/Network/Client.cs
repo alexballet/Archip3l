@@ -22,6 +22,7 @@ public class Client : MonoBehaviour
 
     public event EventHandler<MessageEventArgs> MessageBuildingConstructionEvent;
     public event EventHandler<MessageEventArgs> MessageBuildingUpgradeEvent;
+    public event EventHandler<MessageEventArgs> MessageBuildingDestructionEvent;
     public event EventHandler<MessageEventArgs> MessageTrophyWonEvent;
     public event EventHandler<MessageEventArgs> MessageResourceProductionUpdateEvent;
     public event EventHandler<MessageEventArgs> MessageResourceStockUpdateEvent;
@@ -124,10 +125,22 @@ public class Client : MonoBehaviour
             case 24121:
                 MessageEvent += MessageBuildingUpgradeEvent;
                 break;
-            case 21354:
-            case 22354:
-            case 23354:
-            case 24354:
+            case 21161:
+            case 22161:
+            case 23161:
+            case 24161:
+                MessageEvent += MessageBuildingDestructionEvent;
+                break;
+            case 21331:
+            case 22331:
+            case 23331:
+            case 24331:
+                MessageEvent += MessageResourceTransfertEvent;
+                break;
+            case 21355:
+            case 22355:
+            case 23355:
+            case 24355:
                 MessageEvent += MessageResourceStockUpdateEvent;
                 break;
             case 30001:
