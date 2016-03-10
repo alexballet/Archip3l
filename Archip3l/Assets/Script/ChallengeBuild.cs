@@ -68,8 +68,6 @@ namespace TouchScript.InputSources
                 switch (text.name)
                 {
                     case "Question":
-                        Debug.Log(ChallengeBuild.question);
-
                         text.text = ChallengeBuild.question;
                         break;
                     case "Result":

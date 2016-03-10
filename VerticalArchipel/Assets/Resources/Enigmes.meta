@@ -1,7 +1,11 @@
 fileFormatVersion: 2
 guid: 86452739dd27054489bbdbdc46f56772
 folderAsset: yes
+<<<<<<< HEAD:VerticalArchipel/Assets/Resources/Enigmes.meta
 timeCreated: 1457639197
+=======
+timeCreated: 1457641219
+>>>>>>> a787d42de9c6830ba1c24c15509caacbad462ea2:VerticalArchipel/Assets/Script/Challenge.meta
 licenseType: Free
 DefaultImporter:
   userData: 

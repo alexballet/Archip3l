@@ -12,19 +12,29 @@ public class Client : MonoBehaviour
     private bool _continue;
     private Thread _thListener;
 
+    private int sendingPort = 1523;
+    private int listeningPort = 5054;
+    private string serverIP = "192.168.1.91";
+
     //All events raised
     private delegate void DelegateEvent(object send, EventArgs e);
     private event EventHandler<MessageEventArgs> MessageEvent;
 
     public event EventHandler<MessageEventArgs> MessageBuildingConstructionEvent;
     public event EventHandler<MessageEventArgs> MessageBuildingUpgradeEvent;
+    public event EventHandler<MessageEventArgs> MessageBuildingDestructionEvent;
     public event EventHandler<MessageEventArgs> MessageTrophyWonEvent;
+    public event EventHandler<MessageEventArgs> MessageResourceInitEvent;
     public event EventHandler<MessageEventArgs> MessageResourceProductionUpdateEvent;
     public event EventHandler<MessageEventArgs> MessageResourceStockUpdateEvent;
     public event EventHandler<MessageEventArgs> MessageResourceTransfertEvent;
+    public event EventHandler<MessageEventArgs> MessageChallengeArrival;
     public event EventHandler<MessageEventArgs> MessageChallengeCompleteEvent;
     public event EventHandler<MessageEventArgs> MessageScoreUpdateEvent;
-    public event EventHandler<MessageEventArgs> MessageSystemStartOfGame;
+
+    public event EventHandler<MessageEventArgs> MessageSystemStartInitOfGameEvent;
+    public event EventHandler<MessageEventArgs> MessageSystemStartInitOfGameAnswerEvent;
+    public event EventHandler<MessageEventArgs> MessageSystemStartOfGameEvent;
     public event EventHandler<MessageEventArgs> MessageSystemEndOfGameEvent;
 
 
@@ -32,7 +42,7 @@ public class Client : MonoBehaviour
     {
         _client = new UdpClient();
         //_client.Connect("172.18.136.49", 1523);
-        _client.Connect("192.168.1.91", 1523);
+        _client.Connect(this.serverIP, this.sendingPort);
         Debug.Log("Starting client...");
 
         _continue = true;
@@ -42,6 +52,7 @@ public class Client : MonoBehaviour
 
     public void sendData(string dataToSend)
     {
+        //Debug.Log("Sending : " + dataToSend);
         byte[] data = Encoding.Default.GetBytes(dataToSend);
         _client.Send(data, data.Length);
     }
@@ -60,11 +71,11 @@ public class Client : MonoBehaviour
         //Secure creation of the socket
         try
         {
-            listener = new UdpClient(5053);
+            listener = new UdpClient(this.listeningPort);
         }
         catch
         {
-            Debug.Log("Unable to establish connect to UDP 5053 port. Verify your network configuration.");
+            Debug.Log("Unable to establish connect to UDP " + this.listeningPort + " port. Verify your network configuration.");
             return;
         }
 
@@ -91,15 +102,7 @@ public class Client : MonoBehaviour
     private void ProcessMessage(string message)
     {
         Debug.Log("Client processing : " + message);
-        //The message must start with @ because ip sender automaticaly added
-        //See the GDrive to get code signification
-        //Message Format : @code
-
-        //spcialisation of message
-        /*
-            MessageResourceStockUpdateEvent : @code@Resourcename@VALUE
-
-        */
+        //Go to see the excell to get message format
 
         string[] split = message.Split('@');
         this.MessageEvent = null;
@@ -109,20 +112,74 @@ public class Client : MonoBehaviour
         //Raise event
         switch (code)
         {
+            case 11221:
+            case 12221:
+            case 12321:
+            case 12421:
+                MessageEvent += MessageTrophyWonEvent;
+                break;
             case 21111:
+            case 22111:
+            case 23111:
+            case 24111:
                 MessageEvent += MessageBuildingConstructionEvent;
                 break;
             case 21121:
+            case 22121:
+            case 23121:
+            case 24121:
                 MessageEvent += MessageBuildingUpgradeEvent;
                 break;
-            case 21354:
+            case 21161:
+            case 22161:
+            case 23161:
+            case 24161:
+                MessageEvent += MessageBuildingDestructionEvent;
+                break;
+            case 21331:
+            case 22331:
+            case 23331:
+            case 24331:
+                MessageEvent += MessageResourceTransfertEvent;
+                break;
+            case 20345:
+            case 21345:
+            case 22345:
+            case 23345:
+            case 24345:
+                MessageEvent += MessageResourceProductionUpdateEvent;
+                break;
+            case 20355:
+            case 21355:
+            case 22355:
+            case 23355:
+            case 24355:
                 MessageEvent += MessageResourceStockUpdateEvent;
                 break;
+            case 25371:
+                MessageEvent += MessageChallengeArrival;
+                break;
             case 30001:
-                MessageEvent += MessageSystemStartOfGame;
+                MessageEvent += MessageSystemStartOfGameEvent;
                 break;
             case 30002:
                 MessageEvent += MessageSystemEndOfGameEvent;
+                break;
+            case 30006:
+                MessageEvent += MessageSystemStartInitOfGameEvent;
+                break;
+            case 30087:
+                MessageEvent += MessageSystemStartInitOfGameAnswerEvent;
+                break;
+            case 30306:
+                MessageEvent += MessageResourceInitEvent;
+                break;
+            case 30505:
+            case 31505:
+            case 32505:
+            case 33505:
+            case 34505:
+                MessageEvent += MessageScoreUpdateEvent;
                 break;
         }
 

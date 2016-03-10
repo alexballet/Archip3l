@@ -18,6 +18,9 @@ public class MovePirateBoat : InputSource
     private float lifeTime;
     public ParticleSystem explosionEffect;
     public ParticleSystem sinkEffect;
+	public GameObject sinkingTrail;
+
+    private Client Client;
 
     void Awake()
     {
@@ -25,6 +28,7 @@ public class MovePirateBoat : InputSource
         Destroy(gameObject, this.lifeTime);
         gameObject.SetActive(false);
 		sinking = false;
+        this.Client = GameObject.Find("Network").GetComponent<Client>();
     }
 
 	void Start()
@@ -104,18 +108,21 @@ public class MovePirateBoat : InputSource
     }
     void OnMouseDownSimulation()
     {
+        //Score to add must be checked
+        this.Client.sendData("@30505@" + 10.ToString());
         this.destroyBoat(true);
     }
     
 	IEnumerator ShipSinking()
 	{
 		sinking = true;
-//		GetComponent<ParticleSystem> ().Stop();
-//		GetComponent<Particle> ().velocity = new Vector3 (0, 0, 0);
+		Instantiate (sinkingTrail, transform.position, Quaternion.identity);
 		GetComponent<Animator> ().SetInteger ("animBoat", 1);
 		yield return new WaitForSeconds (1f);
 		Destroy (gameObject);
 		sinking = false;
+		yield return new WaitForSeconds (1f);
+		Destroy (sinkingTrail);
 	}
 
 
