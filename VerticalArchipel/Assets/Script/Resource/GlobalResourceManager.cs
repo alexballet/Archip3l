@@ -9,16 +9,26 @@ public class GlobalResourceManager : MonoBehaviour
     public List<Resource> Resources;
     public List<ResourceManager> ResourceManagers;
 
+    private int resourceCountForScoreInit;
+    private int resourceCountForScoreCurrent;
+
+    private Client Client;
+
     public event EventHandler<EventArgs> MessageInitialized;
 
     void Awake()
     {
+        this.Client = GameObject.Find("Network").GetComponent<Client>();
+
         this.Resources = new List<Resource>();
 
         this.ResourceManagers.Add(GameObject.Find("sous_ile_1").GetComponent<ResourceManager>());
         this.ResourceManagers.Add(GameObject.Find("sous_ile_2").GetComponent<ResourceManager>());
         this.ResourceManagers.Add(GameObject.Find("sous_ile_3").GetComponent<ResourceManager>());
         this.ResourceManagers.Add(GameObject.Find("sous_ile_4").GetComponent<ResourceManager>());
+
+        this.resourceCountForScoreInit = 500;
+        this.resourceCountForScoreCurrent = this.resourceCountForScoreInit;
 
         foreach(ResourceManager rm in this.ResourceManagers)
         {
@@ -53,6 +63,13 @@ public class GlobalResourceManager : MonoBehaviour
         Resource resource = this.getResource(e.resourceType);
         if (resource != null)
         {
+            this.resourceCountForScoreCurrent -= e.stock;
+            if(this.resourceCountForScoreCurrent < 0)
+            {
+                this.resourceCountForScoreCurrent = this.resourceCountForScoreInit;
+                this.Client.sendData("@30505@" + 50.ToString());
+
+            }
             resource.changeStock(e.stock);
         }
         else
