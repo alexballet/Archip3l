@@ -48,6 +48,8 @@ namespace TouchScript.InputSources
             //VraiFaux : answer = Proposition0 ou answer = Proposition1
             //QCM : answer = Proposition0 ou answer = Proposition1 ou answer = Proposition2
 
+            //ENCODAGE : UTF8-16-LE
+            //last line of file usually blank --> to be removed!
             csv = Resources.Load<TextAsset>("Challenges/ChallengesFiles/" + typeChallenge.ToString() + "/" + typeChallenge.ToString() + "_" + myBuilding.TypeBuilding.ToString());
             //csv = Resources.Load<TextAsset>("Challenges/" + typeChallenge.ToString() + "/" + typeChallenge.ToString() + "_Tests");
 
