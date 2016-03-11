@@ -367,7 +367,7 @@ public class MinorIsland : InputSource
             //rotation of image according to the place of the island
             char id = this.nameMinorIsland[this.nameMinorIsland.Length - 1];
             if (id == '1' || id == '2')
-                touchBuildingCanvas.transform.Rotate(Vector3.forward * 180);
+                exchangeWindowCanvas.transform.Rotate(Vector3.forward * 180);
 
             this.exchangeWindowPresent = true;
         }

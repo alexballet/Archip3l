@@ -93,7 +93,7 @@ public class BoatMoving : InputSource
 
     void Start()
     {
-		GetComponent<Animator> ().SetInteger ("animCargo", 0);
+		GetComponent<Animator>().SetInteger("animCargo", 0);
         this.island = this.transform.parent.GetComponent<MinorIsland>();
         this.startPosition = this.transform.position;
         this.harbor = GameObject.Find(this.islandToSend + "_Harbor");
