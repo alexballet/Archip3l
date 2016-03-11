@@ -5,10 +5,11 @@ using System.Collections.Generic;
 using TouchScript.InputSources;
 using TouchScript.Gestures;
 using TouchScript.Hit;
+using TouchScript;
 
-namespace TouchScript.InputSources
-{
-    public class Tuto_Building : InputSource
+
+
+public class Tuto_Building : InputSource
     {
 
         public int buildState { get; set; }
@@ -233,4 +234,3 @@ namespace TouchScript.InputSources
         }
     }
 
-   }

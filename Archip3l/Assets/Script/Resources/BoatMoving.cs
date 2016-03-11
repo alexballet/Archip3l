@@ -4,266 +4,266 @@ using TouchScript.InputSources;
 using TouchScript.Gestures;
 using TouchScript.Hit;
 using System.Collections;
+using TouchScript;
 
-namespace TouchScript.InputSources
+
+
+public class BoatMoving : InputSource
 {
-    public class BoatMoving : InputSource
+
+    public MinorIsland island;
+    public string islandToSend;
+    public int quantityCarried;
+    public string resourceSent;
+    public bool appeared = false;
+    public bool collided = false;
+    public Vector3 startPosition;
+
+	public GameObject sinkingTrail;
+
+    private GameObject harbor;
+
+    private float x1, y1;
+
+    void OnTriggerEnter(Collider col)
     {
-
-        public MinorIsland island;
-        public string islandToSend;
-        public int quantityCarried;
-        public string resourceSent;
-        public bool appeared = false;
-        public bool collided = false;
-        public Vector3 startPosition;
-
-		public GameObject sinkingTrail;
-
-        private GameObject harbor;
-
-        private float x1, y1;
-
-        void OnTriggerEnter(Collider col)
+        if (col.name == islandToSend + "_Harbor")
         {
-            if (col.name == islandToSend + "_Harbor")
+            MinorIsland islandReceiver = GameObject.Find(islandToSend).GetComponent<MinorIsland>();
+            this.collided = true;
+            islandReceiver.displayPopup("Vous venez de recevoir une cargaison de " + this.quantityCarried.ToString() + " " + Resource.translateResourceName(resourceSent) + " !", 3);
+            MinorIsland.exchangePerforming = false;
+            //add resources to islandToSend
+            TypeResource res = (TypeResource)System.Enum.Parse(typeof(TypeResource), resourceSent);
+            islandReceiver.resourceManager.getResource(res).changeStock(this.quantityCarried);
+            StartCoroutine(startBoatDisappearance());
+        }
+        else
+        {
+            if (this.quantityCarried / 2 == 0)
             {
-                MinorIsland islandReceiver = GameObject.Find(islandToSend).GetComponent<MinorIsland>();
                 this.collided = true;
-                islandReceiver.displayPopup("Vous venez de recevoir une cargaison de " + this.quantityCarried.ToString() + " " + Resource.translateResourceName(resourceSent) + " !", 3);
+                island.displayPopup("Suite aux dommages subis, votre bateau coule, ainsi que toutes les ressources transportées ...", 3);
                 MinorIsland.exchangePerforming = false;
-                //add resources to islandToSend
-                TypeResource res = (TypeResource)System.Enum.Parse(typeof(TypeResource), resourceSent);
-                islandReceiver.resourceManager.getResource(res).changeStock(this.quantityCarried);
+                //SINK ANIMATION
                 StartCoroutine(startBoatDisappearance());
+				StartCoroutine(SinkingCargo());
             }
             else
             {
-                if (this.quantityCarried / 2 == 0)
-                {
-                    this.collided = true;
-                    island.displayPopup("Suite aux dommages subis, votre bateau coule, ainsi que toutes les ressources transportées ...", 3);
-                    MinorIsland.exchangePerforming = false;
-                    //SINK ANIMATION
-                    StartCoroutine(startBoatDisappearance());
-					StartCoroutine(SinkingCargo());
-                }
-                else
-                {
-                    StartCoroutine(resetPosition());
-                    island.displayPopup("Attention ! Vous venez de subir une collision, vous perdez donc la moitié des ressources à transmettre", 3);
-                    this.quantityCarried /= 2;
-                }
+                StartCoroutine(resetPosition());
+                island.displayPopup("Attention ! Vous venez de subir une collision, vous perdez donc la moitié des ressources à transmettre", 3);
+                this.quantityCarried /= 2;
             }
         }
+    }
 
-		IEnumerator SinkingCargo()
-		{
-			Instantiate (sinkingTrail, transform.position, Quaternion.identity);
-			GetComponent<Animator> ().SetInteger ("animCargo", 1);
-			yield return new WaitForSeconds (1f);
-			Destroy (gameObject);
-			yield return new WaitForSeconds (1f);
-			Destroy (sinkingTrail);
-		}
+	IEnumerator SinkingCargo()
+	{
+		Instantiate (sinkingTrail, transform.position, Quaternion.identity);
+		GetComponent<Animator> ().SetInteger ("animCargo", 1);
+		yield return new WaitForSeconds (1f);
+		Destroy (gameObject);
+		yield return new WaitForSeconds (1f);
+		Destroy (sinkingTrail);
+	}
 
-        public IEnumerator resetPosition()
+    public IEnumerator resetPosition()
+    {
+        this.GetComponent<BoxCollider>().enabled = false;
+        Color color;
+        for (int i = 0; i < 100; i++)
         {
-            this.GetComponent<BoxCollider>().enabled = false;
-            Color color;
-            for (int i = 0; i < 100; i++)
-            {
-                yield return new WaitForSeconds(0.01f);
-                color = this.GetComponent<SpriteRenderer>().color;
-                color.a -= 0.01f;
-                this.GetComponent<SpriteRenderer>().color = color;
-            }
-            this.transform.position = startPosition;
-            for (int i = 0; i < 100; i++)
-            {
-                yield return new WaitForSeconds(0.01f);
-                color = this.GetComponent<SpriteRenderer>().color;
-                color.a += 0.01f;
-                this.GetComponent<SpriteRenderer>().color = color;
-            }
-            this.GetComponent<BoxCollider>().enabled = true;
-        }
-
-
-        void Start()
-        {
-            this.island = this.transform.parent.GetComponent<MinorIsland>();
-            this.startPosition = this.transform.position;
-            this.harbor = GameObject.Find(this.islandToSend + "_Harbor");
-            StartCoroutine(startBoatAppearance());
-            SpriteRenderer cyclonePrefab = Resources.Load<SpriteRenderer>("Prefab/cyclone");
-            SpriteRenderer cyclone = Instantiate(cyclonePrefab);
-            cyclone.name = "cyclone";
-            StartCoroutine(spine(cyclone));
-        }
-
-        public IEnumerator startBoatAppearance()
-        {
-            Color color;
+            yield return new WaitForSeconds(0.01f);
             color = this.GetComponent<SpriteRenderer>().color;
-            color.a = 0;
+            color.a -= 0.01f;
             this.GetComponent<SpriteRenderer>().color = color;
-            for (int i = 0; i < 100; i++)
-            {
-                yield return new WaitForSeconds(0.03f);
-                color = this.GetComponent<SpriteRenderer>().color;
-                color.a += 0.01f;
-                this.GetComponent<SpriteRenderer>().color = color;
-            }
+        }
+        this.transform.position = startPosition;
+        for (int i = 0; i < 100; i++)
+        {
+            yield return new WaitForSeconds(0.01f);
+            color = this.GetComponent<SpriteRenderer>().color;
+            color.a += 0.01f;
+            this.GetComponent<SpriteRenderer>().color = color;
+        }
+        this.GetComponent<BoxCollider>().enabled = true;
+    }
 
-            this.appeared = true;
+
+    void Start()
+    {
+        this.island = this.transform.parent.GetComponent<MinorIsland>();
+        this.startPosition = this.transform.position;
+        this.harbor = GameObject.Find(this.islandToSend + "_Harbor");
+        StartCoroutine(startBoatAppearance());
+        SpriteRenderer cyclonePrefab = Resources.Load<SpriteRenderer>("Prefab/cyclone");
+        SpriteRenderer cyclone = Instantiate(cyclonePrefab);
+        cyclone.name = "cyclone";
+        StartCoroutine(spine(cyclone));
+    }
+
+    public IEnumerator startBoatAppearance()
+    {
+        Color color;
+        color = this.GetComponent<SpriteRenderer>().color;
+        color.a = 0;
+        this.GetComponent<SpriteRenderer>().color = color;
+        for (int i = 0; i < 100; i++)
+        {
+            yield return new WaitForSeconds(0.03f);
+            color = this.GetComponent<SpriteRenderer>().color;
+            color.a += 0.01f;
+            this.GetComponent<SpriteRenderer>().color = color;
         }
 
-        public IEnumerator startBoatDisappearance()
-        {
+        this.appeared = true;
+    }
 
-            Color color;
-            for (int i = 0; i < 100; i++)
-            {
-                yield return new WaitForSeconds(0.03f);
-                color = this.GetComponent<SpriteRenderer>().color;
-                color.a -= 0.01f;
-                this.GetComponent<SpriteRenderer>().color = color;
-            }
-            Destroy(GameObject.Find("cyclone"));
-            Destroy(this.gameObject);
+    public IEnumerator startBoatDisappearance()
+    {
+
+        Color color;
+        for (int i = 0; i < 100; i++)
+        {
+            yield return new WaitForSeconds(0.03f);
+            color = this.GetComponent<SpriteRenderer>().color;
+            color.a -= 0.01f;
+            this.GetComponent<SpriteRenderer>().color = color;
         }
+        Destroy(GameObject.Find("cyclone"));
+        Destroy(this.gameObject);
+    }
 
-        public IEnumerator spine(SpriteRenderer cyclone)
+    public IEnumerator spine(SpriteRenderer cyclone)
+    {
+        while(!this.collided)
         {
-            while(!this.collided)
-            {
-                yield return new WaitForSeconds(0.001f);
-                cyclone.transform.Rotate(Vector3.back, 2);
-            }
+            yield return new WaitForSeconds(0.001f);
+            cyclone.transform.Rotate(Vector3.back, 2);
         }
+    }
 
 
-        void FixedUpdate()
+    void FixedUpdate()
+    {
+        x1 = harbor.GetComponent<BoxCollider>().bounds.center.x;
+        y1 = harbor.GetComponent<BoxCollider>().bounds.center.y;
+
+        float alpha = 90 - (Mathf.Rad2Deg * Mathf.Atan2(y1 - transform.position.y, x1 - transform.position.x));
+        transform.rotation = Quaternion.Euler(0f, 0f, -alpha);
+
+    }
+
+
+    //-------------- TUIO -----------------------------------------------------------------------
+
+    public int Width = 512;
+    public int Height = 512;
+    float TouchTime;
+
+    private MetaGesture gesture;
+    private Dictionary<int, int> map = new Dictionary<int, int>();
+
+    public override void CancelTouch(TouchPoint touch, bool @return)
+    {
+        base.CancelTouch(touch, @return);
+
+        map.Remove(touch.Id);
+        if (@return)
         {
-            x1 = harbor.GetComponent<BoxCollider>().bounds.center.x;
-            y1 = harbor.GetComponent<BoxCollider>().bounds.center.y;
-
-            float alpha = 90 - (Mathf.Rad2Deg * Mathf.Atan2(y1 - transform.position.y, x1 - transform.position.x));
-            transform.rotation = Quaternion.Euler(0f, 0f, -alpha);
-
-        }
-
-
-        //-------------- TUIO -----------------------------------------------------------------------
-
-        public int Width = 512;
-        public int Height = 512;
-        float TouchTime;
-
-        private MetaGesture gesture;
-        private Dictionary<int, int> map = new Dictionary<int, int>();
-
-        public override void CancelTouch(TouchPoint touch, bool @return)
-        {
-            base.CancelTouch(touch, @return);
-
-            map.Remove(touch.Id);
-            if (@return)
-            {
-                TouchHit hit;
-                if (!gesture.GetTargetHitResult(touch.Position, out hit)) return;
-                map.Add(touch.Id, beginTouch(processCoords(hit.RaycastHit.textureCoord), touch.Tags).Id);
-            }
-        }
-
-
-        protected override void OnEnable()
-        {
-            base.OnEnable();
-            gesture = GetComponent<MetaGesture>();
-            if (gesture)
-            {
-                gesture.TouchBegan += touchBeganHandler;
-                gesture.TouchMoved += touchMovedhandler;
-                gesture.TouchCancelled += touchCancelledhandler;
-                gesture.TouchEnded += touchEndedHandler;
-            }
-        }
-
-
-        protected override void OnDisable()
-        {
-            base.OnDisable();
-
-            if (gesture)
-            {
-                gesture.TouchBegan -= touchBeganHandler;
-                gesture.TouchMoved -= touchMovedhandler;
-                gesture.TouchCancelled -= touchCancelledhandler;
-                gesture.TouchEnded -= touchEndedHandler;
-            }
-        }
-
-        private Vector2 processCoords(Vector2 value)
-        {
-            return new Vector2(value.x * Width, value.y * Height);
-        }
-
-        private void touchBeganHandler(object sender, MetaGestureEventArgs metaGestureEventArgs)
-        {
-            var touch = metaGestureEventArgs.Touch;
-            if (touch.InputSource == this) return;
-            map.Add(touch.Id, beginTouch(processCoords(touch.Hit.RaycastHit.textureCoord), touch.Tags).Id);
-            if (TouchTime == 0)
-            {
-                TouchTime = Time.time;
-            }
-
-        }
-
-        private void touchMovedhandler(object sender, MetaGestureEventArgs metaGestureEventArgs)
-        {
-            int id;
             TouchHit hit;
-            var touch = metaGestureEventArgs.Touch;
-            if (touch.InputSource == this) return;
-            if (!map.TryGetValue(touch.Id, out id)) return;
             if (!gesture.GetTargetHitResult(touch.Position, out hit)) return;
-            moveTouch(id, processCoords(hit.RaycastHit.textureCoord));
-            if (this.appeared && !this.collided)
-            {
-                Vector3 positionTouched = Camera.main.ScreenToWorldPoint(touch.Position);
-                positionTouched.z = 0;
-                this.transform.position = positionTouched;
-            }
+            map.Add(touch.Id, beginTouch(processCoords(hit.RaycastHit.textureCoord), touch.Tags).Id);
+        }
+    }
+
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        gesture = GetComponent<MetaGesture>();
+        if (gesture)
+        {
+            gesture.TouchBegan += touchBeganHandler;
+            gesture.TouchMoved += touchMovedhandler;
+            gesture.TouchCancelled += touchCancelledhandler;
+            gesture.TouchEnded += touchEndedHandler;
+        }
+    }
+
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+
+        if (gesture)
+        {
+            gesture.TouchBegan -= touchBeganHandler;
+            gesture.TouchMoved -= touchMovedhandler;
+            gesture.TouchCancelled -= touchCancelledhandler;
+            gesture.TouchEnded -= touchEndedHandler;
+        }
+    }
+
+    private Vector2 processCoords(Vector2 value)
+    {
+        return new Vector2(value.x * Width, value.y * Height);
+    }
+
+    private void touchBeganHandler(object sender, MetaGestureEventArgs metaGestureEventArgs)
+    {
+        var touch = metaGestureEventArgs.Touch;
+        if (touch.InputSource == this) return;
+        map.Add(touch.Id, beginTouch(processCoords(touch.Hit.RaycastHit.textureCoord), touch.Tags).Id);
+        if (TouchTime == 0)
+        {
+            TouchTime = Time.time;
         }
 
-        private void touchEndedHandler(object sender, MetaGestureEventArgs metaGestureEventArgs)
-        {
-            int id;
-            var touch = metaGestureEventArgs.Touch;
-            if (touch.InputSource == this) return;
-            if (!map.TryGetValue(touch.Id, out id)) return;
-            endTouch(id);
-            if (Time.time - TouchTime < 0.5)
-            {
-                TouchTime = 0;
-                //this.OnMouseDownSimulation();
-            }
-            else if (Time.time - TouchTime < 1.5)
-            {
-                TouchTime = 0;
-            }
-        }
+    }
 
-        private void touchCancelledhandler(object sender, MetaGestureEventArgs metaGestureEventArgs)
+    private void touchMovedhandler(object sender, MetaGestureEventArgs metaGestureEventArgs)
+    {
+        int id;
+        TouchHit hit;
+        var touch = metaGestureEventArgs.Touch;
+        if (touch.InputSource == this) return;
+        if (!map.TryGetValue(touch.Id, out id)) return;
+        if (!gesture.GetTargetHitResult(touch.Position, out hit)) return;
+        moveTouch(id, processCoords(hit.RaycastHit.textureCoord));
+        if (this.appeared && !this.collided)
         {
-            int id;
-            var touch = metaGestureEventArgs.Touch;
-            if (touch.InputSource == this) return;
-            if (!map.TryGetValue(touch.Id, out id)) return;
-            cancelTouch(id);
+            Vector3 positionTouched = Camera.main.ScreenToWorldPoint(touch.Position);
+            positionTouched.z = 0;
+            this.transform.position = positionTouched;
         }
+    }
+
+    private void touchEndedHandler(object sender, MetaGestureEventArgs metaGestureEventArgs)
+    {
+        int id;
+        var touch = metaGestureEventArgs.Touch;
+        if (touch.InputSource == this) return;
+        if (!map.TryGetValue(touch.Id, out id)) return;
+        endTouch(id);
+        if (Time.time - TouchTime < 0.5)
+        {
+            TouchTime = 0;
+            //this.OnMouseDownSimulation();
+        }
+        else if (Time.time - TouchTime < 1.5)
+        {
+            TouchTime = 0;
+        }
+    }
+
+    private void touchCancelledhandler(object sender, MetaGestureEventArgs metaGestureEventArgs)
+    {
+        int id;
+        var touch = metaGestureEventArgs.Touch;
+        if (touch.InputSource == this) return;
+        if (!map.TryGetValue(touch.Id, out id)) return;
+        cancelTouch(id);
     }
 }

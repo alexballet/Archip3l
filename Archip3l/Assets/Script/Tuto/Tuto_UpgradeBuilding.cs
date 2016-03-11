@@ -4,11 +4,10 @@ using System.Collections.Generic;
 using TouchScript.InputSources;
 using TouchScript.Gestures;
 using TouchScript.Hit;
+using TouchScript;
 
-namespace TouchScript.InputSources
-{
 
-    public class Tuto_UpgradeBuilding : InputSource {
+public class Tuto_UpgradeBuilding : InputSource {
 
     public Tuto_MinorIsland island;
     public Tuto_Building building;
@@ -140,4 +139,4 @@ namespace TouchScript.InputSources
         cancelTouch(id);
     }
 }
-}
+
