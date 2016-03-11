@@ -14,24 +14,45 @@ public class Enigma : InputSource
 
     static public Text questionObject { get; private set; }
     static public Text resultObject { get; private set; }
+    static public Text answerObject { get; private set; }
     static public string question { get; private set; }
     static public string answer { get; private set; }
     static public string explainations { get; private set; }
+    static public int nbAnswers = 0;   //has to be 2
 
     public TextAsset csv { get; private set; }
 
 
     void OnMouseDownSimulation()
     {
-        for (int i = 0; i < 10; i++)
-            GameObject.Find(i.ToString()).GetComponent<BoxCollider>().enabled = false;
-        Enigma.questionObject.text = Enigma.explainations;
-        StartCoroutine(wait( this.name == Enigma.answer));
+        if (this.name == Enigma.answerObject.text)  //touch the same number --> remove it
+        {
+            Enigma.nbAnswers--;
+            Enigma.answerObject.text = string.Empty;
+        }
+        else
+        {
+            Enigma.nbAnswers++;
+            if (Enigma.nbAnswers == 1)
+            {
+                Enigma.answerObject.text = this.name;
+            }
+            if (Enigma.nbAnswers == 2)
+            {
+                Enigma.answerObject.text = (int.Parse(Enigma.answerObject.text) * 10 + int.Parse(this.name)).ToString();
+                for (int i = 0; i < 10; i++)
+                    GameObject.Find(i.ToString()).GetComponent<BoxCollider>().enabled = false;
+                Enigma.questionObject.text = Enigma.explainations;
+                StartCoroutine(wait(Enigma.answerObject.text == Enigma.answer));
+            }
+        }
 
     }
 
     void Awake()
     {
+        if (this.name == "Answer")
+            Enigma.answerObject = this.GetComponent<Text>();
         if (this.name == "Result")
             Enigma.resultObject = this.GetComponent<Text>();
         if (this.name == "Question")
@@ -62,8 +83,9 @@ public class Enigma : InputSource
 
         for (int i = 0; i < 10; i++)
             GameObject.Find(i.ToString()).SetActive(false);
+        GameObject.Find("Answer").SetActive(false);
         if (goodAnswer)
-            Enigma.resultObject.text = "Bravo, votre réponse permet ...";
+            Enigma.resultObject.text = "Bravo ! votre réponse permet ...";
         else
             Enigma.resultObject.text = "Votre mauvaise réponse ...";
 

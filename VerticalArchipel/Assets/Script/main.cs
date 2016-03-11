@@ -121,6 +121,7 @@ public class main : MonoBehaviour
         string[] r = toto.Split(';');
         addChallenge(r, TypeChallenge.VraiFaux);
 
+        addEnigma();
         //addDisturbance();
 
         //--------------------------------------------------
