@@ -71,15 +71,42 @@
      <Compile Include="Assets\Script\TouchScript\Editor\Utils\PropertyDrawers\ToggleLeftDrawer.cs" />
      <Compile Include="Assets\Script\TouchScript\Modules\TUIO\Editor\InputSources\TuioInputEditor.cs" />
      <None Include="Assets\Resources\Challenges\QCM\QCM_GoldMine.txt" />
+     <None Include="Assets\Resources\Challenges\ChallengesFiles\QCM\QCM_StoneMine.txt" />
+     <None Include="Assets\Resources\Challenges\ChallengesFiles\VraiFaux\VraiFaux_Cinema.txt" />
+     <None Include="Assets\Resources\Challenges\ChallengesFiles\VraiFaux\VraiFaux_OilPlant.txt" />
+     <None Include="Assets\Resources\Challenges\ChallengesFiles\QCM\QCM_PowerPlant.txt" />
+     <None Include="Assets\Resources\Challenges\ChallengesFiles\QCM\QCM_Hotel.txt" />
+     <None Include="Assets\Resources\Challenges\ChallengesFiles\QCM\QCM_Church.txt" />
+     <None Include="Assets\Resources\Challenges\ChallengesFiles\QCM\QCM_Harbor.txt" />
+     <None Include="Assets\Resources\Challenges\ChallengesFiles\QCM\QCM_School.txt" />
+     <None Include="Assets\Resources\Challenges\ChallengesFiles\VraiFaux\VraiFaux_AmusementPark.txt" />
+     <None Include="Assets\Resources\Challenges\ChallengesFiles\QCM\QCM_Cinema.txt" />
+     <None Include="Assets\Resources\Challenges\ChallengesFiles\QCM\QCM_Factory.txt" />
+     <None Include="Assets\Resources\Challenges\ChallengesFiles\VraiFaux\VraiFaux_WindTurbine.txt" />
+     <None Include="Assets\Resources\Challenges\ChallengesFiles\VraiFaux\VraiFaux_GoldMine.txt" />
      <None Include="Assets\Resources\Challenges\VraiFaux\VraiFaux_GoldMine.txt" />
+     <None Include="Assets\Resources\Challenges\ChallengesFiles\QCM\QCM_AmusementPark.txt" />
+     <None Include="Assets\Resources\Challenges\ChallengesFiles\VraiFaux\VraiFaux_Sawmill.txt" />
      <None Include="Assets\Resources\Challenges\VraiFaux\VraiFaux.txt" />
+     <None Include="Assets\Resources\Challenges\ChallengesFiles\VraiFaux\VraiFaux_Harbor.txt" />
+     <None Include="Assets\Resources\Challenges\ChallengesFiles\VraiFaux\VraiFaux_Lab.txt" />
+     <None Include="Assets\Resources\Challenges\ChallengesFiles\VraiFaux\VraiFaux_Church.txt" />
      <None Include="Assets\Resources\Challenges\VraiFaux\VraiFaux_Tests.txt" />
      <None Include="Assets\Resources\Challenges\QCM\QCM.txt" />
      <None Include="Assets\Resources\Challenges\QCM\QCM_Tests.txt" />
+     <None Include="Assets\Resources\Challenges\ChallengesFiles\VraiFaux\VraiFaux_School.txt" />
+     <None Include="Assets\Resources\Challenges\ChallengesFiles\QCM\QCM_Airport.txt" />
+     <None Include="Assets\Resources\Challenges\ChallengesFiles\VraiFaux\VraiFaux_Airport.txt" />
+     <None Include="Assets\Resources\Challenges\ChallengesFiles\VraiFaux\VraiFaux_PowerPlant.txt" />
+     <None Include="Assets\Resources\Challenges\ChallengesFiles\VraiFaux\VraiFaux_Farm.txt" />
+     <None Include="Assets\Resources\Challenges\ChallengesFiles\QCM\QCM_WindTurbine.txt" />
+     <None Include="Assets\Resources\Challenges\ChallengesFiles\VraiFaux\VraiFaux_Hotel.txt" />
+     <None Include="Assets\Resources\Challenges\ChallengesFiles\VraiFaux\VraiFaux_Factory.txt" />
+     <None Include="Assets\Resources\Challenges\ChallengesFiles\QCM\QCM_OilPlant.txt" />
      <None Include="Assets\Resources\Challenges\VraiFaux\VraiFaux_Farm.txt" />
- <Reference Include="UnityEngine.Advertisements">
- <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Advertisements/UnityEngine.Advertisements.dll</HintPath>
- </Reference>
+     <None Include="Assets\Resources\Challenges\ChallengesFiles\QCM\QCM_Farm.txt" />
+     <None Include="Assets\Resources\Challenges\ChallengesFiles\VraiFaux\VraiFaux_StoneMine.txt" />
+     <None Include="Assets\Resources\Challenges\ChallengesFiles\QCM\QCM_GoldMine.txt" />
  <Reference Include="UnityEditor.Advertisements">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Advertisements/Editor/UnityEditor.Advertisements.dll</HintPath>
  </Reference>
@@ -94,9 +121,6 @@
  </Reference>
  <Reference Include="UnityEditor.Networking">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Networking/Editor/UnityEditor.Networking.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Analytics">
- <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
  </Reference>
  <Reference Include="OSCsharp">
  <HintPath>/Users/Alxd/Desktop/ARCHIPEL/Unity/Archip3l/Archip3l/Assets/Script/TouchScript/Modules/TUIO/Libraries/OSCsharp.dll</HintPath>

@@ -48,10 +48,11 @@ public class MovePirateBoat : InputSource
         float alpha = -90 + (Mathf.Rad2Deg * Mathf.Atan2(targetPosition.y - initPosition.y, targetPosition.x - initPosition.x)); //, transform.position.y, targetPosition.x - transform.position.x));
         transform.rotation = Quaternion.Euler(0f, 0f, alpha);
 
-        float boatSpeed = rnd.Next(3, 10) / 1000f;
+//        float boatSpeed = rnd.Next(1, 5) / 1000f;
+		float boatSpeed = 2 / 1000f;
         this.speed = new Vector2(boatSpeed, boatSpeed);
 
-        float boatScale = 10 + rnd.Next(-3, 4);
+        float boatScale = 7 + rnd.Next(-1, 1);
         transform.localScale = new Vector3(boatScale, boatScale, 0);
 
         gameObject.SetActive(true);
@@ -130,7 +131,7 @@ public class MovePirateBoat : InputSource
     {
         //PROBLEM: animation makes island disappear
 
-        /*if(touched)
+        if(touched)
         {
             SoundPlayer.Instance.playBoatSinkSound();
             Instantiate(sinkEffect, transform.position, Quaternion.identity);
@@ -140,7 +141,7 @@ public class MovePirateBoat : InputSource
         {
             SoundPlayer.Instance.playExplosionOneSound();
             Instantiate(explosionEffect, transform.position, Quaternion.identity);
-        }*/
+        }
             
         Destroy(gameObject);
     }
