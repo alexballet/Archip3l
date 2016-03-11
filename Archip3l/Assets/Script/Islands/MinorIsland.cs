@@ -364,6 +364,11 @@ public class MinorIsland : InputSource
             vector3.z = -5;
             exchangeWindowCanvas.transform.position = vector3;
 
+            //rotation of image according to the place of the island
+            char id = this.nameMinorIsland[this.nameMinorIsland.Length - 1];
+            if (id == '1' || id == '2')
+                touchBuildingCanvas.transform.Rotate(Vector3.forward * 180);
+
             this.exchangeWindowPresent = true;
         }
     }
@@ -500,6 +505,8 @@ public class MinorIsland : InputSource
             collider.gameObject.GetComponent<MovePirateBoat>().destroyBoat(false);
         }
     }
+
+    
 
     //-------------- TUIO -----------------------------------------------------------------------
 
