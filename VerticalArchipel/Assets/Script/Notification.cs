@@ -13,6 +13,7 @@ public class Notification : InputSource
 
     void OnMouseDownSimulation()
     {
+        Debug.Log("toto");
         main.removeNotification(this.gameObject);
     }
         

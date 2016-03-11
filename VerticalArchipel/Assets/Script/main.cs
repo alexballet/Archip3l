@@ -9,7 +9,7 @@ public class main : MonoBehaviour
 {
 
     public const int nbChallengesMax = 3;
-    public const int nbNotificationsMax = 5;
+    public const int nbNotificationsMax = 10;
 
     void Awake()
     {
@@ -65,8 +65,8 @@ public class main : MonoBehaviour
             }
         //no place --> make some place to add this notification
         removeNotification(GameObject.Find("Notif1"));
-        GameObject.Find("Notif5").GetComponent<Text>().text = text;
-        GameObject.Find("Notif5").GetComponent<BoxCollider>().enabled = true;
+        GameObject.Find("Notif" + nbNotificationsMax).GetComponent<Text>().text = text;
+        GameObject.Find("Notif" + +nbNotificationsMax).GetComponent<BoxCollider>().enabled = true;
     }
 
     static public void removeNotification(GameObject go)  //id : last character of the notification's name
@@ -121,8 +121,8 @@ public class main : MonoBehaviour
         string[] r = toto.Split(';');
         addChallenge(r, TypeChallenge.VraiFaux);
 
-        addEnigma();
-        //addDisturbance();
+        //addEnigma();
+        addDisturbance();
 
         //--------------------------------------------------
     }

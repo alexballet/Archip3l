@@ -63,7 +63,7 @@ public class Disturbance : InputSource
 
         if (Disturbance.islandChosen == string.Empty)
         {
-            this.disturbanceText.text = "Vous n'avez choisi aucune île !\nEn conséquence, la perturbation\ns'abattra sur toutes les îles !";
+            this.disturbanceText.text = "Vous n'avez choisi aucune île !\n\nEn conséquence, la perturbation s'abattra \nsur toutes les îles !";
         }
         else
         {
